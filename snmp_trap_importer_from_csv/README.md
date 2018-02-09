@@ -4,7 +4,7 @@ Below are steps to create a Zabbix Import for Traps.
 These traps are captured from the `snmptrap` function in Zabbix.
 
 
-###Step 1:
+### Step 1:
 Select the Alarms from the iReasoning MIB browser and Export them as CSV. 
 This Script expect MIB information to be in CSV format.
 Export from a iReasoning Browser will generate CSV as below.
@@ -15,7 +15,7 @@ We use this information to create snmptrap items and corresponding Trigger in th
 Which can be imported directly.
 
 
-###Step 2: 
+### Step 2: 
 Below are the details to create the xml file from the CSV create above.
 
     python zabbix_snmp_trap_import_from_csv.py <export_csv> <host_name> <host_group_name> <host_interface_name>
@@ -50,4 +50,4 @@ Which can be imported directly.
 
 
 ### Code location 
-Location can be found here : <https://github.com/ahmedzbyr/zabbix_snmp_trap_import_from_csv>
+Location can be found here : <https://github.com/ahmedzbyr/zabbix-automations/tree/master/snmp_trap_importer_from_csv>
