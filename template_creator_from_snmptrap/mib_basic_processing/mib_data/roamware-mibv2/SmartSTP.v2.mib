@@ -1,0 +1,746 @@
+--
+-- Roamware SmartSTP Server  MIB definition.
+-- Release : 6.0
+-- Revision : R160401
+-- Revision date : 29-April-2016
+--
+-- This specification is supplied "AS IS," and no warranty,
+-- either expressed or implied, as to the use, operation, condition,
+-- or performance of the specification, is made by the publisher.
+--
+-- Publisher: Roamware Inc., USA
+-- **************************************************************
+
+Roamware-SmartSTP-V2-MIB DEFINITIONS ::= BEGIN
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, NOTIFICATION-TYPE, TimeTicks, Counter32, Integer32, IpAddress
+        FROM SNMPv2-SMI
+    DisplayString
+        FROM SNMPv2-TC
+    OBJECT-GROUP
+        FROM SNMPv2-CONF
+    roamware, mobGenMachineID, mobGenSeverity, mobGenDescription, mobGenRemoteHostAddr,
+	mobGenRemotePort, mobGenLocalPort, mobGenThresholdName, mobGenThresholdValue, mobGenCapacity,
+	mobGenUtilization, mobGenThresholdArmTime, mobGenNotificationId, mobGenServiceName, mobGenAlarmTime,
+	mobGenAlarmType, mobGenProbableCause, mobGenSequenceNumber
+        FROM Roamware-SDS-V2-MIB;
+
+smartstp-mob	MODULE-IDENTITY
+	LAST-UPDATED "201604290000Z"
+	ORGANIZATION "Roamware Inc."
+	CONTACT-INFO "info@roamware.com"
+	DESCRIPTION  "This is the top level entry for Roamware SmartSTP"
+	REVISION "201604290000Z"
+	DESCRIPTION  "Initial version"
+	::= { roamware 69 }                                  -- 1.3.6.1.4.1.11150.69
+
+--
+-- SmartSTP specific status reports
+--
+smartSTPStatus	   OBJECT IDENTIFIER ::= { smartstp-mob 1 }	 -- 1.3.6.1.4.1.11150.69.1
+
+smartSTPModuleId  OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable identifies an SS7 message queue."
+		   ::= { smartSTPStatus 1 }					   -- 1.3.6.1.4.1.11150.69.1.1
+
+smartSTPAppName  OBJECT-TYPE
+		   SYNTAX OCTET STRING
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable identifies a client application."
+		   ::= { smartSTPStatus 2 }					   -- 1.3.6.1.4.1.11150.69.1.2
+
+smartstpOrgPointCode  OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable identifies an origination point code."
+		   ::= { smartSTPStatus 3 }					   -- 1.3.6.1.4.1.11150.69.1.3
+
+smartstpDestPointCode  OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable identifies a destination point code."
+		   ::= { smartSTPStatus 4 }					   -- 1.3.6.1.4.1.11150.69.1.4
+
+smartstpLinkId  OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable identifies a link identifier."
+		   ::= { smartSTPStatus 5 }					   -- 1.3.6.1.4.1.11150.69.1.5
+
+smartstpLinkSetId  OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable identifies a linkset identifier."
+		   ::= { smartSTPStatus 6 }					   -- 1.3.6.1.4.1.11150.69.1.6
+
+smartstpLinkRefNum  OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable identifies a link reference number."
+		   ::= { smartSTPStatus 7 }					   -- 1.3.6.1.4.1.11150.69.1.7
+
+smartstpLiuId  OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable identifies a line interface unit identifier."
+		   ::= { smartSTPStatus 8 }					   -- 1.3.6.1.4.1.11150.69.1.8
+
+smartstpM3UAssocId	OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable identifies an M3UA association identifier."
+		   ::= { smartSTPStatus 9 }					   -- 1.3.6.1.4.1.11150.69.1.9
+
+smartstpM3UAssocStatus	OBJECT-TYPE
+		   SYNTAX INTEGER
+		   {
+			  m3uaDeactivated (1),
+			  m3uaAvailable (2),
+			  m3uaUnavailable (3),
+			  m3uaCongAbate (4),
+			  m3uaCongOnset (5),
+			  m3uaCongDiscard (6)
+		   }
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable identifies an M3UA association status."
+		   ::= { smartSTPStatus 10 }					   -- 1.3.6.1.4.1.11150.69.1.10
+
+smartstpM3UIP2	OBJECT-TYPE
+		   SYNTAX IpAddress
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable identifies the secondary IP address to be used in a SIGTRAN association."
+		   ::= { smartSTPStatus 11 }					   -- 1.3.6.1.4.1.11150.69.1.11
+
+smartSTPConnStatus  OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the status of linksets."
+		   ::= { smartSTPStatus 12 }					   -- 1.3.6.1.4.1.11150.69.1.12
+
+smartSTPAppHost  OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable is used in the application status notification trap to ientify
+			  the host on which the appication is running."
+		   ::= { smartSTPStatus 13 }					   -- 1.3.6.1.4.1.11150.69.1.13
+
+smartstpStartCic  OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates the starting CIC in an ISUP circuit group."
+		   ::= { smartSTPStatus 14 }					   -- 1.3.6.1.4.1.11150.69.1.14
+
+smartstpCicGrpId  OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates a circuit group id."
+		   ::= { smartSTPStatus 15 }					   -- 1.3.6.1.4.1.11150.69.1.15
+
+smartstpGetAssocStatus  OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "This variable returns the status of configured SIGTRAN associations."
+		   ::= { smartSTPStatus 16 }					   -- 1.3.6.1.4.1.11150.69.1.16
+
+smartstpGetDPCStatus  OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "The variable returns the status of configured DPCs."
+		   ::= { smartSTPStatus 17 }					   -- 1.3.6.1.4.1.11150.69.1.17
+
+smartstpSCTPAssocStatus	OBJECT-TYPE
+		   SYNTAX INTEGER
+		   {
+			  sctpClosed (1),
+			  sctpConnecting (2),
+			  sctpConnected (3),
+			  sctpClosing (4),
+			  sctpRestart (5)
+		   }
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable identifies an SCTP association status."
+		   ::= { smartSTPStatus 18 }					   -- 1.3.6.1.4.1.11150.69.1.18
+
+smartstpSCTPPathStatus	OBJECT-TYPE
+		   SYNTAX INTEGER
+		   {
+			  addressInactive (1),
+			  addressActive (2)
+		   }
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable identifies an SCTP association status."
+		   ::= { smartSTPStatus 19 }					   -- 1.3.6.1.4.1.11150.69.1.19
+
+smartstpProtocolId  OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates the protocol id used in license congestion notification"
+		   ::= { smartSTPStatus 20 }					   -- 1.3.6.1.4.1.11150.69.1.20
+
+smartstpGctPartitionId  OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates the GCT Environment Partition id"
+		   ::= { smartSTPStatus 21 }					   -- 1.3.6.1.4.1.11150.69.1.21	
+		   
+smartstpDSIBoardId  OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates Dialogic Board id"
+		   ::= { smartSTPStatus 22 }					   -- 1.3.6.1.4.1.11150.69.1.22			   
+		   
+smartstpDSIBoardType OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates Dialogic Board Type"
+		   ::= { smartSTPStatus 23 }					   -- 1.3.6.1.4.1.11150.69.1.23		   
+		   
+smartstpDSIBoardFailureCode OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates Failure code of Dialogic Board"
+		   ::= { smartSTPStatus 24 }					   -- 1.3.6.1.4.1.11150.69.1.24			   	   		   
+		   
+--
+-- SmartSTP specific statistics
+--
+smartSTPStatistics OBJECT IDENTIFIER ::= { smartstp-mob 2 }    -- 1.3.6.1.4.1.11150.69.2
+
+smartSTPNumModules  OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "This variable identifies the number of SS7 message queues currently being monitored."
+		   ::= { smartSTPStatistics 1 }					   -- 1.3.6.1.4.1.11150.69.2.1
+
+smartSTPThruput  OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates the average rate of messages per minute in the last five minutes."
+		   ::= { smartSTPStatistics 2 }					   -- 1.3.6.1.4.1.11150.69.2.2
+
+--
+-- SmartSTP specific command interface
+--
+smartSTPCommands OBJECT IDENTIFIER ::= { smartstp-mob 3 }	 -- 1.3.6.1.4.1.11150.69.3
+
+smartSTPStartModule  OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "On input this variable contains the SS7 message queue that SmartSTP should start monitoring.
+			  The output indicates whether the action was successful (1-Yes, 0-No)"
+		   ::= { smartSTPCommands 1 }					   -- 1.3.6.1.4.1.11150.69.3.1
+
+smartSTPStopModule  OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "On input this variable contains the SS7 message queue that SmartSTP should stop monitoring.
+			  The output indicates whether the action was successful (1-Yes, 0-No)"
+		   ::= { smartSTPCommands 2 }					   -- 1.3.6.1.4.1.11150.69.3.2
+
+smartSTPRescanScript OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "This variable instructs SmartSTP to parse the script file for handling an SS7 message queue.
+			  The value on input is the queue number. The output indicates whether the operation
+			  was successful (1-Yes, 0-No)"
+		   ::= { smartSTPCommands 3 }					   -- 1.3.6.1.4.1.11150.69.3.3
+
+smartSTPRescanRT OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "This variable instructs SmartSTP to parse the routing table."
+		   ::= { smartSTPCommands 4 }					   -- 1.3.6.1.4.1.11150.69.3.4
+
+smartSTPEnablePCAP OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "This variable instructs SmartSTP to enable capturing messages in a PCAP slot."
+		   ::= { smartSTPCommands 5 }					   -- 1.3.6.1.4.1.11150.69.3.5
+
+smartSTPDisablePCAP OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "This variable instructs SmartSTP to disable capturing messages in a PCAP slot."
+		   ::= { smartSTPCommands 6 }					   -- 1.3.6.1.4.1.11150.69.3.6
+
+--
+-- SmartSTP KPI objects
+--
+smartSTPKPI OBJECT IDENTIFIER ::= { smartstp-mob 5 }	   -- 1.3.6.1.4.1.11150.69.5
+
+smartSTPNumMessages  OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates the number of messages handled by Smart STP in the last 1 minute"
+		   ::= { smartSTPKPI 1 }						   -- 1.3.6.1.4.1.11150.69.5.1
+
+smartSTPNumMessageBytes  OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates the number of bytes in all messages handled by Smart STP
+			  in the last 1 minute"
+		   ::= { smartSTPKPI 2 }						   -- 1.3.6.1.4.1.11150.69.5.2
+
+smartSTPNumBeginWatch  OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates the number of messages that were put on the watch list
+			  in the last 1 minute"
+		   ::= { smartSTPKPI 3 }						   -- 1.3.6.1.4.1.11150.69.5.3
+
+smartSTPNumBeginAck  OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates the number of messages from watch list that were acknowledged
+			  in the last 1 minute"
+		   ::= { smartSTPKPI 4 }						   -- 1.3.6.1.4.1.11150.69.5.4
+
+smartSTPNumBeginTimeout OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates the number of messages from watch list that timed out
+			  in the last 1 minute"
+		   ::= { smartSTPKPI 5 }						   -- 1.3.6.1.4.1.11150.69.5.5
+
+smartSTPBeginWatchCapacity OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates the maximum number TCAP BEGIN messages that can be watched"
+		   ::= { smartSTPKPI 6 }						   -- 1.3.6.1.4.1.11150.69.5.6
+
+smartSTPBeginWatchSize OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates the number TCAP BEGIN messages that are being watched"
+		   ::= { smartSTPKPI 7 }						   -- 1.3.6.1.4.1.11150.69.5.7
+
+smartSTPSCCPDecodeFailures OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates the number SCCP messages that failed to decode"
+		   ::= { smartSTPKPI 8 }						   -- 1.3.6.1.4.1.11150.69.5.8
+
+smartSTPTCAPDecodeFailures OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates the number TCAP messages that failed to decode"
+		   ::= { smartSTPKPI 9 }						   -- 1.3.6.1.4.1.11150.69.5.9
+
+smartSTPTCAPDecodeAttempt OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates the number TCAP messages that were attempted for decode"
+		   ::= { smartSTPKPI 10 }						   -- 1.3.6.1.4.1.11150.69.5.10
+
+smartSTPUDTSCount OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates the number of routing table mismatches for which UDTS messages were sent"
+		   ::= { smartSTPKPI 11 }						   -- 1.3.6.1.4.1.11150.69.5.11
+
+smartSTPUDTSRecvCount OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates the number of UDTS messages that were received from stack"
+		   ::= { smartSTPKPI 12 }						   -- 1.3.6.1.4.1.11150.69.5.12
+
+smartSTPNumMessagesToStack  OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates the number of messages sent to stack by Smart STP in the last 1 minute"
+		   ::= { smartSTPKPI 13 }						   -- 1.3.6.1.4.1.11150.69.5.13
+
+smartSTPNumMessageBytesToStack  OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates the number of bytes in all messages sent to stack by Smart STP
+			  in the last 1 minute"
+		   ::= { smartSTPKPI 14 }						   -- 1.3.6.1.4.1.11150.69.5.14
+
+smartSTPNumMessagesToPublish  OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates the number of MTP2 messages that Smart STP tried to publish to its clients
+			  in the last 1 minute"
+		   ::= { smartSTPKPI 15 }						   -- 1.3.6.1.4.1.11150.69.5.15
+
+smartSTPNumMessagesPublished  OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates the number of MTP2 messages that Smart STP published to its clients
+			  in the last 1 minute"
+		   ::= { smartSTPKPI 16 }						   -- 1.3.6.1.4.1.11150.69.5.16
+
+--
+-- SmartSTP system specific traps
+--
+
+smartSTPTrapsModule OBJECT IDENTIFIER ::= { smartstp-mob 4 }		-- 1.3.6.1.4.1.11150.69.4
+smartSTPTrapsGroup OBJECT IDENTIFIER ::= { smartSTPTrapsModule 0 }	-- 1.3.6.1.4.1.11150.69.4.0
+
+smartSTPSysUp		NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that the SmartSTP instance is up and active."
+			::= {smartSTPTrapsGroup 1}
+
+smartSTPSysDown		NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that the SmartSTP instance is shutting down."
+			::= {smartSTPTrapsGroup 2}
+
+smartSTPModuleStatus		NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					  smartSTPModuleId }
+			STATUS current
+			DESCRIPTION
+			  "Indicates whether an SS7 message queue is being monitored"
+			::= {smartSTPTrapsGroup 3}
+
+smartSTPAppStatus		NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					  smartSTPAppName, smartSTPAppHost }
+			STATUS current
+			DESCRIPTION
+			  "Indicates the status of an application."
+			::= {smartSTPTrapsGroup 4}
+
+smartSTPLinkCO		NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					  smartstpOrgPointCode, smartstpDestPointCode, smartstpLinkId, smartstpLinkSetId,
+					  smartstpLinkRefNum }
+			STATUS current
+			DESCRIPTION
+			  "Indicates link change over/back"
+			::= {smartSTPTrapsGroup 5}
+
+
+smartSTPLinkRPO		NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					  smartstpOrgPointCode, smartstpDestPointCode, smartstpLinkId, smartstpLinkSetId,
+					  smartstpLinkRefNum }
+			STATUS current
+			DESCRIPTION
+			  "Indicates remote processor outage"
+			::= {smartSTPTrapsGroup 6}
+
+
+smartSTPLinkCong		NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					  smartstpOrgPointCode, smartstpDestPointCode, smartstpLinkId, smartstpLinkSetId,
+					  smartstpLinkRefNum }
+			STATUS current
+			DESCRIPTION
+			  "Indicates link congestion"
+			::= {smartSTPTrapsGroup 7}
+
+
+smartSTPLinksetFail		NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					  smartstpOrgPointCode, smartstpDestPointCode, smartstpLinkSetId }
+			STATUS current
+			DESCRIPTION
+			  "Indicates indicates linkset failure"
+			::= {smartSTPTrapsGroup 8}
+
+
+smartSTPDestOutage		NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					  smartstpDestPointCode }
+			STATUS current
+			DESCRIPTION
+			  "Indicates destination point code unavailable"
+			::= {smartSTPTrapsGroup 9}
+
+
+smartSTPAdjPCOutage		NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					  smartstpOrgPointCode, smartstpDestPointCode, smartstpLinkSetId }
+			STATUS current
+			DESCRIPTION
+			  "Indicates adjascent point code unavailable"
+			::= {smartSTPTrapsGroup 10}
+
+
+smartSTPPCMStatus		NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					  smartstpLiuId }
+			STATUS current
+			DESCRIPTION
+			  "Indicates PCM status (link up/down)"
+			::= {smartSTPTrapsGroup 11}
+
+smartSTPM3UAssocStatusNotif	NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					  smartstpM3UAssocId, smartstpM3UAssocStatus, mobGenRemoteHostAddr, smartstpM3UIP2,
+					  mobGenRemotePort, mobGenLocalPort }
+			STATUS current
+			DESCRIPTION
+			  "Indicates the status of an M3UA association"
+			::= {smartSTPTrapsGroup 12}
+
+smartSTPM3UASPStatus	NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					  smartstpM3UAssocId, mobGenRemoteHostAddr, smartstpM3UIP2, mobGenRemotePort,
+					  mobGenLocalPort }
+			STATUS current
+			DESCRIPTION
+			  "Indicates the status of an M3UA peer ASP"
+			::= {smartSTPTrapsGroup 13}
+
+smartSTPHeartbeat		NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause }
+			STATUS current
+			DESCRIPTION
+			  "Sent periodically to indicate that Smart STP is alive"
+			::= {smartSTPTrapsGroup 14}
+
+smartSTPWatchPoolDeplete	NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					  mobGenThresholdName, mobGenThresholdValue, mobGenCapacity, mobGenUtilization,
+					  mobGenThresholdArmTime }
+			STATUS current
+			DESCRIPTION
+			  "Sent to indicate that the TCAP BEGIN wacther pool is depleting"
+			::= {smartSTPTrapsGroup 15}
+
+smartSTPTCAPWatchEff	NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					  mobGenThresholdName, mobGenThresholdValue, mobGenUtilization, mobGenCapacity,
+					  mobGenThresholdArmTime}
+			STATUS current
+			DESCRIPTION
+			  "Sent to indicate that too many TCAP BEGIN messages are timing out"
+			::= {smartSTPTrapsGroup 16}
+
+smartSTPRSILinkStatus	NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					  smartstpLinkId }
+			STATUS current
+			DESCRIPTION
+			  "Indicates the status of an RSI SIU link"
+			::= {smartSTPTrapsGroup 17}
+
+smartSTPSCCPDecodeFail	NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					  mobGenThresholdName, mobGenThresholdValue, mobGenUtilization, mobGenCapacity,
+					  mobGenThresholdArmTime }
+			STATUS current
+			DESCRIPTION
+			  "Sent to indicate that too many SCCP decodes failed"
+			::= {smartSTPTrapsGroup 18}
+
+smartSTPTCAPDecodeFail	NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					  mobGenThresholdName, mobGenThresholdValue, mobGenUtilization, mobGenCapacity,
+					  mobGenThresholdArmTime }
+			STATUS current
+			DESCRIPTION
+			  "Sent to indicate that too many TCAP decodes failed"
+			::= {smartSTPTrapsGroup 19}
+
+smartSTPUDTSThreshold	NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					  mobGenThresholdName, mobGenThresholdValue, mobGenUtilization, mobGenCapacity,
+					  mobGenThresholdArmTime }
+			STATUS current
+			DESCRIPTION
+			  "Sent to indicate that for too many messages no match was found in the routing table
+			   and subsequently UDTS were sent"
+			::= {smartSTPTrapsGroup 20}
+
+smartSTPResyncTrap	NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause }
+			STATUS current
+			DESCRIPTION
+			  "Emitted before and after a trap resynchronization process"
+			::= {smartSTPTrapsGroup 21}
+
+smartSTPCicStateChange	NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			          smartstpOrgPointCode, smartstpDestPointCode, smartstpCicGrpId, smartstpStartCic }
+			STATUS current
+			DESCRIPTION
+			  "Sent when CICs in an ISUP circuit group get blocked or unblocked"
+			::= {smartSTPTrapsGroup 22}
+
+smartSTPSCTPAssocStatusNotif	NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			          smartstpM3UAssocId, smartstpSCTPAssocStatus, mobGenRemoteHostAddr, smartstpM3UIP2,
+			          mobGenRemotePort, mobGenLocalPort }
+			STATUS current
+			DESCRIPTION
+			  "Indicates the status of an SCTP association"
+			::= {smartSTPTrapsGroup 23}
+
+smartSTPSCTPPathStatusNotif	NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			          smartstpM3UAssocId, mobGenRemoteHostAddr, smartstpSCTPPathStatus,
+			          mobGenRemotePort, mobGenLocalPort }
+			STATUS current
+			DESCRIPTION
+			  "Indicates the status of an SCTP association path"
+			::= {smartSTPTrapsGroup 24}
+
+smartSTPLicenseCongestion	NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			          smartstpProtocolId }
+			STATUS current
+			DESCRIPTION
+			  "Indicates SIGTRAN license breach"
+			::= {smartSTPTrapsGroup 25}
+			
+smartSTPGCTCongestion	NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			          smartstpGctPartitionId }
+			STATUS current
+			DESCRIPTION
+			  "Indicates GCT Environment condition state"
+			::= {smartSTPTrapsGroup 26}			
+
+smartSTPDSIBoardEvent	NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			          smartstpDSIBoardId, smartstpDSIBoardType, smartstpDSIBoardFailureCode }
+			STATUS current
+			DESCRIPTION
+			  "Indicates Dialogic Board Status: ResetOK or Failed"
+			::= {smartSTPTrapsGroup 27}		
+
+smartSTPUDTSRecvThreshold	NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					  mobGenThresholdName, mobGenThresholdValue, mobGenUtilization, mobGenCapacity,
+					  mobGenThresholdArmTime }
+			STATUS current
+			DESCRIPTION
+			  "Sent to indicate that for too many messages received from the stack"
+			::= {smartSTPTrapsGroup 28}
+END

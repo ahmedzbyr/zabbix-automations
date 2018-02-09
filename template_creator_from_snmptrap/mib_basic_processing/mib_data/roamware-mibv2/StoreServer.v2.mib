@@ -1,0 +1,421 @@
+--
+-- Roamware Store Server MIB definition.
+-- Release : 
+-- Revision : 
+-- Revision date : 
+--
+-- This specification is supplied "AS IS," and no warranty, 
+-- either expressed or implied, as to the use, operation, condition,
+-- or performance of the specification, is made by the publisher.
+--
+-- Publisher: Roamware Inc., USA
+-- **************************************************************
+
+
+Roamware-storeServer-V2-MIB DEFINITIONS ::= BEGIN
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, NOTIFICATION-TYPE,
+    TimeTicks, Counter32
+        FROM SNMPv2-SMI
+    DisplayString
+        FROM SNMPv2-TC
+    OBJECT-GROUP
+        FROM SNMPv2-CONF
+    roamware, mobGenNotificationId, mobGenSeverity, 
+    mobGenDescription, mobGenMachineID, mobGenServiceName, 
+    mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause, 
+    mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, 
+    mobGenUtilization, mobGenCapacity, mobGenThresholdArmTime,
+	mobGenSequenceNumber
+        FROM Roamware-SDS-V2-MIB;
+
+
+storeServer-mob      MODULE-IDENTITY   
+                    LAST-UPDATED "200711200000Z"
+                    ORGANIZATION "Roamware Inc."
+                    CONTACT-INFO "info@roamware.com"
+                    DESCRIPTION  "This is the top level entry for Roamware StoreServer."
+                    REVISION 	 "200711200000Z"
+                    DESCRIPTION  "Initial version."
+            ::= { roamware 88 }                                  -- 1.3.6.1.4.1.11150.88
+
+--
+-- storeServer specific status reports
+--
+storeServerState	   OBJECT IDENTIFIER ::= { storeServer-mob 1 }	 -- 1.3.6.1.4.1.11150.88.1
+
+storeServerMasterStatus	OBJECT-TYPE
+		   SYNTAX INTEGER
+		   {
+				master(1),
+				slave(2)
+		   }
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates whether this storeserver is master or slave."
+		   ::= { storeServerState 1 }					   -- 1.3.6.1.4.1.11150.88.1.1
+
+storeServerBusConnectionStatus	OBJECT-TYPE
+		   SYNTAX INTEGER
+		   {
+				up(1),
+				down(2)
+		   }
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates whether the bus is connected or not."
+		   ::= { storeServerState 2 }					   -- 1.3.6.1.4.1.11150.88.1.2
+
+storeServerPeerConnectionStatus	OBJECT-TYPE
+		   SYNTAX INTEGER
+		   {
+				up(1),
+				down(2)
+		   }
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates whether peer store server is connected or not."
+		   ::= { storeServerState 3 }					   -- 1.3.6.1.4.1.11150.88.1.3
+
+storeServerRawBuffersInUse	OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable represents the total number of raw buffers currently assigned to all stores."
+		   ::= { storeServerState 4 }					   -- 1.3.6.1.4.1.11150.88.1.4
+
+storeServerRawBuffersFree	OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable represents the total number of raw buffers currently free."
+		   ::= { storeServerState 5 }					   -- 1.3.6.1.4.1.11150.88.1.5
+
+storeServerNumNoBuffersReached	OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable represents the number of times requests were denied because no raw buffers were free."
+		   ::= { storeServerState 6 }					   -- 1.3.6.1.4.1.11150.88.1.6
+
+--
+-- StoreServer Server operation statistics
+--
+
+storeServerOpTable		OBJECT-TYPE
+		   SYNTAX SEQUENCE OF OpEntry
+		   MAX-ACCESS not-accessible
+		   STATUS current
+		   DESCRIPTION
+              "Status and statistics on per store basis"
+		   ::= { storeServer-mob 2 }					   -- 1.3.6.1.4.1.11150.88.2
+
+storeServerOpTableEntry   OBJECT-TYPE
+		   SYNTAX OpEntry
+		   MAX-ACCESS not-accessible
+		   STATUS current
+		   DESCRIPTION
+              "Entry in per store state table"
+           INDEX    { storeId }
+		   ::= { storeServerOpTable 1 }					   -- 1.3.6.1.4.1.11150.88.2.1
+
+OpEntry ::= 
+    SEQUENCE {
+        storeId                     INTEGER,
+        storeOperations             INTEGER, 
+        storeOperationsFailed       INTEGER,
+        storeInserts                INTEGER,
+        storeInsertsFailed          INTEGER,
+        storeUpdates                INTEGER,
+        storeUpdatesFailed          INTEGER,
+        storeDeletes                INTEGER,
+        storeDeletesFailed          INTEGER,
+        storeQueries                INTEGER,
+        storeQueriesFailed          INTEGER,
+        storeIndexLookups           INTEGER,
+        storeIndexLookupsFailed     INTEGER
+    }
+
+
+storeId			            OBJECT-TYPE
+		   SYNTAX INTEGER (0..255)
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+              "This variable is store identifier."
+		   ::= { storeServerOpTableEntry 1 }					   -- 1.3.6.1.4.1.11150.88.2.1.1
+
+storeOperations			OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+              "This variable indicates total number of operations performed on this store ."
+		   ::= { storeServerOpTableEntry 2 }					   -- 1.3.6.1.4.1.11150.88.2.1.2
+
+storeOperationsFailed	OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+              "This variable indicates total number of operations that failed on this store."
+		   ::= { storeServerOpTableEntry 3 }					   -- 1.3.6.1.4.1.11150.88.2.1.3
+
+storeInserts			OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+              "This variable indicates total number of inserts performed on this store ."
+		   ::= { storeServerOpTableEntry 4 }					   -- 1.3.6.1.4.1.11150.88.2.1.4
+
+storeInsertsFailed	OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+              "This variable indicates total number of inserts that failed on this store."
+		   ::= { storeServerOpTableEntry 5 }					   -- 1.3.6.1.4.1.11150.88.2.1.5
+
+storeUpdates			OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+              "This variable indicates total number of updates performed on this store ."
+		   ::= { storeServerOpTableEntry 6 }					   -- 1.3.6.1.4.1.11150.88.2.1.6
+
+storeUpdatesFailed	OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+              "This variable indicates total number of updates that failed on this store."
+		   ::= { storeServerOpTableEntry 7 }					   -- 1.3.6.1.4.1.11150.88.2.1.7
+
+storeDeletes			OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+              "This variable indicates total number of deletes performed on this store ."
+		   ::= { storeServerOpTableEntry 8 }					   -- 1.3.6.1.4.1.11150.88.2.1.8
+
+storeDeletesFailed	OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+              "This variable indicates total number of deletes that failed on this store."
+		   ::= { storeServerOpTableEntry 9 }					   -- 1.3.6.1.4.1.11150.88.2.1.9
+
+storeQueries			OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+              "This variable indicates total number of queries performed on this store ."
+		   ::= { storeServerOpTableEntry 10 }					   -- 1.3.6.1.4.1.11150.88.2.1.10
+
+storeQueriesFailed	OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+              "This variable indicates total number of queries that failed on this store."
+		   ::= { storeServerOpTableEntry 11 }					   -- 1.3.6.1.4.1.11150.88.2.1.11
+
+storeIndexLookups			OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+              "This variable indicates total number of index lookups performed on this store ."
+		   ::= { storeServerOpTableEntry 12 }					   -- 1.3.6.1.4.1.11150.88.2.1.12
+
+storeIndexLookupsFailed	OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+              "This variable indicates total number of index lookups that failed on this store."
+		   ::= { storeServerOpTableEntry 13 }					   -- 1.3.6.1.4.1.11150.88.2.1.13
+
+--
+-- StoreServer Server record statistics
+--
+
+storeServerRecordTable		OBJECT-TYPE
+		   SYNTAX SEQUENCE OF RecordEntry
+		   MAX-ACCESS not-accessible
+		   STATUS current
+		   DESCRIPTION
+              "Status and statistics on per store basis"
+		   ::= { storeServer-mob 3 }					   -- 1.3.6.1.4.1.11150.88.3
+
+storeServerRecordTableEntry   OBJECT-TYPE
+		   SYNTAX RecordEntry
+		   MAX-ACCESS not-accessible
+		   STATUS current
+		   DESCRIPTION
+              "Entry in per store state table"
+           INDEX    { storeIdRecord }
+		   ::= { storeServerRecordTable 1 }					   -- 1.3.6.1.4.1.11150.88.3.1
+
+RecordEntry ::= 
+    SEQUENCE {
+        storeIdRecord               INTEGER,
+        storeRecordsInUse           INTEGER,
+        storeRecordsFree            INTEGER,
+        storeRecordsSyncedToPeer    INTEGER,
+        storeRecordsSyncedFromPeer  INTEGER,
+        storeRecordsSyncedFromPeerFailed    INTEGER,
+        storeNumNoRecordsReached    INTEGER
+    }
+
+
+storeIdRecord	            OBJECT-TYPE
+		   SYNTAX INTEGER (0..255)
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+              "This variable is store identifier."
+		   ::= { storeServerRecordTableEntry 1 }					   -- 1.3.6.1.4.1.11150.88.3.1.1
+
+storeRecordsInUse			OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+              "This variable indicates the number of records present in this store."
+		   ::= { storeServerRecordTableEntry 2 }					   -- 1.3.6.1.4.1.11150.88.3.1.2
+
+storeRecordsFree			OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+              "This variable indicates the number of records free in this store."
+		   ::= { storeServerRecordTableEntry 3 }					   -- 1.3.6.1.4.1.11150.88.3.1.3
+
+storeRecordsSyncedToPeer			OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+              "This variable indicates the number of records this storeserver sync'ed to its peer."
+		   ::= { storeServerRecordTableEntry 4 }					   -- 1.3.6.1.4.1.11150.88.3.1.4
+
+storeRecordsSyncedFromPeer			OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+              "This variable indicates the number of records this storeserver sync'ed from its peer."
+		   ::= { storeServerRecordTableEntry 5 }					   -- 1.3.6.1.4.1.11150.88.3.1.5
+
+storeRecordsSyncedFromPeerFailed	OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+              "This variable indicates the number of records this storeserver failed to sync from its peer."
+		   ::= { storeServerRecordTableEntry 6 }					   -- 1.3.6.1.4.1.11150.88.3.1.6
+
+storeNumNoRecordsReached	OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			  "This variable represents the number of times requests were denied because no records were free."
+		   ::= { storeServerRecordTableEntry 7 }					   -- 1.3.6.1.4.1.11150.88.3.1.7
+
+-- Trap variables
+storeServerVariables OBJECT IDENTIFIER ::= { storeServer-mob 5 }    -- 1.3.6.1.4.1.11150.88.5
+
+storeServerBusConnId		OBJECT-TYPE
+		   SYNTAX OCTET STRING
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+				"Variable indicating name of the message complex"
+		   ::= { storeServerVariables 1 }					   -- 1.3.6.1.4.1.11150.88.5.1
+
+storeServerBusConnType	OBJECT-TYPE
+		   SYNTAX INTEGER {primary (1), secondary (2)}
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+				"Indicates primary/secondary connection"
+		   ::= { storeServerVariables 2 }					   -- 1.3.6.1.4.1.11150.88.5.2
+
+--
+-- Store Server specific traps
+--
+storeServerTrapsModule OBJECT IDENTIFIER ::= { storeServer-mob 4 }	 -- 1.3.6.1.4.1.11150.88.4
+storeServerTrapsGroup OBJECT IDENTIFIER ::= { storeServerTrapsModule 0 }	   -- 1.3.6.1.4.1.11150.88.4.0
+
+storeServerSysUp	NOTIFICATION-TYPE
+			OBJECTS {   mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, 
+						mobGenDescription, mobGenMachineID, mobGenServiceName, 
+						mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause }
+			STATUS current
+			DESCRIPTION
+			"Indicates that the Store Server is up and active."
+			::= { storeServerTrapsGroup 1 }
+
+storeServerSysDown	NOTIFICATION-TYPE
+			OBJECTS {   mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, 
+						mobGenDescription, mobGenMachineID, mobGenServiceName, 
+						mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause }
+			STATUS current
+			DESCRIPTION
+			"Indicates that the Store Server is shutting down."
+		::= { storeServerTrapsGroup 2 }
+
+storeServerBusConnStatus	NOTIFICATION-TYPE
+			OBJECTS {   mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, 
+						mobGenDescription, mobGenMachineID, mobGenServiceName, 
+						mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+						storeServerBusConnId, storeServerBusConnType }
+			STATUS current
+			DESCRIPTION
+			"Indicates the change in availability status of message complex."
+			::= { storeServerTrapsGroup 3 }
+
+storeServerPeerConnStatus	NOTIFICATION-TYPE
+			OBJECTS {   mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, 
+						mobGenDescription, mobGenMachineID, mobGenServiceName, 
+						mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause }
+			STATUS current
+			DESCRIPTION
+			"Indicates the change in peer connection status."
+			::= { storeServerTrapsGroup 4 }
+
+storeServerTrapsResync NOTIFICATION-TYPE
+			OBJECTS {   mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, 
+						mobGenDescription, mobGenMachineID, mobGenServiceName, 
+						mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause }
+			STATUS current
+			DESCRIPTION  
+			"Indicates the start and end of a trap resync operation."
+			::= { storeServerTrapsGroup 5 }
+
+
+storeServerHeartbeat       NOTIFICATION-TYPE
+			OBJECTS {   mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, 
+						mobGenDescription, mobGenMachineID, mobGenServiceName, 
+						mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause }
+			STATUS current
+			DESCRIPTION
+			"Sent periodically to indicate that Store Server is alive"
+			::= { storeServerTrapsGroup 6 }
+
+
+END

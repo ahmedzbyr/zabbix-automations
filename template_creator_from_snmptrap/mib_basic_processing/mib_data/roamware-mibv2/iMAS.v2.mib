@@ -1,0 +1,131 @@
+--
+-- Roamware iMAS Server  MIB definition.
+-- Release : 6.0
+-- Revision : R100601
+-- Revision date : 21-Jun-2010
+--
+-- This specification is supplied "AS IS," and no warranty,
+-- either expressed or implied, as to the use, operation, condition,
+-- or performance of the specification, is made by the publisher.
+--
+-- Publisher: Roamware Inc., USA
+-- **************************************************************
+
+Roamware-iMAS-V2-MIB DEFINITIONS ::= BEGIN
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, NOTIFICATION-TYPE, TimeTicks, Counter32, Integer32, IpAddress
+        FROM SNMPv2-SMI
+    DisplayString
+        FROM SNMPv2-TC
+    OBJECT-GROUP
+        FROM SNMPv2-CONF
+    roamware, mobGenMachineID, mobGenSeverity, mobGenDescription, mobGenRemoteHostAddr,
+	mobGenSequenceNumber, mobGenPoolName, mobGenNotificationId, mobGenServiceName, mobGenAlarmTime,
+	mobGenAlarmType, mobGenProbableCause
+        FROM Roamware-SDS-V2-MIB;
+
+imas-mob	MODULE-IDENTITY
+	LAST-UPDATED "201006210000Z"
+	ORGANIZATION "Roamware Inc."
+	CONTACT-INFO "info@roamware.com"
+	DESCRIPTION  "This is the top level entry for Roamware iMAS"
+	REVISION "201006210000Z"
+	DESCRIPTION  "Initial version"
+	::= { roamware 115 }                                  -- 1.3.6.1.4.1.11150.115
+
+--
+-- iMAS specific status reports
+--
+imasStatus	   OBJECT IDENTIFIER ::= { imas-mob 1 }		 -- 1.3.6.1.4.1.11150.115.1
+
+--
+-- iMAS specific statistics
+--
+imasStatistics OBJECT IDENTIFIER ::= { imas-mob 2 }		-- 1.3.6.1.4.1.11150.115.2
+
+--
+-- iMAS specific command interface
+--
+imasCommands OBJECT IDENTIFIER ::= { imas-mob 3 }		-- 1.3.6.1.4.1.11150.115.3
+
+--
+-- iMAS KPI objects
+--
+imasKPI OBJECT IDENTIFIER ::= { imas-mob 4 }			-- 1.3.6.1.4.1.11150.115.4
+
+--
+-- iMAS system specific traps
+--
+imasTrapsModule OBJECT IDENTIFIER ::= { imas-mob 5 }		-- 1.3.6.1.4.1.11150.115.5
+imasTrapsGroup OBJECT IDENTIFIER ::= { imasTrapsModule 0 }	-- 1.3.6.1.4.1.11150.115.5.0
+
+--------------------------------------------------------------------------------
+-- This trap indicates that iMAS system up and running.
+-- Severity:        Normal
+-- Description:     "iMAS service up and running"
+--------------------------------------------------------------------------------
+imasSysUp	NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that the iMAS instance is up and active."
+			::= {imasTrapsGroup 1}
+
+--------------------------------------------------------------------------------
+-- This trap indicates that iMAS system shutting down.
+-- Severity:        Critical
+-- Description:     "iMAS service shutting down"
+--------------------------------------------------------------------------------
+imasSysDown	NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that the iMAS instance is shutting down."
+			::= {imasTrapsGroup 2}
+
+--------------------------------------------------------------------------------
+-- This trap indicates abnormal condition with a database connection pool.
+-- Severity:        Normal
+-- Description:     "Database connection is normal"
+-- Severity:        Critical
+-- Description:     "Abnormal condition with database connection"
+--------------------------------------------------------------------------------
+imasDBConn	NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause, mobGenPoolName }
+			STATUS current
+			DESCRIPTION
+			  "Indicates abnormal condition with a database connection pool."
+			::= {imasTrapsGroup 3}
+
+--------------------------------------------------------------------------------
+-- This trap is a heartbeat to inform that the application is running normally.
+-- Severity:        Normal
+-- Description:     "Application is up and running"
+--------------------------------------------------------------------------------
+imasHeartBeat	NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause }
+			STATUS current
+			DESCRIPTION
+			  "Indicates a heartbeat to inform that the application is running normally."
+			::= {imasTrapsGroup 4}
+
+--------------------------------------------------------------------------------
+-- This trap is to indicate start and end of traps resync activity.
+-- Severity:        Minor
+-- Description:     "Application trap resync started."
+-- Severity:        Normal
+-- Description:     "Application trap resync ended."
+--------------------------------------------------------------------------------
+imasResync	NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			          mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause }
+			STATUS current
+			DESCRIPTION
+			  "Indicates start and end of traps resync activity."
+			::= {imasTrapsGroup 5}
+
+END

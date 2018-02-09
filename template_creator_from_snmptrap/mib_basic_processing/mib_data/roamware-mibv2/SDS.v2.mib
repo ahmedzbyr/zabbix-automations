@@ -1,0 +1,3153 @@
+--
+-- Roamware SDS MIB definition.
+-- Release : 7.0
+-- Revision date : 30-Dec-2014
+--
+-- This specification is supplied "AS IS," and no warranty,
+-- either expressed or implied, as to the use, operation, condition,
+-- or performance of the specification, is made by the publisher.
+--
+-- Publisher: Roamware Inc., USA
+--
+-- **************************************************************
+
+Roamware-SDS2-V2-MIB DEFINITIONS ::= BEGIN
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, NOTIFICATION-TYPE, enterprises,
+    TimeTicks, Counter32, IpAddress, Integer32
+        FROM SNMPv2-SMI
+    DisplayString
+        FROM SNMPv2-TC
+    OBJECT-GROUP
+        FROM SNMPv2-CONF
+	roamware, mobGenSeverity, mobGenDescription, mobGenPoolName, mobGenMachineID,
+	mobGenRemoteHostAddr, mobGenRemotePort, mobGenAlarmTime, mobGenThresholdValue,
+	mobGenNotificationId, mobGenServiceName, mobGenAlarmType, mobGenProbableCause,
+	mobGenCacheName, mobGenErrorText, mobGenThresholdLWM, mobGenThresholdHWM,
+	mobGenThresholdArmTime, mobGenThresholdName, mobGenUtilization, mobGenCapacity,
+	mobGenSourcePath, mobGenTargetPath, mobGenInstanceName, mobGenRole, mobGenFeatureName,
+	mobGenModuleId, mobGenKPIName, mobGenNetwork, mobGenNodeName, mobGenSequenceNumber, mobGenErrorCode,
+	mobGenResourceName, mobGenAddressList,mobGenRemoteHost
+		FROM Roamware-SDS-V2-MIB;
+
+sds-mob			MODULE-IDENTITY
+	LAST-UPDATED "201412300000Z"
+	ORGANIZATION "Roamware Inc."
+	CONTACT-INFO "info@roamware.com"
+	DESCRIPTION  "This is the top level entry for Roamware SDS 7.0"
+	REVISION     "201412300000Z"
+	DESCRIPTION  "Initial version."
+	::= { roamware 84 }													-- 1.3.6.1.4.1.11150.84
+
+--
+-- Inter-Process Communications Bus specific parameters
+--
+sdsIPCBGroup					OBJECT IDENTIFIER ::= { sds-mob 1 }				-- 1.3.6.1.4.1.11150.84.1
+
+sdsIPCBStatusGroup				OBJECT IDENTIFIER ::= { sdsIPCBGroup 1 }		-- 1.3.6.1.4.1.11150.84.1.1
+
+sdsIPCBName						OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the name of the messaging complex being used"
+		   ::= { sdsIPCBStatusGroup 1 }											-- 1.3.6.1.4.1.11150.84.1.1.1
+
+sdsIPCBPrimaryDetails			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Connection details for the primary IPCB connection"
+		   ::= { sdsIPCBStatusGroup 2 }											-- 1.3.6.1.4.1.11150.84.1.1.2
+
+sdsIPCBPrimaryStatus			OBJECT-TYPE
+		   SYNTAX INTEGER {connected (1), disconnected (2)}
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Indicates the status of the primary IPCB connection"
+		   ::= { sdsIPCBStatusGroup 3 }											-- 1.3.6.1.4.1.11150.84.1.1.3
+
+sdsIPCBSecondaryDetails			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Connection details for the secondary IPCB connection"
+		   ::= { sdsIPCBStatusGroup 4 }											-- 1.3.6.1.4.1.11150.84.1.1.4
+
+sdsIPCBSecondaryStatus			OBJECT-TYPE
+		   SYNTAX INTEGER {connected (1), disconnected (2)}
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Indicates the status of the secondary IPCB connection"
+		   ::= { sdsIPCBStatusGroup 5 }											-- 1.3.6.1.4.1.11150.84.1.1.5
+
+sdsIPCBConnectionType			OBJECT-TYPE
+		   SYNTAX INTEGER {primary (1), secondary (2)}
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "Indicates primary/secondary connection"
+		   ::= { sdsIPCBStatusGroup 6 }											-- 1.3.6.1.4.1.11150.84.1.1.6
+
+--
+-- Probing subsystem interface specific parameters
+--
+sdsTDRGroup						OBJECT IDENTIFIER ::= { sds-mob 2 }				-- 1.3.6.1.4.1.11150.84.2
+
+sdsTDRCommandGroup				OBJECT IDENTIFIER ::= { sdsTDRGroup 1 }			-- 1.3.6.1.4.1.11150.84.2.1
+
+sdsTDRCmdPause				OBJECT-TYPE
+		   SYNTAX INTEGER {active (1), paused(2)}
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Send a SET request with this variable to pause or resume processing of
+			 events arriving from DB writer. Send a GET request with this OID to check
+			 the current status."
+		   ::= { sdsTDRCommandGroup 1 }											-- 1.3.6.1.4.1.11150.84.2.1.1
+
+sdsTDRCmdTrace					OBJECT-TYPE
+		   SYNTAX INTEGER {traceon(1), traceoff(2)}
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Send a SET request with this variable to pause or resume tracing of
+			 events arriving from DB writer. Send a GET request with this OID to check
+			 the current status."
+		   ::= { sdsTDRCommandGroup 2 }											-- 1.3.6.1.4.1.11150.84.2.1.2
+
+sdsCGWCmdPause					OBJECT-TYPE
+		   SYNTAX INTEGER {active (1), paused(2)}
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Send a SET request with this variable to pause or resume processing of
+			 events arriving from Call Gateway. Send a GET request with this OID to check
+			 the current status."
+		   ::= { sdsTDRCommandGroup 3 }											-- 1.3.6.1.4.1.11150.84.2.1.3
+
+sdsCGWCmdTrace					OBJECT-TYPE
+		   SYNTAX INTEGER {traceon(1), traceoff(2)}
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Send a SET request with this variable to pause or resume tracing of
+			 events arriving from Call Gateway. Send a GET request with this OID to check
+			 the current status."
+		   ::= { sdsTDRCommandGroup 4 }											-- 1.3.6.1.4.1.11150.84.2.1.4
+
+sdsGTPTraceStatus				OBJECT-TYPE
+		   SYNTAX INTEGER {trace(1), donttrace(2)}
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Send a SET request with this variable to pause or resume tracing of
+			 GTP events arriving from IP Probe. Send a GET request with this OID to check
+			 the mandatory status."
+		   ::= { sdsTDRCommandGroup 5 }											-- 1.3.6.1.4.1.11150.84.2.1.5
+
+sdsRADIUSTraceStatus				OBJECT-TYPE
+		   SYNTAX INTEGER {trace(1), donttrace(2)}
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Send a SET request with this variable to pause or resume tracing of
+			 RADIUS events arriving from IP Probe. Send a GET request with this OID to check
+			 the mandatory status."
+		   ::= { sdsTDRCommandGroup 6 }											-- 1.3.6.1.4.1.11150.84.2.1.6
+
+sdsDiameterTraceStatus				OBJECT-TYPE
+		   SYNTAX INTEGER {trace(1), donttrace(2)}
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Send a SET request with this variable to pause or resume tracing of
+			 Diameter events arriving from IP Probe. Send a GET request with this OID to check
+			 the mandatory status."
+		   ::= { sdsTDRCommandGroup 7 }											-- 1.3.6.1.4.1.11150.84.2.1.7
+
+sdsTDRStatusGroup				OBJECT IDENTIFIER ::= { sdsTDRGroup 2 }			-- 1.3.6.1.4.1.11150.84.2.2
+
+sdsTDRConnStatus				OBJECT-TYPE
+		   SYNTAX INTEGER {connected(1), disconnected(2)}
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Used for checking if a service is connected to the TDR subsystem."
+		   ::= { sdsTDRStatusGroup 1 }											-- 1.3.6.1.4.1.11150.84.2.2.1
+
+sdsCGWConnStatus				OBJECT-TYPE
+		   SYNTAX INTEGER {connected(1), disconnected(2)}
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Used for checking if a service is connected to the Call Gateway."
+		   ::= { sdsTDRStatusGroup 2 }											-- 1.3.6.1.4.1.11150.84.2.2.2
+
+sdsTDRStatisticsGroup			OBJECT IDENTIFIER ::= { sdsTDRGroup 3 }			-- 1.3.6.1.4.1.11150.84.2.3
+
+sdsTDRMesgCount					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of messages received from TDR subsystem in the last
+			 one minute."
+		   ::= { sdsTDRStatisticsGroup 1 }										-- 1.3.6.1.4.1.11150.84.2.3.1
+
+sdsCGWMesgCount					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of messages received from Call Gateway in the last
+			 one minute."
+		   ::= { sdsTDRStatisticsGroup 2 }										-- 1.3.6.1.4.1.11150.84.2.3.2
+
+sdsCacheGroup					OBJECT IDENTIFIER ::= { sds-mob 3 }				-- 1.3.6.1.4.1.11150.84.3
+
+sdsFSMCacheGroup				OBJECT IDENTIFIER ::= { sdsCacheGroup 1 }		-- 1.3.6.1.4.1.11150.84.3.1
+
+sdsFSMCacheCount				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of elements in the FSM cache in the instance of SDS."
+		   ::= { sdsFSMCacheGroup 1 }											-- 1.3.6.1.4.1.11150.84.3.1.1
+
+sdsFSMCacheMemHits				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an FSM was found in the FSM cache in the
+			 last one minute."
+		   ::= { sdsFSMCacheGroup 2 }											-- 1.3.6.1.4.1.11150.84.3.1.2
+
+sdsFSMCacheStoreHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an FSM was found not in the FSM cache and
+			 had to be fetched from the backing store in the last one minute."
+		   ::= { sdsFSMCacheGroup 3 }											-- 1.3.6.1.4.1.11150.84.3.1.3
+
+sdsFSMCacheMisses				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an FSM was not found either in memory or
+			 in backing store in the last one minute."
+		   ::= { sdsFSMCacheGroup 4 }											-- 1.3.6.1.4.1.11150.84.3.1.4
+
+sdsFSMCacheSaves				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an FSM was saved in the last one minute."
+		   ::= { sdsFSMCacheGroup 5 }											-- 1.3.6.1.4.1.11150.84.3.1.5
+
+sdsFSMCacheRemoves				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of FSM closed in the last one minute."
+		   ::= { sdsFSMCacheGroup 6 }											-- 1.3.6.1.4.1.11150.84.3.1.6
+
+sdsFSMCacheProps				OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing cache configuration properties."
+		   ::= { sdsFSMCacheGroup 7 }											-- 1.3.6.1.4.1.11150.84.3.1.7
+
+sdsFSMCachePrint			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the details of state machines in memory in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { sdsFSMCacheGroup 8 }											-- 1.3.6.1.4.1.11150.84.3.1.8
+
+sdsSysParamCacheGroup			OBJECT IDENTIFIER ::= { sdsCacheGroup 2 }		-- 1.3.6.1.4.1.11150.84.3.2
+
+sdsSysParamCacheCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of elements in the System Parameters cache in the instance of SDS."
+		   ::= { sdsSysParamCacheGroup 1 }										-- 1.3.6.1.4.1.11150.84.3.2.1
+
+sdsSysParamCacheMemHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was found in the System Parameters cache in the
+			 last one minute."
+		   ::= { sdsSysParamCacheGroup 2 }										-- 1.3.6.1.4.1.11150.84.3.2.2
+
+sdsSysParamCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was not found in System Parameters cache
+			 in the last one minute."
+		   ::= { sdsSysParamCacheGroup 3 }										-- 1.3.6.1.4.1.11150.84.3.2.3
+
+sdsSysParamCacheCmdRefresh		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The System Parameters cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsSysParamCacheGroup 4 }										-- 1.3.6.1.4.1.11150.84.3.2.4
+
+sdsSysParamCacheRefreshTime		OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of System Parameters cache."
+		   ::= { sdsSysParamCacheGroup 5 }										-- 1.3.6.1.4.1.11150.84.3.2.5
+
+sdsSysParamCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing System Parameters cache configuration properties."
+		   ::= { sdsSysParamCacheGroup 6 }										-- 1.3.6.1.4.1.11150.84.3.2.6
+
+sdsSysParamCachePrint			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the System Parameters cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { sdsSysParamCacheGroup 7 }										-- 1.3.6.1.4.1.11150.84.3.2.7
+
+sdsNetworkCacheGroup			OBJECT IDENTIFIER ::= { sdsCacheGroup 3 }		-- 1.3.6.1.4.1.11150.84.3.3
+
+sdsNetworkCacheCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of elements in the network list cache in the instance of SDS."
+		   ::= { sdsNetworkCacheGroup 1 }										-- 1.3.6.1.4.1.11150.84.3.3.1
+
+sdsNetworkCacheMemHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a network was found in the network list cache in the
+			 last one minute."
+		   ::= { sdsNetworkCacheGroup 2 }										-- 1.3.6.1.4.1.11150.84.3.3.2
+
+sdsNetworkCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a network was not found in network list cache
+			 in the last one minute."
+		   ::= { sdsNetworkCacheGroup 3 }										-- 1.3.6.1.4.1.11150.84.3.3.3
+
+sdsNetworkCacheCmdRefresh			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The network list cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsNetworkCacheGroup 4 }										-- 1.3.6.1.4.1.11150.84.3.3.4
+
+sdsNetworkCacheRefreshTime			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of network list cache."
+		   ::= { sdsNetworkCacheGroup 5 }										-- 1.3.6.1.4.1.11150.84.3.3.5
+
+sdsNetworkCacheProps				OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing network list cache configuration properties."
+		   ::= { sdsNetworkCacheGroup 6 }										-- 1.3.6.1.4.1.11150.84.3.3.6
+
+sdsNetworkCachePrint				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the network list cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { sdsNetworkCacheGroup 7 }										-- 1.3.6.1.4.1.11150.84.3.3.7
+
+sdsMGTCacheGroup				OBJECT IDENTIFIER ::= { sdsCacheGroup 4 }		-- 1.3.6.1.4.1.11150.84.3.4
+
+sdsMGTCacheCount				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of elements in the MGT list cache in the instance of SDS."
+		   ::= { sdsMGTCacheGroup 1 }											-- 1.3.6.1.4.1.11150.84.3.4.1
+
+sdsMGTCacheMemHits				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a network entry was found in the MGT list cache in the
+			 last one minute."
+		   ::= { sdsMGTCacheGroup 2 }											-- 1.3.6.1.4.1.11150.84.3.4.2
+
+sdsMGTCacheMisses				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a network entry was not found in MGT list cache
+			 in the last one minute."
+		   ::= { sdsMGTCacheGroup 3 }											-- 1.3.6.1.4.1.11150.84.3.4.3
+
+sdsMGTCacheCmdRefresh			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The MGT list cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsMGTCacheGroup 4 }											-- 1.3.6.1.4.1.11150.84.3.4.4
+
+sdsMGTCacheRefreshTime			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of MGT list cache."
+		   ::= { sdsMGTCacheGroup 5 }											-- 1.3.6.1.4.1.11150.84.3.4.5
+
+sdsMGTCacheProps				OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing MGT list cache configuration properties."
+		   ::= { sdsMGTCacheGroup 6 }											-- 1.3.6.1.4.1.11150.84.3.4.6
+
+--
+-- COS Cache
+--
+sdsCOSCacheGroup				OBJECT IDENTIFIER ::= { sdsCacheGroup 5 }		-- 1.3.6.1.4.1.11150.84.3.5
+
+sdsCOSCacheCmdRefresh			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The COS cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsCOSCacheGroup 1 }											-- 1.3.6.1.4.1.11150.84.3.5.1
+
+sdsCOSCacheRefreshTime			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of COS cache."
+		   ::= { sdsCOSCacheGroup 2 }											-- 1.3.6.1.4.1.11150.84.3.5.2
+
+sdsCOSCacheMemHits				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was found in the COS cache in the
+			 last one minute."
+		   ::= { sdsCOSCacheGroup 3 }											-- 1.3.6.1.4.1.11150.84.3.5.3
+
+sdsCOSCacheMisses				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was not found in COS cache
+			 in the last one minute."
+		   ::= { sdsCOSCacheGroup 4 }											-- 1.3.6.1.4.1.11150.84.3.5.4
+
+sdsCOSCacheProps				OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing COS cache configuration properties."
+		   ::= { sdsCOSCacheGroup 5 }											-- 1.3.6.1.4.1.11150.84.3.5.5
+
+--
+-- Context based System Parameters cache
+--
+sdsContextBasedSysParamCacheGroup			OBJECT IDENTIFIER ::= { sdsCacheGroup 7 }		-- 1.3.6.1.4.1.11150.84.3.7
+
+sdsContextBasedSysParamCacheMemHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was found in the Context based System Parameters cache in the
+			 last one minute."
+		   ::= { sdsContextBasedSysParamCacheGroup 2 }										-- 1.3.6.1.4.1.11150.84.3.7.2
+
+sdsContextBasedSysParamCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was not found in Context based System Parameters cache
+			 in the last one minute."
+		   ::= { sdsContextBasedSysParamCacheGroup 3 }										-- 1.3.6.1.4.1.11150.84.3.7.3
+
+sdsContextBasedSysParamCacheCmdRefresh		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The Context based System Parameters cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsContextBasedSysParamCacheGroup 4 }										-- 1.3.6.1.4.1.11150.84.3.7.4
+
+sdsContextBasedSysParamCacheRefreshTime		OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of Context based System Parameters cache."
+		   ::= { sdsContextBasedSysParamCacheGroup 5 }										-- 1.3.6.1.4.1.11150.84.3.7.5
+
+sdsContextBasedSysParamCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing Context based System Parameters cache configuration properties."
+		   ::= { sdsContextBasedSysParamCacheGroup 6 }										-- 1.3.6.1.4.1.11150.84.3.7.6
+
+--
+-- Local GT cache
+--
+sdsLocalGTCacheGroup			OBJECT IDENTIFIER ::= { sdsCacheGroup 8 }		-- 1.3.6.1.4.1.11150.84.3.8
+
+sdsLocalGTCacheCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of GTs in the Local GT cache in the instance of SDS."
+		   ::= { sdsLocalGTCacheGroup 1 }										-- 1.3.6.1.4.1.11150.84.3.8.1
+
+sdsLocalGTCacheMemHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a GT was found in the Local GT cache in the
+			 last one minute."
+		   ::= { sdsLocalGTCacheGroup 2 }										-- 1.3.6.1.4.1.11150.84.3.8.2
+
+sdsLocalGTCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a GT was not found in Local GT cache
+			 in the last one minute."
+		   ::= { sdsLocalGTCacheGroup 3 }										-- 1.3.6.1.4.1.11150.84.3.8.3
+
+sdsLocalGTCacheCmdRefresh		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The Local GT cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsLocalGTCacheGroup 4 }										-- 1.3.6.1.4.1.11150.84.3.8.4
+
+sdsLocalGTCacheRefreshTime		OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of Local GT cache."
+		   ::= { sdsLocalGTCacheGroup 5 }										-- 1.3.6.1.4.1.11150.84.3.8.5
+
+sdsLocalGTCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing Local GT cache configuration properties."
+		   ::= { sdsLocalGTCacheGroup 6 }										-- 1.3.6.1.4.1.11150.84.3.8.6
+
+sdsLocalGTCachePrint			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the Local GT cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { sdsLocalGTCacheGroup 7 }										-- 1.3.6.1.4.1.11150.84.3.8.7
+
+--
+-- Language Master cache
+--
+sdsLanguageCacheGroup			OBJECT IDENTIFIER ::= { sdsCacheGroup 9 }		-- 1.3.6.1.4.1.11150.84.3.9
+
+sdsLanguageCacheCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of entries in the language cache in the instance of SDS."
+		   ::= { sdsLanguageCacheGroup 1 }										-- 1.3.6.1.4.1.11150.84.3.9.1
+
+sdsLanguageCacheMemHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a language was found in the language cache in the
+			 last one minute."
+		   ::= { sdsLanguageCacheGroup 2 }										-- 1.3.6.1.4.1.11150.84.3.9.2
+
+sdsLanguageCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a language code was not found in language cache
+			 in the last one minute."
+		   ::= { sdsLanguageCacheGroup 3 }										-- 1.3.6.1.4.1.11150.84.3.9.3
+
+sdsLanguageCacheCmdRefresh		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The language cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsLanguageCacheGroup 4 }										-- 1.3.6.1.4.1.11150.84.3.9.4
+
+sdsLanguageCacheRefreshTime		OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of language cache."
+		   ::= { sdsLanguageCacheGroup 5 }										-- 1.3.6.1.4.1.11150.84.3.9.5
+
+sdsLanguageCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing language cache configuration properties."
+		   ::= { sdsLanguageCacheGroup 6 }										-- 1.3.6.1.4.1.11150.84.3.9.6
+
+--
+-- Subscriber Black List cache
+--
+sdsSubsBLCacheGroup			OBJECT IDENTIFIER ::= { sdsCacheGroup 10 }		-- 1.3.6.1.4.1.11150.84.3.10
+
+sdsSubsBLCacheMemHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was found in the subscriber black-list cache in the
+			 last one minute."
+		   ::= { sdsSubsBLCacheGroup 1 }										-- 1.3.6.1.4.1.11150.84.3.10.1
+
+sdsSubsBLCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was not found in subscriber black-list cache
+			 in the last one minute."
+		   ::= { sdsSubsBLCacheGroup 2 }										-- 1.3.6.1.4.1.11150.84.3.10.2
+
+sdsSubsBLCacheCmdRefresh		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The subscriber black-list cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsSubsBLCacheGroup 3 }										-- 1.3.6.1.4.1.11150.84.3.10.3
+
+sdsSubsBLCacheRefreshTime		OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of subscriber black-list cache."
+		   ::= { sdsSubsBLCacheGroup 4 }										-- 1.3.6.1.4.1.11150.84.3.10.4
+
+sdsSubsBLCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing subscriber black-list cache configuration properties."
+		   ::= { sdsSubsBLCacheGroup 5 }										-- 1.3.6.1.4.1.11150.84.3.10.5
+
+--
+-- Subscriber White List cache
+--
+sdsSubsWLCacheGroup			OBJECT IDENTIFIER ::= { sdsCacheGroup 11 }		-- 1.3.6.1.4.1.11150.84.3.11
+
+sdsSubsWLCacheMemHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was found in the subscriber white-list cache in the
+			 last one minute."
+		   ::= { sdsSubsWLCacheGroup 1 }										-- 1.3.6.1.4.1.11150.84.3.11.1
+
+sdsSubsWLCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was not found in subscriber white-list cache
+			 in the last one minute."
+		   ::= { sdsSubsWLCacheGroup 2 }										-- 1.3.6.1.4.1.11150.84.3.11.2
+
+sdsSubsWLCacheCmdRefresh		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The subscriber white-list cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsSubsWLCacheGroup 3 }										-- 1.3.6.1.4.1.11150.84.3.11.3
+
+sdsSubsWLCacheRefreshTime		OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of subscriber white-list cache."
+		   ::= { sdsSubsWLCacheGroup 4 }										-- 1.3.6.1.4.1.11150.84.3.11.4
+
+sdsSubsWLCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing subscriber white-list cache configuration properties."
+		   ::= { sdsSubsWLCacheGroup 5 }										-- 1.3.6.1.4.1.11150.84.3.11.5
+
+--
+-- Network Black List cache
+--
+sdsNetBLCacheGroup			OBJECT IDENTIFIER ::= { sdsCacheGroup 12 }		-- 1.3.6.1.4.1.11150.84.3.12
+
+sdsNetBLCacheMemHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was found in the network black-list cache in the
+			 last one minute."
+		   ::= { sdsNetBLCacheGroup 1 }										-- 1.3.6.1.4.1.11150.84.3.12.1
+
+sdsNetBLCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was not found in network black-list cache
+			 in the last one minute."
+		   ::= { sdsNetBLCacheGroup 2 }										-- 1.3.6.1.4.1.11150.84.3.12.2
+
+sdsNetBLCacheCmdRefresh		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The network black-list cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsNetBLCacheGroup 3 }										-- 1.3.6.1.4.1.11150.84.3.12.3
+
+sdsNetBLCacheRefreshTime		OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of network black-list cache."
+		   ::= { sdsNetBLCacheGroup 4 }										-- 1.3.6.1.4.1.11150.84.3.12.4
+
+sdsNetBLCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing network black-list cache configuration properties."
+		   ::= { sdsNetBLCacheGroup 5 }										-- 1.3.6.1.4.1.11150.84.3.12.5
+
+--
+-- Network Node White List cache
+--
+sdsNetNodeWLCacheGroup			OBJECT IDENTIFIER ::= { sdsCacheGroup 13 }		-- 1.3.6.1.4.1.11150.84.3.13
+
+sdsNetNodeWLCacheMemHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was found in the network node white-list cache in the
+			 last one minute."
+		   ::= { sdsNetNodeWLCacheGroup 1 }										-- 1.3.6.1.4.1.11150.84.3.13.1
+
+sdsNetNodeWLCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was not found in network node white-list cache
+			 in the last one minute."
+		   ::= { sdsNetNodeWLCacheGroup 2 }										-- 1.3.6.1.4.1.11150.84.3.13.2
+
+sdsNetNodeWLCacheCmdRefresh		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The network node white-list cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsNetNodeWLCacheGroup 3 }										-- 1.3.6.1.4.1.11150.84.3.13.3
+
+sdsNetNodeWLCacheRefreshTime		OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of network node white-list cache."
+		   ::= { sdsNetNodeWLCacheGroup 4 }										-- 1.3.6.1.4.1.11150.84.3.13.4
+
+sdsNetNodeWLCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing network node white-list cache configuration properties."
+		   ::= { sdsNetNodeWLCacheGroup 5 }										-- 1.3.6.1.4.1.11150.84.3.13.5
+
+--
+-- KPI Configuration cache
+--
+sdsKPIConfigCacheGroup			OBJECT IDENTIFIER ::= { sdsCacheGroup 14 }		-- 1.3.6.1.4.1.11150.84.3.14
+
+sdsKPIConfigCacheCmdRefresh		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The KPI configuration cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsKPIConfigCacheGroup 1 }										-- 1.3.6.1.4.1.11150.84.3.14.1
+
+sdsKPIConfigCacheRefreshTime		OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of the KPI configuration cache."
+		   ::= { sdsKPIConfigCacheGroup 2 }										-- 1.3.6.1.4.1.11150.84.3.14.2
+
+sdsKPIConfigCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing KPI configuration cache configuration properties."
+		   ::= { sdsKPIConfigCacheGroup 3 }										-- 1.3.6.1.4.1.11150.84.3.14.3
+
+--
+-- Service Details cache
+--
+sdsServiceDetailsCacheGroup		OBJECT IDENTIFIER ::= { sdsCacheGroup 15 }		-- 1.3.6.1.4.1.11150.84.3.15
+
+sdsServiceDetailsCacheCount		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of elements in Service Details cache in the instance of SDS."
+		   ::= { sdsServiceDetailsCacheGroup 1 }								-- 1.3.6.1.4.1.11150.84.3.15.1
+
+sdsServiceDetailsCacheMemHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a service was found in the Service Details cache in the
+			 last one minute."
+		   ::= { sdsServiceDetailsCacheGroup 2 }								-- 1.3.6.1.4.1.11150.84.3.15.2
+
+sdsServiceDetailsCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a service was not found in Service Details cache
+			 in the last one minute."
+		   ::= { sdsServiceDetailsCacheGroup 3 }								-- 1.3.6.1.4.1.11150.84.3.15.3
+
+sdsServiceDetailsCacheCmdRefresh			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The Service Details list cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsServiceDetailsCacheGroup 4 }								-- 1.3.6.1.4.1.11150.84.3.15.4
+
+sdsServiceDetailsCacheRefreshTime			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of Service Details cache."
+		   ::= { sdsServiceDetailsCacheGroup 5 }								-- 1.3.6.1.4.1.11150.84.3.15.5
+
+sdsServiceDetailsCacheProps				OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing Service Details cache configuration properties."
+		   ::= { sdsServiceDetailsCacheGroup 6 }								-- 1.3.6.1.4.1.11150.84.3.15.6
+
+sdsServiceDetailsCachePrint				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the ServiceDetails cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { sdsServiceDetailsCacheGroup 7 }								-- 1.3.6.1.4.1.11150.84.3.15.7
+
+--
+-- Country data cache
+--
+sdsCountryDataCacheGroup			OBJECT IDENTIFIER ::= { sdsCacheGroup 16 }		-- 1.3.6.1.4.1.11150.84.3.16
+
+sdsCountryDataCacheCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of elements in the country data cache"
+		   ::= { sdsCountryDataCacheGroup 1 }										-- 1.3.6.1.4.1.11150.84.3.16.1
+
+sdsCountryDataCacheCmdRefresh		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The country data cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsCountryDataCacheGroup 2 }										-- 1.3.6.1.4.1.11150.84.3.16.2
+
+sdsCountryDataCacheRefreshTime		OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of the country data cache."
+		   ::= { sdsCountryDataCacheGroup 3 }										-- 1.3.6.1.4.1.11150.84.3.16.3
+
+sdsCountryDataCacheProps			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing country data cache configuration properties."
+		   ::= { sdsCountryDataCacheGroup 4 }										-- 1.3.6.1.4.1.11150.84.3.16.4
+
+--
+-- DNIS Cache
+--
+sdsDNISCacheGroup			OBJECT IDENTIFIER ::= { sdsCacheGroup 17 }		-- 1.3.6.1.4.1.11150.84.3.17
+
+sdsClearDNISCache			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "A DNIS cache is cleared when this parameter is SET with the cache name.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsDNISCacheGroup 1 }										-- 1.3.6.1.4.1.11150.84.3.17.1
+
+sdsDNISCacheCmdRefresh		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The DNIS cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsDNISCacheGroup 2 }										-- 1.3.6.1.4.1.11150.84.3.17.2
+
+sdsDNISCacheRefreshTime		OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of the DNIS cache."
+		   ::= { sdsDNISCacheGroup 3 }										-- 1.3.6.1.4.1.11150.84.3.17.3
+
+--
+-- SMSC Pool Properties Cache
+--
+sdsSmscPoolPropertiesCacheGroup			OBJECT IDENTIFIER ::= { sdsCacheGroup 18 }		-- 1.3.6.1.4.1.11150.84.3.18
+
+sdsSmscPoolPropertiesCacheCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of elements in the SMSC pool properties cache in the instance of SDS."
+		   ::= { sdsSmscPoolPropertiesCacheGroup 1 }										-- 1.3.6.1.4.1.11150.84.3.18.1
+
+sdsSmscPoolPropertiesCacheMemHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a pool property was found in the SMSC pool properties cache in the
+			 last one minute."
+		   ::= { sdsSmscPoolPropertiesCacheGroup 2 }										-- 1.3.6.1.4.1.11150.84.3.18.2
+
+sdsSmscPoolPropertiesCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a pool property was not found in SMSC pool properties cache
+			 in the last one minute."
+		   ::= { sdsSmscPoolPropertiesCacheGroup 3 }										-- 1.3.6.1.4.1.11150.84.3.18.3
+
+sdsSmscPoolPropertiesCacheRefresh			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The SMSC pool properties cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsSmscPoolPropertiesCacheGroup 4 }										-- 1.3.6.1.4.1.11150.84.3.18.4
+
+sdsSmscPoolPropertiesCacheRefreshTime			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of SMSC pool properties cache."
+		   ::= { sdsSmscPoolPropertiesCacheGroup 5 }										-- 1.3.6.1.4.1.11150.84.3.18.5
+
+--
+-- Custom Black/White List cache
+--
+sdsCustomBWCacheGroup			OBJECT IDENTIFIER ::= { sdsCacheGroup 19 }		-- 1.3.6.1.4.1.11150.84.3.19
+
+sdsCustomBWCacheMemHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was found in the custom black/white list cache in the
+			 last one minute."
+		   ::= { sdsCustomBWCacheGroup 1 }										-- 1.3.6.1.4.1.11150.84.3.19.1
+
+sdsCustomBWCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was not found in custom black/white list cache
+			 in the last one minute."
+		   ::= { sdsCustomBWCacheGroup 2 }										-- 1.3.6.1.4.1.11150.84.3.19.2
+
+sdsCustomBWCacheCmdRefresh		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The custom black/white list cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsCustomBWCacheGroup 3 }										-- 1.3.6.1.4.1.11150.84.3.19.3
+
+sdsCustomBWCacheRefreshTime		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of custom black/white list cache."
+		   ::= { sdsCustomBWCacheGroup 4 }										-- 1.3.6.1.4.1.11150.84.3.19.4
+
+sdsCustomBWCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing custom black/white list cache configuration properties."
+		   ::= { sdsCustomBWCacheGroup 5 }										-- 1.3.6.1.4.1.11150.84.3.19.5
+
+--
+-- Message template and categories cache
+--
+sdsMessagesCacheGroup			OBJECT IDENTIFIER ::= { sdsCacheGroup 20 }		-- 1.3.6.1.4.1.11150.84.3.20
+
+sdsMessagesCacheMemHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was found in the messages cache in the
+			 last one minute."
+		   ::= { sdsMessagesCacheGroup 1 }										-- 1.3.6.1.4.1.11150.84.3.20.1
+
+sdsMessagesCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was not found in the messages cache
+			 in the last one minute."
+		   ::= { sdsMessagesCacheGroup 2 }										-- 1.3.6.1.4.1.11150.84.3.20.2
+
+sdsMessagesCacheCmdRefresh		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The message cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsMessagesCacheGroup 3 }										-- 1.3.6.1.4.1.11150.84.3.20.3
+
+sdsMessagesCacheRefreshTime		OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of the message cache."
+		   ::= { sdsMessagesCacheGroup 4 }										-- 1.3.6.1.4.1.11150.84.3.20.4
+
+sdsMessagesCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing the messages cache configuration properties."
+		   ::= { sdsMessagesCacheGroup 5 }										-- 1.3.6.1.4.1.11150.84.3.20.5
+
+--
+-- External COS Cache
+--
+sdsExternalCOSCacheGroup				OBJECT IDENTIFIER ::= { sdsCacheGroup 21 }		-- 1.3.6.1.4.1.11150.84.3.21
+
+sdsExternalCOSCacheCmdRefresh			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The Dynamic COS cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsExternalCOSCacheGroup 1 }											-- 1.3.6.1.4.1.11150.84.3.21.1
+
+sdsExternalCOSCacheRefreshTime			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of Dynamic COS cache."
+		   ::= { sdsExternalCOSCacheGroup 2 }											-- 1.3.6.1.4.1.11150.84.3.21.2
+
+sdsExternalCOSCacheMemHits				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was found in the Dynamic COS cache in the
+			 last one minute."
+		   ::= { sdsExternalCOSCacheGroup 3 }											-- 1.3.6.1.4.1.11150.84.3.21.3
+
+sdsExternalCOSCacheMisses				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was not found in Dynamic COS cache
+			 in the last one minute."
+		   ::= { sdsExternalCOSCacheGroup 4 }											-- 1.3.6.1.4.1.11150.84.3.21.4
+
+sdsExternalCOSCacheProps				OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing Dynamic COS cache configuration properties."
+		   ::= { sdsExternalCOSCacheGroup 5 }											-- 1.3.6.1.4.1.11150.84.3.21.5
+
+--
+-- Error codes Cache
+--
+sdsErrorCodesCacheGroup					OBJECT IDENTIFIER ::= { sdsCacheGroup 22 }		-- 1.3.6.1.4.1.11150.84.3.22
+
+sdsErrorCodesCacheCmdRefresh			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The error codes cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsErrorCodesCacheGroup 1 }											-- 1.3.6.1.4.1.11150.84.3.22.1
+
+sdsErrorCodesCacheRefreshTime			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of error codes cache."
+		   ::= { sdsErrorCodesCacheGroup 2 }											-- 1.3.6.1.4.1.11150.84.3.22.2
+
+sdsErrorCodesCacheMemHits				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was found in the error codes cache in the
+			 last one minute."
+		   ::= { sdsErrorCodesCacheGroup 3 }											-- 1.3.6.1.4.1.11150.84.3.22.3
+
+sdsErrorCodesCacheMisses				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was not found in error codes cache
+			 in the last one minute."
+		   ::= { sdsErrorCodesCacheGroup 4 }											-- 1.3.6.1.4.1.11150.84.3.22.4
+
+sdsErrorCodesCacheProps				OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing error codes cache configuration properties."
+		   ::= { sdsErrorCodesCacheGroup 5 }											-- 1.3.6.1.4.1.11150.84.3.22.5
+
+--
+-- Number Translation Cache
+--
+sdsNumberTranslationCacheGroup				OBJECT IDENTIFIER ::= { sdsCacheGroup 23 }		-- 1.3.6.1.4.1.11150.84.3.23
+
+sdsNumberTranslationCacheCmdRefresh			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The Number Translation cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsNumberTranslationCacheGroup 1 }											-- 1.3.6.1.4.1.11150.84.3.23.1
+
+sdsNumberTranslationCacheRefreshTime			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of Number Translation cache."
+		   ::= { sdsNumberTranslationCacheGroup 2 }											-- 1.3.6.1.4.1.11150.84.3.23.2
+
+sdsNumberTranslationCacheProps				OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing Number Translation cache configuration properties."
+		   ::= { sdsNumberTranslationCacheGroup 3 }											-- 1.3.6.1.4.1.11150.84.3.23.3
+
+--
+-- Resources Cache
+--
+sdsResourcesCacheGroup				OBJECT IDENTIFIER ::= { sdsCacheGroup 24 }		-- 1.3.6.1.4.1.11150.84.3.24
+
+sdsResourcesCacheCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of elements in the Resources cache."
+		   ::= { sdsResourcesCacheGroup 1 }											-- 1.3.6.1.4.1.11150.84.3.24.1
+
+sdsResourcesCacheCmdRefresh			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The Resources cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsResourcesCacheGroup 2 }											-- 1.3.6.1.4.1.11150.84.3.24.2
+
+sdsResourcesCacheRefreshTime			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of Resources cache."
+		   ::= { sdsResourcesCacheGroup 3 }											-- 1.3.6.1.4.1.11150.84.3.24.3
+
+sdsResourcesCacheMemHits				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was found in the Resources cache in the
+			 last one minute."
+		   ::= { sdsResourcesCacheGroup 4 }											-- 1.3.6.1.4.1.11150.84.3.24.4
+
+sdsResourcesCacheMisses				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was not found in Resources cache
+			 in the last one minute."
+		   ::= { sdsResourcesCacheGroup 5 }											-- 1.3.6.1.4.1.11150.84.3.24.5
+
+sdsResourcesCacheProps				OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing Resources cache configuration properties."
+		   ::= { sdsResourcesCacheGroup 6 }											-- 1.3.6.1.4.1.11150.84.3.24.6
+
+--
+-- Resource Selection Cache
+--
+sdsResourceSelectionCacheGroup				OBJECT IDENTIFIER ::= { sdsCacheGroup 25 }		-- 1.3.6.1.4.1.11150.84.3.25
+
+sdsResourceSelectionCacheCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of elements in the Resource Selection cache."
+		   ::= { sdsResourceSelectionCacheGroup 1 }											-- 1.3.6.1.4.1.11150.84.3.25.1
+
+sdsResourceSelectionCacheCmdRefresh			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The Resource Selection cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsResourceSelectionCacheGroup 2 }											-- 1.3.6.1.4.1.11150.84.3.25.2
+
+sdsResourceSelectionCacheRefreshTime			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of Resource Selection cache."
+		   ::= { sdsResourceSelectionCacheGroup 3 }											-- 1.3.6.1.4.1.11150.84.3.25.3
+
+sdsResourceSelectionCacheMemHits				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was found in the Resource Selection cache in the
+			 last one minute."
+		   ::= { sdsResourceSelectionCacheGroup 4 }											-- 1.3.6.1.4.1.11150.84.3.25.4
+
+sdsResourceSelectionCacheMisses				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was not found in Resource Selection cache
+			 in the last one minute."
+		   ::= { sdsResourceSelectionCacheGroup 5 }											-- 1.3.6.1.4.1.11150.84.3.25.5
+
+sdsResourceSelectionCacheProps				OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing Resource Selection cache configuration properties."
+		   ::= { sdsResourceSelectionCacheGroup 6 }											-- 1.3.6.1.4.1.11150.84.3.25.6
+
+--
+-- Imsi COS Cache
+--
+sdsImsiCOSCacheGroup				OBJECT IDENTIFIER ::= { sdsCacheGroup 26}		-- 1.3.6.1.4.1.11150.84.3.26
+
+sdsImsiCOSCacheCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of elements in the Imsi COS cache."
+		   ::= { sdsImsiCOSCacheGroup 1 }											-- 1.3.6.1.4.1.11150.84.3.26.1
+
+sdsImsiCOSCacheCmdRefresh			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The Imsi COS cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsImsiCOSCacheGroup 2 }											-- 1.3.6.1.4.1.11150.84.3.26.2
+
+sdsImsiCOSCacheRefreshTime			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of Imsi COS cache."
+		   ::= { sdsImsiCOSCacheGroup 3 }											-- 1.3.6.1.4.1.11150.84.3.26.3
+
+sdsImsiCOSCacheMemHits				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was found in the Imsi COS cache in the
+			 last one minute."
+		   ::= { sdsImsiCOSCacheGroup 4 }											-- 1.3.6.1.4.1.11150.84.3.26.4
+
+sdsImsiCOSCachePullHits				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times pull through invoked for the Imsi COS cache in the
+			 last one minute."
+		   ::= { sdsImsiCOSCacheGroup 5 }											-- 1.3.6.1.4.1.11150.84.3.26.5
+
+sdsImsiCOSCacheMisses				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was not found in Imsi COS cache
+			 in the last one minute."
+		   ::= { sdsImsiCOSCacheGroup 6 }											-- 1.3.6.1.4.1.11150.84.3.26.6
+
+sdsImsiCOSCacheProps				OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing Imsi COS cache configuration properties."
+		   ::= { sdsImsiCOSCacheGroup 7 }											-- 1.3.6.1.4.1.11150.84.3.26.7
+
+sdsImsiCOSCachePrint			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the Imsi COS cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { sdsImsiCOSCacheGroup 8 }											-- 1.3.6.1.4.1.11150.84.3.26.8
+
+--
+-- Msisdn COS Cache
+--
+sdsMsisdnCOSCacheGroup				OBJECT IDENTIFIER ::= { sdsCacheGroup 27 }		-- 1.3.6.1.4.1.11150.84.3.27
+
+sdsMsisdnCOSCacheCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of elements in the Msisdn COS cache."
+		   ::= { sdsMsisdnCOSCacheGroup 1 }											-- 1.3.6.1.4.1.11150.84.3.27.1
+
+sdsMsisdnCOSCacheCmdRefresh			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The Msisdn COS cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsMsisdnCOSCacheGroup 2 }											-- 1.3.6.1.4.1.11150.84.3.27.2
+
+sdsMsisdnCOSCacheRefreshTime			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of Msisdn COS cache."
+		   ::= { sdsMsisdnCOSCacheGroup 3 }											-- 1.3.6.1.4.1.11150.84.3.27.3
+
+sdsMsisdnCOSCacheMemHits				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was found in the Msisdn COS cache in the
+			 last one minute."
+		   ::= { sdsMsisdnCOSCacheGroup 4 }											-- 1.3.6.1.4.1.11150.84.3.27.4
+
+sdsMsisdnCOSCachePullHits				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times pull through invoked for the Msisdn COS cache in the
+			 last one minute."
+		   ::= { sdsMsisdnCOSCacheGroup 5 }											-- 1.3.6.1.4.1.11150.84.3.27.5
+
+sdsMsisdnCOSCacheMisses				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times an entry was not found in Msisdn COS cache
+			 in the last one minute."
+		   ::= { sdsMsisdnCOSCacheGroup 6 }											-- 1.3.6.1.4.1.11150.84.3.27.6
+
+sdsMsisdnCOSCacheProps				OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing Msisdn COS cache configuration properties."
+		   ::= { sdsMsisdnCOSCacheGroup 7 }											-- 1.3.6.1.4.1.11150.84.3.27.7
+
+sdsMsisdnCOSCachePrint			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the Msisdn COS cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { sdsMsisdnCOSCacheGroup 8 }											-- 1.3.6.1.4.1.11150.84.3.27.8
+
+--
+-- DiameterConnections Cache
+--
+sdsDiameterConnectionsCacheGroup				OBJECT IDENTIFIER ::= { sdsCacheGroup 28 }		-- 1.3.6.1.4.1.11150.84.3.28
+
+sdsDiameterConnectionsCacheCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of elements in the Diameter connections cache."
+		   ::= { sdsDiameterConnectionsCacheGroup 1 }											-- 1.3.6.1.4.1.11150.84.3.28.1
+
+sdsDiameterConnectionsCacheCmdRefresh			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The Diameter connections cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsDiameterConnectionsCacheGroup 2 }											-- 1.3.6.1.4.1.11150.84.3.28.2
+
+sdsDiameterConnectionsCacheRefreshTime			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of Diameter connections cache."
+		   ::= { sdsDiameterConnectionsCacheGroup 3 }											-- 1.3.6.1.4.1.11150.84.3.28.3
+
+--
+-- sdsDiameterCongestion Cache
+--
+sdsDiameterCongestionCacheGroup				OBJECT IDENTIFIER ::= { sdsCacheGroup 29 }		-- 1.3.6.1.4.1.11150.84.3.29
+
+sdsDiameterCongestionCacheCmdRefresh			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The Diameter congestion cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsDiameterCongestionCacheGroup 1 }											-- 1.3.6.1.4.1.11150.84.3.29.1
+
+sdsDiameterCongestionCacheRefreshTime			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of Diameter congestion cache."
+		   ::= { sdsDiameterCongestionCacheGroup 2 }											-- 1.3.6.1.4.1.11150.84.3.29.2
+
+-- Cache Commands
+--
+sdsCacheCommandGroup				OBJECT IDENTIFIER ::= { sdsCacheGroup 30 }		-- 1.3.6.1.4.1.11150.84.3.30
+
+sdsCacheCmdEnableTrace				OBJECT-TYPE
+		   SYNTAX OCTET STRING
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Send a SET request with this variable to enable tracing of cache to KPI log."
+		   ::= { sdsCacheCommandGroup 1 }										-- 1.3.6.1.4.1.11150.84.3.30.1
+
+sdsCacheCmdDisableTrace				OBJECT-TYPE
+		   SYNTAX OCTET STRING
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Send a SET request with this variable to disable tracing of cache to KPI log."
+		   ::= { sdsCacheCommandGroup 2 }
+
+--
+-- sdsCampaign Cache
+--
+sdsCampaignCacheGroup				OBJECT IDENTIFIER ::= { sdsCacheGroup 31 }		-- 1.3.6.1.4.1.11150.84.3.31
+
+sdsCampaignCacheCmdRefresh			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The Campaign cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsCampaignCacheGroup 1 }											-- 1.3.6.1.4.1.11150.84.3.31.1
+
+--
+-- sdsScript Cache
+--
+sdsScriptCacheGroup				OBJECT IDENTIFIER ::= { sdsCacheGroup 32 }		-- 1.3.6.1.4.1.11150.84.3.32
+
+sdsScriptCacheCmdRefresh			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The Script cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsScriptCacheGroup 1 }											-- 1.3.6.1.4.1.11150.84.3.32.1
+
+--
+-- sdsCOSEngine Cache
+--
+sdsCOSEngineCacheGroup				OBJECT IDENTIFIER ::= { sdsCacheGroup 33 }		-- 1.3.6.1.4.1.11150.84.3.33
+
+sdsCOSEngineCacheCmdRefresh			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The COS Engine cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsCOSEngineCacheGroup 1 }							-- 1.3.6.1.4.1.11150.84.3.33.1
+
+sdsCOSEngineCacheRefreshTime			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of COS Engine cache."
+		   ::= { sdsCOSEngineCacheGroup 2 }							-- 1.3.6.1.4.1.11150.84.3.33.2
+
+--
+-- sdsSIPConnectionCache Cache
+--
+sdsSIPConnectionCacheGroup				OBJECT IDENTIFIER ::= { sdsCacheGroup 34 }		-- 1.3.6.1.4.1.11150.84.3.34
+
+sdsSIPConnectionCacheCmdRefresh			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The SIP connection cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { sdsSIPConnectionCacheGroup 1 }							-- 1.3.6.1.4.1.11150.84.3.34.1
+
+sdsSIPConnectionCacheRefreshTime			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of SIP connection cache."
+		   ::= { sdsSIPConnectionCacheGroup 2 }							-- 1.3.6.1.4.1.11150.84.3.34.2
+
+--
+-- SDS service details
+--
+sdsServiceGroup						OBJECT IDENTIFIER ::= { sds-mob 4 }				-- 1.3.6.1.4.1.11150.84.4
+
+sdsServiceStatusGroup				OBJECT IDENTIFIER ::= { sdsServiceGroup 1 }		-- 1.3.6.1.4.1.11150.84.4.1
+
+sdsServiceName						OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the name of the service."
+		   ::= { sdsServiceStatusGroup 1 }										-- 1.3.6.1.4.1.11150.84.4.1.1
+
+sdsServiceQueueSize					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the current size of the internal event queue."
+		   ::= { sdsServiceStatusGroup 2 }										-- 1.3.6.1.4.1.11150.84.4.1.2
+
+sdsServiceQueueCapacity				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the configured maximum capacity of the internal event queue."
+		   ::= { sdsServiceStatusGroup 3 }										-- 1.3.6.1.4.1.11150.84.4.1.3
+
+sdsServiceSMPoolAvl					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of free state machine objects available for new state machines."
+		   ::= { sdsServiceStatusGroup 4 }										-- 1.3.6.1.4.1.11150.84.4.1.4
+
+sdsServiceSMPoolMax					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the configured maximum allowed number of state machine objects to be used."
+		   ::= { sdsServiceStatusGroup 5 }										-- 1.3.6.1.4.1.11150.84.4.1.5
+
+sdsServiceSMPoolAlloc				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "State machine objects are created in groups. The maximum number of state machine
+			  objects are not created unless the load demands that number. This object indicates
+			  the number of state machine objects that have been created so far."
+		   ::= { sdsServiceStatusGroup 6 }										-- 1.3.6.1.4.1.11150.84.4.1.6
+
+sdsServiceStatisticsGroup			OBJECT IDENTIFIER ::= { sdsServiceGroup 2 }	-- 1.3.6.1.4.1.11150.84.4.2
+
+sdsServiceEnqueueCount				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of events enqueued in the last minute."
+		   ::= { sdsServiceStatisticsGroup 1 }									-- 1.3.6.1.4.1.11150.84.4.2.1
+
+sdsServiceDequeueCount				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of events dequeued (and processed) in the last minute."
+		   ::= { sdsServiceStatisticsGroup 2 }									-- 1.3.6.1.4.1.11150.84.4.2.2
+
+sdsFSMCreateCount					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of state machines created in the last minute."
+		   ::= { sdsServiceStatisticsGroup 3 }									-- 1.3.6.1.4.1.11150.84.4.2.3
+
+sdsFSMCompleteCount					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of state machines completed in the last minute."
+		   ::= { sdsServiceStatisticsGroup 4 }									-- 1.3.6.1.4.1.11150.84.4.2.4
+
+sdsActiveFSMCount					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of currently active state machines."
+		   ::= { sdsServiceStatisticsGroup 5 }									-- 1.3.6.1.4.1.11150.84.4.2.5
+
+sdsServiceCmdGroup					OBJECT IDENTIFIER ::= { sdsServiceGroup 3 }	-- 1.3.6.1.4.1.11150.84.4.3
+
+sdsServiceCmdPrintQueuedFSM			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Use a SET command with a positive integer value to print the FSM id of enqueued
+			 events and locks. This will acquire a common mutex and could impact performance."
+		   ::= { sdsServiceCmdGroup 1 }									-- 1.3.6.1.4.1.11150.84.4.3.1
+
+sdsServiceCmdEnableSMSPool			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Use a SET command with the name of the SMSC pool to restart an SMSC pool after it
+			  failed to login and shutdown."
+		   ::= { sdsServiceCmdGroup 2 }									-- 1.3.6.1.4.1.11150.84.4.3.2
+
+--
+-- Variables that are included in traps but not gettable otherwise
+--
+sdsServiceAttrGroup					OBJECT IDENTIFIER ::= { sdsServiceGroup 4 }	-- 1.3.6.1.4.1.11150.84.4.4
+
+sdsServiceAttrDNISName				OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable is included in traps related to DNIS management."
+		   ::= { sdsServiceAttrGroup 1 }										-- 1.3.6.1.4.1.11150.84.4.4.1
+
+sdsServiceAttrResourceName		OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+			 "This variable indicates the name of a resource."
+		   ::= { sdsServiceAttrGroup 2 }										-- 1.3.6.1.4.1.11150.84.4.4.2
+
+sdsServiceAttrDiameterHostName		OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+				"This variable indicates the host name of a Diameter peer"
+		   ::= { sdsServiceAttrGroup 3 }										-- 1.3.6.1.4.1.11150.84.4.4.3
+
+sdsServiceAttrDiameterConnType		OBJECT-TYPE
+		   SYNTAX INTEGER {initiator (0), responder (1)}
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+				"This variable indicates Diameter connection type"
+		   ::= { sdsServiceAttrGroup 4 }										-- 1.3.6.1.4.1.11150.84.4.4.4
+
+sdsServiceAttrDiameterTransportProtocol		OBJECT-TYPE
+		   SYNTAX INTEGER {tcp (0), sctp (1)}
+		   MAX-ACCESS accessible-for-notify
+		   STATUS current
+		   DESCRIPTION
+				"This variable indicates Diameter connection type"
+		   ::= { sdsServiceAttrGroup 5 }										-- 1.3.6.1.4.1.11150.84.4.4.5
+
+--
+-- TCAP related group
+--
+sdsTCAPGroup					OBJECT IDENTIFIER ::= { sds-mob 5 }				-- 1.3.6.1.4.1.11150.84.5
+
+--
+-- TCAP tracing group
+--
+sdsTCAPTraceGroup				OBJECT IDENTIFIER ::= { sdsTCAPGroup 1 }		-- 1.3.6.1.4.1.11150.84.5.1
+
+sdsTCAPTraceEnable			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The TCAP event trace is enabled when this parameter is SET with a non-zero value
+			  and disabled when SET with zero value.
+			  GET on this parameter returns nothing useful."
+		   ::= { sdsTCAPTraceGroup 1 }											-- 1.3.6.1.4.1.11150.84.5.1.1
+
+sdsTCAPPayloadTraceEnable	OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The TCAP user payload hex trace is enabled when this parameter is SET with a non-zero value
+			  and disabled when SET with zero value.
+			  GET on this parameter returns nothing useful."
+		   ::= { sdsTCAPTraceGroup 2 }											-- 1.3.6.1.4.1.11150.84.5.1.2
+
+--
+-- TCAP KPI group
+--
+sdsTCAPKPIGroup				OBJECT IDENTIFIER ::= { sdsTCAPGroup 2 }		-- 1.3.6.1.4.1.11150.84.5.2
+
+--
+-- TCAP Sent Message KPI group
+--
+sdsTCAPKPISentMsgGroup		OBJECT IDENTIFIER ::= { sdsTCAPKPIGroup 1 }		-- 1.3.6.1.4.1.11150.84.5.2.1
+
+sdsTCAPKPITxnStarted					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of TCAP transactions initiated in last minute."
+		   ::= { sdsTCAPKPISentMsgGroup 1 }								-- 1.3.6.1.4.1.11150.84.5.2.1.1
+
+sdsTCAPKPIAbortsSent					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of TCAP Aborts sent in last minute."
+		   ::= { sdsTCAPKPISentMsgGroup 2 }								-- 1.3.6.1.4.1.11150.84.5.2.1.2
+
+sdsTCAPKPIErrorsSent					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of TCAP Return Errors sent in last minute."
+		   ::= { sdsTCAPKPISentMsgGroup 3 }								-- 1.3.6.1.4.1.11150.84.5.2.1.3
+
+sdsTCAPKPIRejectsSent					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of TCAP Rejects sent in last minute."
+		   ::= { sdsTCAPKPISentMsgGroup 4 }								-- 1.3.6.1.4.1.11150.84.5.2.1.4
+
+sdsTCAPKPIUnidirectionalsSent					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of TCAP Unidirectionals sent in last minute."
+		   ::= { sdsTCAPKPISentMsgGroup 5 }								-- 1.3.6.1.4.1.11150.84.5.2.1.5
+
+sdsTCAPKPIContinuesSent					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of TCAP Continues sent in last minute."
+		   ::= { sdsTCAPKPISentMsgGroup 6 }								-- 1.3.6.1.4.1.11150.84.5.2.1.6
+
+sdsTCAPKPIEndsSent					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of TCAP Ends sent in last minute."
+		   ::= { sdsTCAPKPISentMsgGroup 7 }								-- 1.3.6.1.4.1.11150.84.5.2.1.7
+--
+-- TCAP Received Message group
+--
+sdsTCAPKPIReceivedMsgGroup	OBJECT IDENTIFIER ::= { sdsTCAPKPIGroup 2 }		-- 1.3.6.1.4.1.11150.84.5.2.2
+
+sdsTCAPKPITxnReceived					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of TCAP transactions received in last minute."
+		   ::= { sdsTCAPKPIReceivedMsgGroup 1 }								-- 1.3.6.1.4.1.11150.84.5.2.2.1
+
+sdsTCAPKPIAbortsReceived					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of TCAP Aborts received in last minute."
+		   ::= { sdsTCAPKPIReceivedMsgGroup 2 }								-- 1.3.6.1.4.1.11150.84.5.2.2.2
+
+sdsTCAPKPIErrorsReceived					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of TCAP Return Errors received in last minute."
+		   ::= { sdsTCAPKPIReceivedMsgGroup 3 }								-- 1.3.6.1.4.1.11150.84.5.2.2.3
+
+sdsTCAPKPIRejectsReceived					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of TCAP Rejects received in last minute."
+		   ::= { sdsTCAPKPIReceivedMsgGroup 4 }								-- 1.3.6.1.4.1.11150.84.5.2.2.4
+
+sdsTCAPKPIUnidirectionalsReceived					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of TCAP Unidirectionals received in last minute."
+		   ::= { sdsTCAPKPIReceivedMsgGroup 5 }								-- 1.3.6.1.4.1.11150.84.5.2.2.5
+
+sdsTCAPKPIContinuesReceived					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of TCAP Continues received in last minute."
+		   ::= { sdsTCAPKPIReceivedMsgGroup 6 }								-- 1.3.6.1.4.1.11150.84.5.2.2.6
+
+sdsTCAPKPIEndsReceived					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of TCAP Ends received in last minute."
+		   ::= { sdsTCAPKPIReceivedMsgGroup 7 }								-- 1.3.6.1.4.1.11150.84.5.2.2.7
+
+--
+-- TCAP Thresholds
+--
+sdsTCAPKPIThresholdGroup	OBJECT IDENTIFIER ::= { sdsTCAPKPIGroup 3 }		-- 1.3.6.1.4.1.11150.84.5.2.3
+
+sdsTCAPKPIAbortsReceivedHWM					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "If the percent of Aborts received are more than HWM % of the transactions started an alarm is raised"
+		   ::= { sdsTCAPKPIThresholdGroup 1 }								-- 1.3.6.1.4.1.11150.84.5.2.3.1
+
+sdsTCAPKPIAbortsReceivedLWM					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "If the percent of Aborts received fall below LWM % of the transactions started a previously raised alarm is raised"
+		   ::= { sdsTCAPKPIThresholdGroup 2 }								-- 1.3.6.1.4.1.11150.84.5.2.3.2
+
+sdsTCAPKPIErrorsReceivedHWM					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "If the percent of Return Errors received are more than HWM % of the transactions started an alarm is raised"
+		   ::= { sdsTCAPKPIThresholdGroup 3 }								-- 1.3.6.1.4.1.11150.84.5.2.3.3
+
+sdsTCAPKPIErrorsReceivedLWM					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "If the percent of Return Errors received fall below LWM % of the transactions started a previously raised alarm is raised"
+		   ::= { sdsTCAPKPIThresholdGroup 4 }								-- 1.3.6.1.4.1.11150.84.5.2.3.4
+
+sdsTCAPKPIRejectsReceivedHWM					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "If the percent of Rejects received are more than HWM % of the transactions started an alarm is raised"
+		   ::= { sdsTCAPKPIThresholdGroup 5 }								-- 1.3.6.1.4.1.11150.84.5.2.3.5
+
+sdsTCAPKPIRejectsReceivedLWM					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "If the percent of Rejects received fall below LWM % of the transactions started a previously raised alarm is raised"
+		   ::= { sdsTCAPKPIThresholdGroup 6 }								-- 1.3.6.1.4.1.11150.84.5.2.3.6
+
+--
+-- Utilities library related group
+--
+sdsUtilsGroup					OBJECT IDENTIFIER ::= { sds-mob 6 }				-- 1.3.6.1.4.1.11150.84.6
+
+--
+-- Message Template processor KPI objects
+--
+sdsTemplateKPIGroup				OBJECT IDENTIFIER ::= { sdsUtilsGroup 1 }		-- 1.3.6.1.4.1.11150.84.6.1
+
+sdsTemplateMsgSubmitted			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of messages submitted in the last one minute"
+		   ::= { sdsTemplateKPIGroup 1 }									-- 1.3.6.1.4.1.11150.84.6.1.1
+
+sdsTemplateMsgSubmitFailed		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of submission failures in the last one minute"
+		   ::= { sdsTemplateKPIGroup 2 }									-- 1.3.6.1.4.1.11150.84.6.1.2
+
+sdsTemplateLookupFailed			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of message template lookup failures in the last one minute"
+		   ::= { sdsTemplateKPIGroup 3 }									-- 1.3.6.1.4.1.11150.84.6.1.3
+
+sdsTemplateMsgCreateFailed		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of message creation failures in the last one minute"
+		   ::= { sdsTemplateKPIGroup 4 }									-- 1.3.6.1.4.1.11150.84.6.1.4
+
+sdsTemplateMsgCreated			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of messages created in the last one minute"
+		   ::= { sdsTemplateKPIGroup 5 }									-- 1.3.6.1.4.1.11150.84.6.1.5
+
+sdsTemplateMsgSubmitRecordFailed	OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of message submission recording failed in the last one minute"
+		   ::= { sdsTemplateKPIGroup 6 }									-- 1.3.6.1.4.1.11150.84.6.1.6
+
+sdsTemplateMsgDeliveryRecordFailed			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of message deivery recording failed in the last one minute"
+		   ::= { sdsTemplateKPIGroup 7 }									-- 1.3.6.1.4.1.11150.84.6.1.7
+
+--
+-- Probing subsystem interface specific parameters
+--
+sdsOpenRateGroup				OBJECT IDENTIFIER ::= { sds-mob 7 }				-- 1.3.6.1.4.1.11150.84.7
+
+sdsOpenRateCommandGroup			OBJECT IDENTIFIER ::= { sdsOpenRateGroup 1 }	-- 1.3.6.1.4.1.11150.84.7.1
+
+sdsOpenRateCmdPause				OBJECT-TYPE
+		   SYNTAX INTEGER {active (1), paused(2)}
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Send a SET request with this variable to pause or resume processing of
+			 events arriving from OpenRate. Send a GET request with this OID to check
+			 the mandatory status."
+		   ::= { sdsOpenRateCommandGroup 1 }									-- 1.3.6.1.4.1.11150.84.7.1.1
+
+sdsOpenRateCmdTrace					OBJECT-TYPE
+		   SYNTAX INTEGER {traceon(1), traceoff(2)}
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Send a SET request with this variable to pause or resume tracing of
+			 events arriving from OpenRate. Send a GET request with this OID to check
+			 the mandatory status."
+		   ::= { sdsOpenRateCommandGroup 2 }									-- 1.3.6.1.4.1.11150.84.7.1.2
+
+
+sdsOpenRateStatusGroup			OBJECT IDENTIFIER ::= { sdsOpenRateGroup 2 }	-- 1.3.6.1.4.1.11150.84.7.2
+
+sdsOpenRateConnStatus			OBJECT-TYPE
+		   SYNTAX INTEGER {connected(1), disconnected(2)}
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Used for checking if a service is connected to the OpenRate subsystem."
+		   ::= { sdsOpenRateStatusGroup 1 }										-- 1.3.6.1.4.1.11150.84.7.2.1
+
+
+sdsOpenRateStatisticsGroup		OBJECT IDENTIFIER ::= { sdsOpenRateGroup 3 }	-- 1.3.6.1.4.1.11150.84.7.3
+
+sdsOpenRateReqMesgCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns Number of Request messages sent to OpenRate in last one minute."
+		   ::= { sdsOpenRateStatisticsGroup 1 }									-- 1.3.6.1.4.1.11150.84.7.3.1
+
+sdsOpenRateResSuccCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns Number of Request messages sent to OpenRate in last one minute."
+		   ::= { sdsOpenRateStatisticsGroup 2 }									-- 1.3.6.1.4.1.11150.84.7.3.2
+
+sdsOpenRateResErrorCount		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns Number of Request messages sent to OpenRate in last one minute."
+		   ::= { sdsOpenRateStatisticsGroup 3 }									-- 1.3.6.1.4.1.11150.84.7.3.3
+
+sdsOpenRateReqTimoutCount		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns Number of Request messages sent to OpenRate in last one minute."
+		   ::= { sdsOpenRateStatisticsGroup 4 }									-- 1.3.6.1.4.1.11150.84.7.3.4
+
+sdsOpenRateTotalReqMesgCount	OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns Number of Request messages sent to OpenRate in last one minute."
+		   ::= { sdsOpenRateStatisticsGroup 5 }									-- 1.3.6.1.4.1.11150.84.7.3.5
+
+sdsOpenRateTotalResSuccCount	OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns Number of Request messages sent to OpenRate in last one minute."
+		   ::= { sdsOpenRateStatisticsGroup 6 }									-- 1.3.6.1.4.1.11150.84.7.3.6
+
+sdsOpenRateTotalResErrorCount	OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns Total Number of Error Responses recd from OpenRate since last start."
+		   ::= { sdsOpenRateStatisticsGroup 7 }									-- 1.3.6.1.4.1.11150.84.7.3.7
+
+sdsOpenRateTotalReqTimeoutCount	OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns Total Number of Requests to OpenRate timed out since last start."
+		   ::= { sdsOpenRateStatisticsGroup 8 }									-- 1.3.6.1.4.1.11150.84.7.3.8
+
+sdsOpenRateAvgProcTime			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns Average Response Time for all requests processed by OpenRate since last start."
+		   ::= { sdsOpenRateStatisticsGroup 9 }									-- 1.3.6.1.4.1.11150.84.7.3.9
+
+--
+-- NADA related group
+--
+sdsNADAGroup					OBJECT IDENTIFIER ::= { sds-mob 8 }				-- 1.3.6.1.4.1.11150.84.8
+
+--
+-- NADA messaging group
+--
+sdsNADAMsgGroup				OBJECT IDENTIFIER ::= { sdsNADAGroup 1 }			-- 1.3.6.1.4.1.11150.84.8.1
+
+sdsNADAMsgSent			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the no. of NADA messages sent in the last minute."
+		   ::= { sdsNADAMsgGroup 1 }											-- 1.3.6.1.4.1.11150.84.8.1.1
+
+sdsNADAMsgRecvd			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the no. of NADA messages received in the last minute."
+		   ::= { sdsNADAMsgGroup 2 }											-- 1.3.6.1.4.1.11150.84.8.1.2
+
+sdsSubscriptionStatisticsGroup		OBJECT IDENTIFIER ::= { sds-mob 9 }		-- 1.3.6.1.4.1.11150.84.9
+
+--
+-- UCIP group
+--
+sdsUCIPStatisticsGroup		OBJECT IDENTIFIER ::= { sdsSubscriptionStatisticsGroup 1 }		-- 1.3.6.1.4.1.11150.84.9.1
+
+sdsUCIPRPCStatisticsGroup	OBJECT IDENTIFIER ::= { sdsUCIPStatisticsGroup 1 }		-- 1.3.6.1.4.1.11150.84.9.1.1
+
+sdsUCIPRPCGetAcctDetailSuccessCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns UCIP GetAccountDetails successful requests over RPC in last one minute."
+		   ::= { sdsUCIPRPCStatisticsGroup 1 }									-- 1.3.6.1.4.1.11150.84.9.1.1.1
+
+sdsUCIPRPCGetBalanceAndDateSuccessCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns UCIP GetBalanceAndDate successful requests over RPC in last one minute."
+		   ::= { sdsUCIPRPCStatisticsGroup 2 }									-- 1.3.6.1.4.1.11150.84.9.1.1.2
+
+sdsUCIPRPCRefillSuccessCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns UCIP Refill successful requests over RPC in last one minute."
+		   ::= { sdsUCIPRPCStatisticsGroup 3 }									-- 1.3.6.1.4.1.11150.84.9.1.1.3
+
+sdsUCIPRPCGetAcctDetailsFailedCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns UCIP GetAccountDetails failed requests over RPC in last one minute."
+		   ::= { sdsUCIPRPCStatisticsGroup 4 }									-- 1.3.6.1.4.1.11150.84.9.1.1.4
+
+sdsUCIPRPCGetBalanceAndDateFailedCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns UCIP GetBalanceAndDate failed requests over RPC in last one minute."
+		   ::= { sdsUCIPRPCStatisticsGroup 5 }									-- 1.3.6.1.4.1.11150.84.9.1.1.5
+
+sdsUCIPRPCRefillFailedCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns UCIP Refill failed requests over RPC in last one minute."
+		   ::= { sdsUCIPRPCStatisticsGroup 6 }									-- 1.3.6.1.4.1.11150.84.9.1.1.6
+
+sdsUCIPAIRStatisticsGroup	OBJECT IDENTIFIER ::= { sdsUCIPStatisticsGroup 2 }		-- 1.3.6.1.4.1.11150.84.9.1.2
+
+sdsUCIPAIRGetAcctDetailSuccessCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+		   "Returns UCIP GetAccountDetails successful requests processed by AIR server in last one minute."
+		   ::= { sdsUCIPAIRStatisticsGroup 1 }									-- 1.3.6.1.4.1.11150.84.9.1.2.1
+
+sdsUCIPAIRGetBalanceAndDateSuccessCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns UCIP GetBalanceAndDate successful requests processed by AIR server in last one minute."
+		   ::= { sdsUCIPAIRStatisticsGroup 2 }									-- 1.3.6.1.4.1.11150.84.9.1.2.2
+
+sdsUCIPAIRRefillSuccessCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns UCIP Refill successful requests processed by AIR server in last one minute."
+		   ::= { sdsUCIPAIRStatisticsGroup 3 }									-- 1.3.6.1.4.1.11150.84.9.1.2.3
+
+sdsUCIPAIRGetAcctDetailFailedCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+		   "Returns UCIP GetAccountDetails failed requests processed by AIR server in last one minute."
+		   ::= { sdsUCIPAIRStatisticsGroup 4 }									-- 1.3.6.1.4.1.11150.84.9.1.2.4
+
+sdsUCIPAIRGetBalanceAndDateFailedCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns UCIP GetBalanceAndDate failed requests processed by AIR server in last one minute."
+		   ::= { sdsUCIPAIRStatisticsGroup 5 }									-- 1.3.6.1.4.1.11150.84.9.1.2.5
+
+sdsUCIPAIRRefillFailedCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns UCIP Refill failed requests processed by AIR server in last one minute."
+		   ::= { sdsUCIPAIRStatisticsGroup 6 }									-- 1.3.6.1.4.1.11150.84.9.1.2.6
+
+--
+-- RPC group
+--
+sdsRPCGroup					OBJECT IDENTIFIER ::= { sds-mob 11 }				-- 1.3.6.1.4.1.11150.84.11
+
+sdsRPCStatusGroup			OBJECT IDENTIFIER ::= { sdsRPCGroup 1 }				-- 1.3.6.1.4.1.11150.84.11.1
+
+sdsRPCRegisteredApplications	OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns list of applications which have registered with this service"
+		   ::= { sdsRPCStatusGroup 1 }											-- 1.3.6.1.4.1.11150.84.11.1.1
+
+sdsRPCRegisteredModules			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns list of RPC module ids on which messages will be accepted by this service"
+		   ::= { sdsRPCStatusGroup 2 }											-- 1.3.6.1.4.1.11150.84.11.1.2
+
+--
+-- Diameter specific parameters
+--
+sdsDiameterGroup				OBJECT IDENTIFIER ::= { sds-mob 12 }			-- 1.3.6.1.4.1.11150.84.12
+
+sdsDiameterConnMgmtGroup		OBJECT IDENTIFIER ::= { sdsDiameterGroup 1 }	-- 1.3.6.1.4.1.11150.84.12.1
+
+sdsDiameterConnCmdGroup			OBJECT IDENTIFIER ::= { sdsDiameterConnMgmtGroup 1 }	-- 1.3.6.1.4.1.11150.84.12.1.1
+
+sdsDiameterCmdEnableConn		OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Use a SET command with the name of the connection to enable it"
+		   ::= { sdsDiameterConnCmdGroup 1 }									-- 1.3.6.1.4.1.11150.84.12.1.1.1
+
+sdsDiameterCmdDisableConn		OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Use a SET command with the name of the connection to disable it"
+		   ::= { sdsDiameterConnCmdGroup 2 }									-- 1.3.6.1.4.1.11150.84.12.1.1.2
+
+--
+-- Diameter tracing group
+--
+sdsDiameterCommandGroup				OBJECT IDENTIFIER ::= { sdsDiameterGroup 2 }				  -- 1.3.6.1.4.1.11150.84.12.2
+
+sdsDiameterTraceRawBuffer		OBJECT-TYPE
+		   SYNTAX INTEGER {enable(1), disable(2)}
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Send a SET request with this variable to pause or resume tracing of
+			 raw buffer in detail trace of diameter messages received and sent. "
+		   ::= { sdsDiameterCommandGroup 1 }											-- 1.3.6.1.4.1.11150.84.12.2.1
+
+--
+-- SDS traps
+--
+sdsAlarmModule OBJECT IDENTIFIER ::= { sds-mob 10 }								-- 1.3.6.1.4.1.11150.84.10
+sdsAlarmGroup OBJECT IDENTIFIER ::= { sdsAlarmModule 0 }						-- 1.3.6.1.4.1.11150.84.10.0
+
+sdsSysUp				NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that the sds instance is up and active."
+			::= {sdsAlarmGroup 1}
+
+sdsSysDown				NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that the sds instance is shutting down."
+			::= {sdsAlarmGroup 2}
+
+sdsTrapDBConnStatus		NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenPoolName }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that connection to a database connection pool is up or down."
+			::= {sdsAlarmGroup 3}
+
+sdsTrapIPCBConnStatus	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            sdsIPCBConnectionType, mobGenRemoteHostAddr, mobGenRemotePort }
+			STATUS obsolete
+			DESCRIPTION
+			  "Indicates that connection to an IPCB daemon is up or down."
+			::= {sdsAlarmGroup 4}
+
+sdsTrapEventQueueStatus	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+			            mobGenCapacity, mobGenThresholdArmTime}
+			STATUS current
+			DESCRIPTION
+			  "Indicates that the event queue is above or below high/low water mark."
+			::= {sdsAlarmGroup 5}
+
+sdsTrapDBWStatus		NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenRemoteHostAddr, mobGenRemotePort }
+			STATUS obsolete
+			DESCRIPTION
+			  "Indicates that connection to a DB writer instance (TDR interface) is up or down."
+			::= {sdsAlarmGroup 6}
+
+sdsTrapCGWStatus		NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenRemoteHostAddr, mobGenRemotePort }
+			STATUS obsolete
+			DESCRIPTION
+			  "Indicates that connection to a DB writer instance (Call Gateway) is up or down."
+			::= {sdsAlarmGroup 7}
+
+sdsTrapSMSCConnStatus	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenRemoteHostAddr, mobGenRemotePort, mobGenPoolName }
+			STATUS obsolete
+			DESCRIPTION
+			  "Indicates that connection to an SMSC connection pool is up or down."
+			::= {sdsAlarmGroup 8}
+
+sdsTrapDNISAllocFail	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            sdsServiceAttrDNISName, mobGenCapacity, mobGenUtilization, mobGenErrorText }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that allocation of a temporary DNIS mapping failed."
+			::= {sdsAlarmGroup 9}
+
+sdsTrapDNISRemoveFail	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            sdsServiceAttrDNISName }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that removal of a temporary DNIS mapping failed."
+			::= {sdsAlarmGroup 10}
+
+sdsTrapDNISInsertFail	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            sdsServiceAttrDNISName }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that insertion of a temporary DNIS mapping failed."
+			::= {sdsAlarmGroup 11}
+
+sdsTrapDNISLookupFail	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            sdsServiceAttrDNISName }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that lookup of a temporary DNIS mapping failed."
+			::= {sdsAlarmGroup 12}
+
+sdsTrapDNISPoolExhaust	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+			            mobGenCapacity, mobGenThresholdArmTime, sdsServiceAttrDNISName }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that a named DNIS allocation pool is used up."
+			::= {sdsAlarmGroup 13}
+
+sdsCacheLoadingStatus	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenCacheName, mobGenErrorText }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that loading of a Cache was a success or failure."
+			::= {sdsAlarmGroup 14}
+
+sdsFileTransferError	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenRemoteHostAddr, mobGenErrorText }
+			STATUS obsolete
+			DESCRIPTION
+			  "Indicates a problem with file transfer."
+			::= {sdsAlarmGroup 15}
+
+sdsFileRotateFail		NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenSourcePath, mobGenTargetPath }
+			STATUS current
+			DESCRIPTION
+			  "Indicates a problem with file rotation."
+			::= {sdsAlarmGroup 16}
+
+sdsFilePollFail			NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenSourcePath }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that a file poller task was aborted."
+			::= {sdsAlarmGroup 17}
+
+sdsFileWriteFail		NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenTargetPath }
+			STATUS current
+			DESCRIPTION
+			  "Indicates a failure to write to a file."
+			::= {sdsAlarmGroup 18}
+
+sdsTrapRoleChange		NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenFeatureName, mobGenInstanceName, mobGenRole}
+			STATUS current
+			DESCRIPTION
+			  "Indicates a change in the role of a service instance for a feature"
+			::= {sdsAlarmGroup 19}
+
+sdsTrapRecvdTCAPAbortExceeded	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+			            mobGenCapacity, mobGenThresholdArmTime}
+			STATUS current
+			DESCRIPTION
+			  "Indicates that Aborts are being received for a high percentage of transactions"
+			::= {sdsAlarmGroup 20}
+
+sdsTrapRecvdTCAPErrorExceeded	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+			            mobGenCapacity, mobGenThresholdArmTime}
+			STATUS current
+			DESCRIPTION
+			  "Indicates that Return Errors are being received for a high percentage of transactions"
+			::= {sdsAlarmGroup 21}
+
+sdsTrapRecvdTCAPRejectExceeded	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+			            mobGenCapacity, mobGenThresholdArmTime}
+			STATUS current
+			DESCRIPTION
+			  "Indicates that Rejects are being received for a high percentage of transactions"
+			::= {sdsAlarmGroup 22}
+
+sdsTrapIPProbeStatus	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenRemoteHostAddr, mobGenRemotePort }
+			STATUS obsolete
+			DESCRIPTION
+			  "Indicates that connection to an IP Probe instance is up or down."
+			::= {sdsAlarmGroup 23}
+
+sdsTrapEODStatus		NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause}
+			STATUS current
+			DESCRIPTION
+			  "Indicates that SDS EOD execution has failed."
+			::= {sdsAlarmGroup 24}
+
+sdsNetworkKPIStatus		NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+			            mobGenCapacity, mobGenThresholdArmTime, mobGenKPIName, mobGenNetwork}
+			STATUS current
+			DESCRIPTION
+			  "Indicates that the status of a KPI for a network"
+			::= {sdsAlarmGroup 25}
+
+sdsNodeKPIStatus		NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+			            mobGenCapacity, mobGenThresholdArmTime, mobGenKPIName, mobGenNodeName}
+			STATUS current
+			DESCRIPTION
+			  "Indicates that the status of a KPI for a node"
+			::= {sdsAlarmGroup 26}
+
+sdsNetworkKPIWatchStatus	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenThresholdArmTime, mobGenKPIName, mobGenNetwork}
+			STATUS current
+			DESCRIPTION
+			  "Indicates that there has been no activity with respect to a KPI for a network"
+			::= {sdsAlarmGroup 27}
+
+sdsNodeKPIWatchStatus	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenThresholdArmTime, mobGenKPIName, mobGenNetwork}
+			STATUS current
+			DESCRIPTION
+			  "Indicates that there has been no activity with respect to a KPI for a node"
+			::= {sdsAlarmGroup 28}
+
+sdsNetworkKPIDelta		NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenThresholdValue,
+			            mobGenThresholdArmTime, mobGenKPIName, mobGenNetwork, mobGenUtilization, mobGenCapacity}
+			STATUS current
+			DESCRIPTION
+			  "EXPERIMENTAL - WILL CHANGE IN NEXT RELEASE: Indicates that the status of a KPI for a network"
+			::= {sdsAlarmGroup 29}
+
+sdsNodeKPIDelta			NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenThresholdValue,
+			            mobGenThresholdArmTime, mobGenKPIName, mobGenNodeName, mobGenUtilization, mobGenCapacity}
+			STATUS current
+			DESCRIPTION
+			  "EXPERIMENTAL - WILL CHANGE IN NEXT RELEASE: Indicates that the status of a KPI for a node"
+			::= {sdsAlarmGroup 30}
+
+sdsTrapDBPollFail		NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenPoolName, mobGenFeatureName}
+			STATUS current
+			DESCRIPTION
+			  "Indicates that a database table poller task failed"
+			::= {sdsAlarmGroup 31}
+
+sdsTrapOpenRateStatus	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenRemoteHostAddr, mobGenRemotePort }
+			STATUS obsolete
+			DESCRIPTION
+			  "Indicates that connection to a OpenRate instance (Rating Engine interface) is up or down."
+			::= {sdsAlarmGroup 32}
+
+--sdsTrapMessagingThreshold   NOTIFICATION-TYPE
+--			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+--			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+--			            mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+--			            mobGenCapacity, mobGenThresholdArmTime, mobGenKPIName, mobGenNodeName}
+--			STATUS current
+--			DESCRIPTION
+--			  "Indicates that some aspect of messaging library has crossed a configured threshold."
+--			::= {sdsAlarmGroup 33}
+
+sdsTrapResyncOp		NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that a trap resync operation is in progress."
+			::= {sdsAlarmGroup 34}
+
+sdsTrapHeartbeat	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause }
+			STATUS current
+			DESCRIPTION
+			  "Heartbeat trap to indicate that a process is alive (severity is always normal)."
+			::= {sdsAlarmGroup 35}
+
+sdsTrapExecFail		NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenFeatureName, sdsServiceAttrResourceName, mobGenErrorCode, mobGenErrorText }
+			STATUS current
+			DESCRIPTION
+			  "Indicates a failure in execution of some component."
+			::= {sdsAlarmGroup 36}
+
+sdsTrapChargingGatewayStatus	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenRemoteHostAddr, mobGenRemotePort }
+			STATUS obsolete
+			DESCRIPTION
+			  "Indicates that connection to the charging gateway is up or down."
+			::= {sdsAlarmGroup 37}
+
+sdsTrapDNISKPIThresholdCrossed		NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+			            mobGenCapacity, mobGenThresholdArmTime, sdsServiceAttrDNISName, mobGenKPIName}
+			STATUS current
+			DESCRIPTION
+			  "Indicates a DNIS KPI threshold breach."
+			::= {sdsAlarmGroup 38}
+
+sdsIPProbeRADIUSConnectionStatus	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenRemoteHostAddr, mobGenRemotePort }
+			STATUS obsolete
+			DESCRIPTION
+			  "Indicates that connection to an IP Probe RADIUS instance is up or down."
+			::= {sdsAlarmGroup 39}
+
+sdsTrapLDAPConnStatus		NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenPoolName }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that connection to a LDAP connection pool is up or down."
+			::= {sdsAlarmGroup 40}
+
+sdsTrapHTTPStatus		NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenResourceName }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that connection to a HTTP is up or down."
+			::= {sdsAlarmGroup 41}
+
+sdsTrapDiameterPeerAddressStatus	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenRemoteHostAddr, mobGenRemotePort, sdsServiceAttrDiameterHostName, sdsServiceAttrDiameterConnType,
+			            sdsServiceAttrDiameterTransportProtocol, mobGenResourceName }
+			STATUS obsolete
+			DESCRIPTION
+			  "Indicates that a particular address belonging to a Diameter peer is up or down."
+			::= {sdsAlarmGroup 42}
+
+sdsTrapDiameterPeerStatus	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            sdsServiceAttrDiameterHostName, mobGenAddressList, sdsServiceAttrDiameterConnType,
+			            sdsServiceAttrDiameterTransportProtocol, mobGenResourceName }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that a Diameter peer is up or down."
+			::= {sdsAlarmGroup 43}
+
+sdsTrapRPCStatus           NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+						mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+						mobGenRemoteHostAddr, mobGenModuleId }
+			STATUS obsolete
+			DESCRIPTION
+				"Indicates that connection to a RPC module is up or down."
+			::= {sdsAlarmGroup 44}
+
+
+sdsTrapPassivePubClientStatus   NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+				mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+				mobGenRemoteHostAddr, mobGenRemotePort, mobGenErrorCode }
+			STATUS obsolete
+			DESCRIPTION
+			"Indicates that Roamware Passive Publisher's client application is disconnected or connected."
+			::= {sdsAlarmGroup 45}
+
+sdsFilePollNoFile    NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+					mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					mobGenResourceName }
+			STATUS current
+			DESCRIPTION
+				"Indicates that a file poller did not find any files for processing for a configured number of sweeps."
+			::= {sdsAlarmGroup 46}
+
+sdsExportImportFailed    NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+					mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					mobGenResourceName }
+			STATUS current
+			DESCRIPTION
+				"Indicates that export import utility got failed."
+			::= {sdsAlarmGroup 47}
+
+sdsTrapTransportServerStatus   NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+					mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					mobGenRemoteHostAddr, mobGenRemotePort, mobGenErrorCode }
+			STATUS obsolete
+			DESCRIPTION
+			"Indicates that Transport Server is disconnected or connected."
+			::= {sdsAlarmGroup 48}
+
+sdsTrapDiaResponseSendTime   NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+    				    mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+				    mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+			            mobGenCapacity, mobGenThresholdArmTime, mobGenResourceName}
+			STATUS current
+			DESCRIPTION
+			"Indicates high response time for diamter requests made."
+			::= {sdsAlarmGroup 49}
+
+sdsTrapDiaResponseReceiveTime   NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+    				    mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+				    mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+			            mobGenCapacity, mobGenThresholdArmTime, mobGenResourceName}
+			STATUS current
+			DESCRIPTION
+			"Indicates high response time for incomming diamter requests."
+			::= {sdsAlarmGroup 50}
+
+sdsTrapDiaRecvdErrorExceeded   NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+    				    mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+				    mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+			            mobGenCapacity, mobGenThresholdArmTime, mobGenResourceName}
+			STATUS current
+			DESCRIPTION
+			"Indicates high incoming error for outgoing diameter request."
+			::= {sdsAlarmGroup 51}
+
+sdsTrapDiaRecvdRequestDelta   NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+    				    mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+				    mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+			            mobGenCapacity, mobGenThresholdArmTime, mobGenResourceName}
+			STATUS current
+			DESCRIPTION
+			"Indicates fluctuation in incoming diameter request count."
+			::= {sdsAlarmGroup 52}
+
+sdsTrapDiaSentRequestTimeout   NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+    				    mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+				    mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+			            mobGenCapacity, mobGenThresholdArmTime, mobGenResourceName}
+			STATUS current
+			DESCRIPTION
+			"Indicates high time out count for outgoing diameter requests."
+			::= {sdsAlarmGroup 53}
+
+sdsTrapDiaSentRequestUnavailable   NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+    				    mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+				    mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+			            mobGenCapacity, mobGenThresholdArmTime, mobGenResourceName}
+			STATUS current
+			DESCRIPTION
+			"Indicates high unavailable count for outgoing diameter request."
+			::= {sdsAlarmGroup 54}
+
+sdsTrapDiaGlobalInPeerCongestion   NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+    				    mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenUtilization, mobGenCapacity, mobGenThresholdArmTime}
+			STATUS current
+			DESCRIPTION
+			"Indicates Global Peer Congestion for Incoming Request."
+			::= {sdsAlarmGroup 55}
+
+sdsTrapDiaGlobalInHostCongestion   NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+    				    mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenUtilization, mobGenCapacity, mobGenThresholdArmTime}
+			STATUS current
+			DESCRIPTION
+			"Indicates Global Host Congestion for Incoming Request."
+			::= {sdsAlarmGroup 56}
+
+sdsTrapDiaInPeerCongestion   NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+    				    mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            sdsServiceAttrDiameterHostName, mobGenUtilization, mobGenCapacity, mobGenThresholdArmTime}
+			STATUS current
+			DESCRIPTION
+			"Indicates Peer Congestion for Incoming Request."
+			::= {sdsAlarmGroup 57}
+
+sdsTrapDiaInHostCongestion   NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+    				    mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            sdsServiceAttrDiameterHostName, mobGenUtilization, mobGenCapacity, mobGenThresholdArmTime}
+			STATUS current
+			DESCRIPTION
+			"Indicates Host Congestion for Incoming Request."
+			::= {sdsAlarmGroup 58}
+
+sdsTrapDiaOutPeerCongestion   NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+    				    mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            sdsServiceAttrDiameterHostName, mobGenUtilization, mobGenCapacity, mobGenThresholdArmTime}
+			STATUS current
+			DESCRIPTION
+			"Indicates Peer Congestion for Outgoing Request."
+			::= {sdsAlarmGroup 59}
+
+sdsTrapDiaOutHostCongestion   NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+    				    mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            sdsServiceAttrDiameterHostName, mobGenUtilization, mobGenCapacity, mobGenThresholdArmTime}
+			STATUS current
+			DESCRIPTION
+			"Indicates Peer Congestion for Outgoing Request."
+			::= {sdsAlarmGroup 60}
+
+sdsTrapPassivePubClientStatus2   NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+				mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+				mobGenRemoteHost, mobGenRemotePort, mobGenErrorCode }
+			STATUS current
+			DESCRIPTION
+			"Indicates that Roamware Passive Publisher's client application is disconnected or connected."
+			::= {sdsAlarmGroup 61}
+
+sdsTrapCGWStatus2		NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenRemoteHost, mobGenRemotePort }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that connection to a DB writer instance (Call Gateway) is up or down."
+			::= {sdsAlarmGroup 62}
+
+sdsTrapIPProbeStatus2	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenRemoteHost, mobGenRemotePort }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that connection to an IP Probe instance is up or down."
+			::= {sdsAlarmGroup 63}
+
+sdsTrapDBWStatus2		NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenRemoteHost, mobGenRemotePort }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that connection to a DB writer instance (TDR interface) is up or down."
+			::= {sdsAlarmGroup 64}
+
+sdsTrapChargingGatewayStatus2	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenRemoteHost, mobGenRemotePort }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that connection to the charging gateway is up or down."
+			::= {sdsAlarmGroup 65}
+
+sdsFileTransferError2	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenRemoteHost, mobGenErrorText }
+			STATUS current
+			DESCRIPTION
+			  "Indicates a problem with file transfer."
+			::= {sdsAlarmGroup 66}
+
+sdsTrapRPCStatus2           NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+						mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+						mobGenRemoteHost, mobGenModuleId }
+			STATUS current
+			DESCRIPTION
+				"Indicates that connection to a RPC module is up or down."
+			::= {sdsAlarmGroup 67}
+
+sdsTrapIPCBConnStatus2	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            sdsIPCBConnectionType, mobGenRemoteHost, mobGenRemotePort }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that connection to an IPCB daemon is up or down."
+			::= {sdsAlarmGroup 68}
+
+sdsTrapOpenRateStatus2	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenRemoteHost, mobGenRemotePort }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that connection to a OpenRate instance (Rating Engine interface) is up or down."
+			::= {sdsAlarmGroup 69}
+
+sdsTrapSMSCConnStatus2	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenRemoteHost, mobGenRemotePort, mobGenPoolName }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that connection to an SMSC connection pool is up or down."
+			::= {sdsAlarmGroup 70}
+
+sdsIPProbeRADIUSConnectionStatus2	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenRemoteHost, mobGenRemotePort }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that connection to an IP Probe RADIUS instance is up or down."
+			::= {sdsAlarmGroup 71}
+
+sdsTrapDiameterPeerAddressStatus2	NOTIFICATION-TYPE
+			OBJECTS   { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+			            mobGenRemoteHost, mobGenRemotePort, sdsServiceAttrDiameterHostName, sdsServiceAttrDiameterConnType,
+			            sdsServiceAttrDiameterTransportProtocol, mobGenResourceName }
+			STATUS current
+			DESCRIPTION
+			  "Indicates that a particular address belonging to a Diameter peer is up or down."
+			::= {sdsAlarmGroup 72}
+
+sdsTrapTransportServerStatus2   NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+					mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					mobGenRemoteHost, mobGenRemotePort, mobGenErrorCode }
+			STATUS current
+			DESCRIPTION
+			"Indicates that Transport Server is disconnected or connected."
+			::= {sdsAlarmGroup 73}
+
+sdsTrapJavaScriptExecutionStatus   NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+					mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					mobGenResourceName }
+			STATUS current
+			DESCRIPTION
+			"Indicates the status of Java script execution."
+			::= {sdsAlarmGroup 74}
+
+sdsTrapCOSEngineExecutionStatus   NOTIFICATION-TYPE
+			OBJECTS { mobGenSequenceNumber, mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+					mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+					mobGenFeatureName, mobGenErrorText }
+			STATUS current
+			DESCRIPTION
+			"Indicates the status of execution of a COS Engine operation."
+			::= {sdsAlarmGroup 75}
+
+END
+

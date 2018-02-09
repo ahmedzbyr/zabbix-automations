@@ -1,0 +1,689 @@
+--
+-- Roamware SDS MIB definition.
+-- Release : 6.0
+-- Revision : R91002
+-- Revision date : 13-Oct-2009
+--
+-- This specification is supplied "AS IS," and no warranty,
+-- either expressed or implied, as to the use, operation, condition,
+-- or performance of the specification, is made by the publisher.
+--
+-- Publisher: Roamware Inc., USA
+-- **************************************************************
+
+Roamware-SDS-V2-MIB DEFINITIONS ::= BEGIN
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, NOTIFICATION-TYPE, enterprises,
+    TimeTicks, Counter32, IpAddress, Integer32
+        FROM SNMPv2-SMI
+    DisplayString
+        FROM SNMPv2-TC
+    OBJECT-GROUP
+        FROM SNMPv2-CONF ;
+
+roamware	MODULE-IDENTITY
+	LAST-UPDATED "200910130000Z"
+	ORGANIZATION "Roamware Inc."
+	CONTACT-INFO "info@roamware.com"
+	DESCRIPTION  "The Structure of Management Information for Roamware Inc. enterprise.
+                  This is the top-level registry for managed objects under the Roamware
+                  SNMP management enterprise object identifier."
+	REVISION "200910130000Z"
+	DESCRIPTION  "Initial version."
+	::= { enterprises 11150 }                          -- 1.3.6.1.4.1.11150 - assigned by IANA
+--
+-- Definition of various systems/services offered by Roamware Inc.
+--
+gen-mob		OBJECT IDENTIFIER ::= { roamware 1 }       -- 1.3.6.1.4.1.11150.1 		Generic services/functions
+
+--
+-- Details of services/functions that are common across all Roamware products
+--
+mobGenStatus  OBJECT IDENTIFIER ::= { gen-mob 1 }      -- 1.3.6.1.4.1.11150.1.1
+
+mobLogLevel   OBJECT-TYPE
+			  SYNTAX INTEGER
+			  {
+				fatal(1),
+				error(2),
+				warning(3),
+				information(4),
+				debug(5)
+			  }
+			  MAX-ACCESS read-write
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the current level of logging subsystem. By manipulating
+				 this value, additional or less log messages can be generated. This
+				 could be a very useful too for troubleshooting if something goes
+				 wrong."
+			  ::= { mobGenStatus 1 }				   -- 1.3.6.1.4.1.11150.1.1.1
+
+mobSysActive  OBJECT-TYPE
+              SYNTAX INTEGER
+			  {
+				active(1),
+				paused(2)
+			  }
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates whether the system is active or paused temporarily."
+			  ::= { mobGenStatus 2 }				   -- 1.3.6.1.4.1.11150.1.1.2
+
+mobDBPoolSize  OBJECT-TYPE
+              SYNTAX Integer32
+			  MAX-ACCESS read-only
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the current size of the database connection pool."
+			  ::= { mobGenStatus 3 }				   -- 1.3.6.1.4.1.11150.1.1.3
+
+mobDBPoolMaxSize  OBJECT-TYPE
+              SYNTAX Integer32
+			  MAX-ACCESS read-only
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the maximum size to which the database connection pool can grow."
+			  ::= { mobGenStatus 4 }				   -- 1.3.6.1.4.1.11150.1.1.4
+
+mobDBPoolMinSize  OBJECT-TYPE
+              SYNTAX Integer32
+			  MAX-ACCESS read-only
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the minimum number of connections to be maintained in the database
+				 connection pool."
+			  ::= { mobGenStatus 5 }				   -- 1.3.6.1.4.1.11150.1.1.5
+
+mobLDAPPoolSize  OBJECT-TYPE
+              SYNTAX Integer32
+			  MAX-ACCESS read-only
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the current size of the LDAP connection pool."
+			  ::= { mobGenStatus 6 }				   -- 1.3.6.1.4.1.11150.1.1.6
+
+mobLDAPPoolMaxSize  OBJECT-TYPE
+              SYNTAX Integer32
+			  MAX-ACCESS read-only
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the maximum size to which the LDAP connection pool can grow."
+			  ::= { mobGenStatus 7 }				   -- 1.3.6.1.4.1.11150.1.1.7
+
+mobLDAPPoolMinSize  OBJECT-TYPE
+              SYNTAX Integer32
+			  MAX-ACCESS read-only
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the minimum number of connections to be maintained in the LDAP
+				 connection pool."
+			  ::= { mobGenStatus 8 }				   -- 1.3.6.1.4.1.11150.1.1.8
+
+--
+-- Commands applicable across applications
+--
+
+mobGenCommands OBJECT IDENTIFIER ::= {gen-mob 2 }	   -- 1.3.6.1.4.1.11150.1.2
+
+mobTrapResync OBJECT-TYPE
+			  SYNTAX INTEGER { syncDefMgr(1), syncReqMgr(2) }
+			  MAX-ACCESS read-write
+			  STATUS current
+			  DESCRIPTION
+				"Instructs the SNMP agent to re-send all active traps."
+			  ::= { mobGenCommands 1 }				   -- 1.3.6.1.4.1.11150.1.2.1
+
+mobCmdStop	  OBJECT-TYPE
+			  SYNTAX INTEGER { stopping(1), notallowed(2) }
+			  MAX-ACCESS read-write
+			  STATUS current
+			  DESCRIPTION
+				"Instructs the system to stop processing and exit gracefully."
+			  ::= { mobGenCommands 2 }				   -- 1.3.6.1.4.1.11150.1.2.2
+
+mobCmdPause   OBJECT-TYPE
+			  SYNTAX INTEGER { paused(1), notallowed(2) }
+			  MAX-ACCESS read-write
+			  STATUS current
+			  DESCRIPTION
+				"Instructs the system to pause operations temporarily."
+			  ::= { mobGenCommands 3 }				   -- 1.3.6.1.4.1.11150.1.2.3
+
+mobCmdResume  OBJECT-TYPE
+			  SYNTAX INTEGER { resumed(1), notallowed(2) }
+			  MAX-ACCESS read-write
+			  STATUS current
+			  DESCRIPTION
+				"Instructs the system to resume operations after a pause."
+			  ::= { mobGenCommands 4 }				   -- 1.3.6.1.4.1.11150.1.2.4
+
+mobCmdScanNw  OBJECT-TYPE
+			  SYNTAX INTEGER { scan(1) }
+			  MAX-ACCESS read-write
+			  STATUS current
+			  DESCRIPTION
+				"Instructs the system to rescan the network list database."
+			  ::= { mobGenCommands 6 }				   -- 1.3.6.1.4.1.11150.1.2.6
+
+mobCmdScanLicense  OBJECT-TYPE
+			  SYNTAX INTEGER { scan(1), error(2), notreqd(3) }
+			  MAX-ACCESS read-write
+			  STATUS current
+			  DESCRIPTION
+				"Instructs the system to re-check license if one is required."
+			  ::= { mobGenCommands 7 }				   -- 1.3.6.1.4.1.11150.1.2.7
+
+mobCmdScanCtryList  OBJECT-TYPE
+			  SYNTAX INTEGER { scan(1) }
+			  MAX-ACCESS read-write
+			  STATUS current
+			  DESCRIPTION
+				"Instructs the system to reload country codes list."
+			  ::= { mobGenCommands 8 }				   -- 1.3.6.1.4.1.11150.1.2.8
+
+mobCmdEnableSMSTrace OBJECT-TYPE
+			  SYNTAX DisplayString
+			  MAX-ACCESS read-write
+			  STATUS current
+			  DESCRIPTION
+				"Instructs the system to enable tracing for the specified SMSC connection pool."
+			  ::= { mobGenCommands 9 }				   -- 1.3.6.1.4.1.11150.1.2.9
+
+mobCmdDisableSMSTrace OBJECT-TYPE
+			  SYNTAX DisplayString
+			  MAX-ACCESS read-write
+			  STATUS current
+			  DESCRIPTION
+				"Instructs the system to disable tracing for the specified SMSC connection pool."
+			  ::= { mobGenCommands 10 }				   -- 1.3.6.1.4.1.11150.1.2.10
+
+mobCmdScanMGTMapList  OBJECT-TYPE
+			  SYNTAX INTEGER { scan(1) }
+			  MAX-ACCESS read-write
+			  STATUS current
+			  DESCRIPTION
+				"Instructs the system to reload the MGT mapping list"
+			  ::= { mobGenCommands 11 }				   -- 1.3.6.1.4.1.11150.1.2.11
+
+mobCmdScanMVNOList  OBJECT-TYPE
+			  SYNTAX INTEGER { scan(1) }
+			  MAX-ACCESS read-write
+			  STATUS current
+			  DESCRIPTION
+				"Instructs the system to reload the MVNO data"
+			  ::= { mobGenCommands 12 }				   -- 1.3.6.1.4.1.11150.1.2.12
+
+mobCmdDumpMVNOList  OBJECT-TYPE
+			  SYNTAX INTEGER { scan(1) }
+			  MAX-ACCESS read-write
+			  STATUS current
+			  DESCRIPTION
+				"Instructs the system to dump the MVNO data in cache to a file"
+			  ::= { mobGenCommands 13 }				   -- 1.3.6.1.4.1.11150.1.2.13
+
+mobCmdScanGSNIPRanges  OBJECT-TYPE
+			  SYNTAX INTEGER { scan(1) }
+			  MAX-ACCESS read-write
+			  STATUS current
+			  DESCRIPTION
+				"Instructs the system to rescan the GSN IP Range cache."
+			  ::= { mobGenCommands 14 }				   -- 1.3.6.1.4.1.11150.1.2.14
+
+mobCmdScanGPRSData  OBJECT-TYPE
+			  SYNTAX INTEGER { scan(1) }
+			  MAX-ACCESS read-write
+			  STATUS current
+			  DESCRIPTION
+				"Instructs the system to rescan the APN master cache."
+			  ::= { mobGenCommands 15 }				   -- 1.3.6.1.4.1.11150.1.2.15
+
+mobCmdScanSharedGT  OBJECT-TYPE
+			  SYNTAX INTEGER { scan(1) }
+			  MAX-ACCESS read-write
+			  STATUS current
+			  DESCRIPTION
+				"Instructs the system to rescan the Shared GT cache."
+			  ::= { mobGenCommands 16 }				   -- 1.3.6.1.4.1.11150.1.2.16
+
+mobCmdScanCDMASIDCache OBJECT-TYPE
+			  SYNTAX INTEGER { scan(1) }
+			  MAX-ACCESS read-write
+			  STATUS current
+			  DESCRIPTION
+				"Instructs the system to rescan the CDMA SID cache."
+			  ::= { mobGenCommands 17 }				   -- 1.3.6.1.4.1.11150.1.2.17
+
+mobCmdDumpThreadHealth  OBJECT-TYPE
+			  SYNTAX INTEGER { summary(1), detail(2) }
+			  MAX-ACCESS read-write
+			  STATUS current
+			  DESCRIPTION
+				"Instructs the system to dump thread health data in a flat file."
+			  ::= { mobGenCommands 18 }				   -- 1.3.6.1.4.1.11150.1.2.18
+
+--Command planned for next major release.
+--
+-- mobCmdCfgRescan  OBJECT-TYPE
+--			  SYNTAX INTEGER { scan(1) }
+--			  MAX-ACCESS read-write
+--			  STATUS current
+--			  DESCRIPTION
+--				"Instructs the system to rescan the configuration file entries."
+--			  ::= { mobGenCommands 5 }				   - - 1.3.6.1.4.1.11150.1.2.5
+--Not implemented yet.
+
+--
+-- Variables sent in traps across applications
+--
+
+mobGenTraps  OBJECT IDENTIFIER ::= {gen-mob 3 } 	   -- 1.3.6.1.4.1.11150.1.3
+
+mobGenSeverity OBJECT-TYPE
+			   SYNTAX INTEGER
+			   {
+					normal(1),
+					indefinite(2),
+					warning(3),
+					minor(4),
+					major(5),
+					critical(6)
+			   }
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the severity of an alarm."
+			  ::= { mobGenTraps 1 } 				  -- 1.3.6.1.4.1.11150.1.3.1
+
+mobGenDescription OBJECT-TYPE
+			  SYNTAX DisplayString
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Provides a textual description of an alarm."
+			  ::= { mobGenTraps 2 } 			  -- 1.3.6.1.4.1.11150.1.3.2
+
+mobGenMachineID OBJECT-TYPE
+			  SYNTAX DisplayString
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Provides the information about the computer."
+			  ::= { mobGenTraps 3 } 			  -- 1.3.6.1.4.1.11150.1.3.3
+
+mobGenPoolName OBJECT-TYPE
+			  SYNTAX DisplayString
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Provides the name of a pool of resources."
+			  ::= { mobGenTraps 4 } 			  -- 1.3.6.1.4.1.11150.1.3.4
+
+mobGenNumResources OBJECT-TYPE
+			  SYNTAX Integer32
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Provides the number of resources. This variable is typically
+				 used in conjunction with a pool which is specified using
+				 mobGenPoolName (1.3.6.1.4.1.11150.1.3.4)"
+			  ::= { mobGenTraps 5 } 			  -- 1.3.6.1.4.1.11150.1.3.5
+
+mobGenErrorCode OBJECT-TYPE
+			  SYNTAX DisplayString
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates an error code."
+			  ::= { mobGenTraps 6 } 			  -- 1.3.6.1.4.1.11150.1.3.6
+
+mobGenRemoteHostAddr OBJECT-TYPE
+			  SYNTAX IpAddress
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the IP address of a remote computer."
+			  ::= { mobGenTraps 7 } 			  -- 1.3.6.1.4.1.11150.1.3.7
+
+mobGenRemotePort OBJECT-TYPE
+			  SYNTAX Integer32
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the TCP/UDP port on a remote computer."
+			  ::= { mobGenTraps 8 } 			  -- 1.3.6.1.4.1.11150.1.3.8
+
+
+mobGenLocalPort OBJECT-TYPE
+			  SYNTAX Integer32
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the TCP/UDP port on the local computer."
+			  ::= { mobGenTraps 9 } 			  -- 1.3.6.1.4.1.11150.1.3.9
+
+mobGenAlarmTime OBJECT-TYPE
+			  SYNTAX DisplayString
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the time when the alarm is raised or cleared."
+			  ::= { mobGenTraps 10 } 			  -- 1.3.6.1.4.1.11150.1.3.10
+
+mobGenHostAddr OBJECT-TYPE
+			  SYNTAX IpAddress
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the IP address of the agent computer."
+			  ::= { mobGenTraps 11 } 			  -- 1.3.6.1.4.1.11150.1.3.11
+
+mobGenThresholdValue OBJECT-TYPE
+			  SYNTAX Integer32
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the threshold value that has been breached/cleared."
+			  ::= { mobGenTraps 12 } 			  -- 1.3.6.1.4.1.11150.1.3.12
+
+mobGenServiceName OBJECT-TYPE
+			  SYNTAX DisplayString
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the name of the service that raised/cleared the trap."
+			  ::= { mobGenTraps 13 } 			  -- 1.3.6.1.4.1.11150.1.3.13
+
+mobGenAlarmType OBJECT-TYPE
+			  SYNTAX Integer32
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the alarm type."
+			  ::= { mobGenTraps 14 } 			  -- 1.3.6.1.4.1.11150.1.3.14
+
+mobGenSpecificCause OBJECT-TYPE
+			  SYNTAX Integer32
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the specific cause of an alarm."
+			  ::= { mobGenTraps 15 } 			  -- 1.3.6.1.4.1.11150.1.3.15
+
+mobGenSeverityTrend OBJECT-TYPE
+			  SYNTAX Integer32
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the trend in severity level."
+			  ::= { mobGenTraps 16 } 			  -- 1.3.6.1.4.1.11150.1.3.16
+
+mobGenProbableCause OBJECT-TYPE
+			  SYNTAX Integer32
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the probable cause of an alarm."
+			  ::= { mobGenTraps 17 } 			  -- 1.3.6.1.4.1.11150.1.3.17
+
+mobGenCapacity OBJECT-TYPE
+			  SYNTAX Integer32
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the maximum capacity of a resource."
+			  ::= { mobGenTraps 18 } 			  -- 1.3.6.1.4.1.11150.1.3.18
+
+mobGenUtilization OBJECT-TYPE
+			  SYNTAX Integer32
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the utilized capacity of a resource."
+			  ::= { mobGenTraps 19 } 			  -- 1.3.6.1.4.1.11150.1.3.19
+
+mobGenErrorText OBJECT-TYPE
+			  SYNTAX DisplayString
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the textual description of an error."
+			  ::= { mobGenTraps 20 } 			  -- 1.3.6.1.4.1.11150.1.3.20
+
+mobGenNotificationId OBJECT-TYPE
+			  SYNTAX Integer32
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"The value of this object can be used for matching a raise and its
+				 corresponding clear traps."
+			  ::= { mobGenTraps 21 } 			  -- 1.3.6.1.4.1.11150.1.3.21
+
+mobGenCorrelationId OBJECT-TYPE
+			  SYNTAX Integer32
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates a correlated notification id."
+			  ::= { mobGenTraps 22 } 			  -- 1.3.6.1.4.1.11150.1.3.22
+
+mobGenSequenceNumber OBJECT-TYPE
+			  SYNTAX Integer32
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"The value of this object is an ever increasing sequence number
+				 in every trap raised by an agent. The value of this number is
+				 reset back to 1 after it reaches a value of 2147483647."
+			  ::= { mobGenTraps 23 } 			  -- 1.3.6.1.4.1.11150.1.3.23
+
+mobGenThresholdHWM OBJECT-TYPE
+			  SYNTAX Integer32
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the high water mark for an object with limited resource space."
+			  ::= { mobGenTraps 24 } 			  -- 1.3.6.1.4.1.11150.1.3.24
+
+mobGenThresholdLWM OBJECT-TYPE
+			  SYNTAX Integer32
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the low water mark for an object with limited resource space."
+			  ::= { mobGenTraps 25 } 			  -- 1.3.6.1.4.1.11150.1.3.25
+
+mobGenThresholdArmTime OBJECT-TYPE
+			  SYNTAX TimeTicks
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the time when an alarm for an object with limited resource
+				 space was armed."
+			  ::= { mobGenTraps 26 } 			  -- 1.3.6.1.4.1.11150.1.3.26
+
+mobGenThresholdName OBJECT-TYPE
+			  SYNTAX DisplayString
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the name of an object with limited resource space."
+			  ::= { mobGenTraps 27 } 			  -- 1.3.6.1.4.1.11150.1.3.27
+
+mobGenCacheName OBJECT-TYPE
+			  SYNTAX DisplayString
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the name of a cache."
+			  ::= { mobGenTraps 28 } 			  -- 1.3.6.1.4.1.11150.1.3.28
+
+mobGenAgentOID OBJECT-TYPE
+			  SYNTAX OBJECT IDENTIFIER
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the SNMP OID of the agent."
+			  ::= { mobGenTraps 29 } 			  -- 1.3.6.1.4.1.11150.1.3.29
+
+mobGenSourcePath OBJECT-TYPE
+			  SYNTAX DisplayString
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the name of a source directory."
+			  ::= { mobGenTraps 30 } 			  -- 1.3.6.1.4.1.11150.1.3.30
+
+mobGenTargetPath OBJECT-TYPE
+			  SYNTAX DisplayString
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the name of a target directory."
+			  ::= { mobGenTraps 31 } 			  -- 1.3.6.1.4.1.11150.1.3.31
+
+mobGenInstanceName OBJECT-TYPE
+			  SYNTAX DisplayString
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the name of the service instance that raised/cleared the trap."
+			  ::= { mobGenTraps 32 } 			  -- 1.3.6.1.4.1.11150.1.3.32
+
+mobGenRole OBJECT-TYPE
+			   SYNTAX INTEGER
+			   {
+					active(1),
+					standby(2)
+			   }
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the role of a service"
+			  ::= { mobGenTraps 33 }              -- 1.3.6.1.4.1.11150.1.3.33
+
+mobGenFeatureName OBJECT-TYPE
+			  SYNTAX DisplayString
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the name of the feature for which the raised/cleared the trap."
+			  ::= { mobGenTraps 34 } 			  -- 1.3.6.1.4.1.11150.1.3.34
+
+mobGenModuleId OBJECT-TYPE
+			  SYNTAX Integer32
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates a module identifier."
+			  ::= { mobGenTraps 35 } 			  -- 1.3.6.1.4.1.11150.1.3.35
+
+mobGenKPIName OBJECT-TYPE
+			  SYNTAX DisplayString
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates a Key Performance Index name"
+			  ::= { mobGenTraps 36 } 			  -- 1.3.6.1.4.1.11150.1.3.36
+
+mobGenNetwork OBJECT-TYPE
+			  SYNTAX DisplayString
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates a network (MCC-MNC)"
+			  ::= { mobGenTraps 37 } 			  -- 1.3.6.1.4.1.11150.1.3.37
+
+mobGenNodeName OBJECT-TYPE
+			  SYNTAX DisplayString
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates an application node name"
+			  ::= { mobGenTraps 38 } 			  -- 1.3.6.1.4.1.11150.1.3.38
+
+mobGenResourceName OBJECT-TYPE
+			  SYNTAX DisplayString
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates a resource name"
+			  ::= { mobGenTraps 39 } 			  -- 1.3.6.1.4.1.11150.1.3.39
+
+mobGenAddressList OBJECT-TYPE
+			  SYNTAX DisplayString
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates an address list containing pipe (|) seperated <protocol>://<ipaddress>:<port>"
+			  ::= { mobGenTraps 40 } 			  -- 1.3.6.1.4.1.11150.1.3.40
+
+mobGenRemoteHost OBJECT-TYPE
+			  SYNTAX DisplayString
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the IP v4 or v6 address of a remote computer."
+			  ::= { mobGenTraps 41 } 			  -- 1.3.6.1.4.1.11150.1.3.41
+
+mobGenHost OBJECT-TYPE
+			  SYNTAX DisplayString
+			  MAX-ACCESS accessible-for-notify
+			  STATUS current
+			  DESCRIPTION
+				"Indicates the IP v4 or v6 address of the agent computer."
+			  ::= { mobGenTraps 42 } 			  -- 1.3.6.1.4.1.11150.1.3.42
+
+-- Traps applicable across applications
+--
+sdsTraps        OBJECT IDENTIFIER ::= { gen-mob 4 }   -- 1.3.6.1.4.1.11150.1.4
+sdsTrapsGroup   OBJECT IDENTIFIER ::= { sdsTraps 0 }  -- 1.3.6.1.4.1.11150.1.4.0
+
+------------------------------------------------------------------------------
+-- This trap is now deprecated.
+-- Severity:    Normal
+-- Description: "Application 'DBWriter' restarted.", 	
+-- AgentOID:    OID Of Applications
+----------
+-- Severity:    Critical
+-- Description: "Application '{appname}' was hanging. It is being restarted.", 	
+-- AgentOID:    OID Of Applications
+----------
+-- Severity:    Critical
+-- Description: "Failed to kill application '{appname}'.",
+-- AgentOID:    OID Of Applications
+----------
+-- Severity:    Critical
+-- Description: "Application '{appname}' cannot be started.", 
+-- AgentOID:    OID Of Applications
+--------------------------------------------------------------------------------
+sdsSysNoResp    NOTIFICATION-TYPE
+                OBJECTS { mobGenNotificationId, mobGenSeverity,
+                          mobGenDescription, mobGenMachineID,
+                          mobGenServiceName, mobGenAlarmTime,
+                          mobGenAlarmType, mobGenProbableCause, mobGenAgentOID }
+                STATUS obsolete
+                DESCRIPTION
+                "Indicates that a service is not responding to the system health monitor."
+                ::= { sdsTrapsGroup 1 }
+
+--------------------------------------------------------------------------------
+-- This trap is now deprecated.
+-- Severity:        Normal
+-- Description:     "{appname} application heartbeat"
+-- SequenceNumber:  Running sequence number.
+-- AgentOID:        OID Of Applications.
+--------------------------------------------------------------------------------
+sdsSysHeartbeat NOTIFICATION-TYPE
+                OBJECTS { mobGenNotificationId, mobGenSeverity,
+                          mobGenDescription, mobGenMachineID,
+                          mobGenServiceName, mobGenAlarmTime,
+                          mobGenAlarmType, mobGenProbableCause,
+                          mobGenSequenceNumber, mobGenAgentOID }
+                STATUS obsolete
+                DESCRIPTION
+                "Indicates a heartbeat to inform that the application is running normally."
+                ::= { sdsTrapsGroup 2 }
+
+END

@@ -1,0 +1,2259 @@
+--
+-- Roamware MM Service MIB definition.
+-- Release : 1.0
+-- Revision : Q90705
+-- Revision date : 24-Jul-2009
+--
+-- This specification is supplied "AS IS," and no warranty,
+-- either expressed or implied, as to the use, operation, condition,
+-- or performance of the specification, is made by the publisher.
+--
+-- Publisher: Roamware Inc., USA
+-- **************************************************************
+MMSERVICE-V2-MIB DEFINITIONS ::= BEGIN
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, NOTIFICATION-TYPE, enterprises,
+    TimeTicks, Counter32, IpAddress, Integer32
+        FROM SNMPv2-SMI
+    DisplayString
+        FROM SNMPv2-TC
+    OBJECT-GROUP
+        FROM SNMPv2-CONF
+	roamware, mobGenSeverity, mobGenDescription, mobGenPoolName, mobGenMachineID,
+	mobGenRemoteHostAddr, mobGenRemotePort, mobGenAlarmTime, mobGenThresholdValue,
+	mobGenNotificationId, mobGenServiceName, mobGenAlarmType, mobGenProbableCause,
+	mobGenCacheName, mobGenErrorText, mobGenThresholdLWM, mobGenThresholdHWM,
+	mobGenThresholdArmTime, mobGenThresholdName, mobGenUtilization, mobGenCapacity,
+	mobGenSourcePath, mobGenTargetPath, mobGenInstanceName, mobGenRole, mobGenFeatureName
+		FROM Roamware-SDS-V2-MIB;
+
+pmms-mob			MODULE-IDENTITY
+	LAST-UPDATED "200907010000Z"
+	ORGANIZATION "Roamware Inc."
+	CONTACT-INFO "info@roamware.com"
+	DESCRIPTION  "This is the top level entry for Roamware MM Service 1.0"
+	REVISION     "200907010000Z"
+	DESCRIPTION  "Initial version."
+	::= { roamware 103 }																-- 1.3.6.1.4.1.11150.103
+	
+--
+-- MM Service KPI Group
+--
+mmServiceKPIGroup				OBJECT IDENTIFIER ::= { pmms-mob 2 }					-- 1.3.6.1.4.1.11150.103.2
+
+---
+--- mmServiceULThresholdGroup
+--- threshold for update location related alarms
+---
+mmServiceULThresholdGroup			OBJECT IDENTIFIER ::= { mmServiceKPIGroup 1 }				-- 1.3.6.1.4.1.11150.103.2.1
+
+mmServiceUpdateLocationMonitoredHWM		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "If the percent of Profile updates monitored is greater than HWM % of the total Profile updates monitored an alarm is raised"
+		   ::= { mmServiceULThresholdGroup 1 }									-- 1.3.6.1.4.1.11150.103.2.1.1
+
+mmServiceUpdateLocationMonitoredLWM		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "If the percent of Profile updates monitored is less than LWM % of the total Profile updates monitored the alarm is cleared"
+		   ::= { mmServiceULThresholdGroup 2 }									-- 1.3.6.1.4.1.11150.103.2.1.2
+
+--
+-- MM Service VLR Passive Event KPI
+-- keep statistics related to VLR passive events like ULs,isds,dsds,cl,purgems etc monitored 
+--
+mmServicePassiveVlrKPIGroup			OBJECT IDENTIFIER ::= { mmServiceKPIGroup 2 }				-- 1.3.6.1.4.1.11150.103.2.2
+
+mmServiceVlrULsMonitored				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of VLR update locations monitored passively in last one minute"
+		   ::= { mmServicePassiveVlrKPIGroup 1 }								-- 1.3.6.1.4.1.11150.103.2.2.1
+		   
+mmServiceVlrISDsMonitored				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of VLR ISDs monitored passively in last one minute"
+		   ::= { mmServicePassiveVlrKPIGroup 2 }								-- 1.3.6.1.4.1.11150.103.2.2.2
+	
+mmServiceVlrDSDsMonitored				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of VLR DSDs monitored passively in last one minute"
+		   ::= { mmServicePassiveVlrKPIGroup 3 }								-- 1.3.6.1.4.1.11150.103.2.2.3
+		   
+mmServiceVlrCLsMonitored				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of VLR CLs monitored passively in last one minute"
+		   ::= { mmServicePassiveVlrKPIGroup 4 }								-- 1.3.6.1.4.1.11150.103.2.2.4
+   		   
+mmServiceVlrPMsMonitored				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of VLR Purge MSs  monitored passively in last one minute"
+		   ::= { mmServicePassiveVlrKPIGroup 5 }								-- 1.3.6.1.4.1.11150.103.2.2.5
+
+--
+-- MM Service VLR KPI Group
+-- keep statistics of incoming VLR TCAP messages
+--
+mmServiceTcapVlrKPIGroup			OBJECT IDENTIFIER ::= { mmServiceKPIGroup 3 }				-- 1.3.6.1.4.1.11150.103.2.3
+
+---
+--- mmServiceVlrIsdKPIGroup
+--- number of VLR ISDs succeeded/failed/ etc
+---
+
+mmServiceVlrIsdKPIGroup				OBJECT IDENTIFIER ::= { mmServiceTcapVlrKPIGroup 1 }			-- 1.3.6.1.4.1.11150.103.2.3.1
+
+mmServiceVlrIsdFailures				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of VLR ISD Failures in last one minute"
+		   ::= { mmServiceVlrIsdKPIGroup 1 }									-- 1.3.6.1.4.1.11150.103.2.3.1.1
+		   
+mmServiceVlrIsdTimeouts				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of VLR ISD Timeouts in last one minute"
+		   ::= { mmServiceVlrIsdKPIGroup 2 }									-- 1.3.6.1.4.1.11150.103.2.3.1.2
+		   
+mmServiceVlrIsdAborts				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of VLR ISD Aborts in last one minute"
+		   ::= { mmServiceVlrIsdKPIGroup 3 }									-- 1.3.6.1.4.1.11150.103.2.3.1.3
+		   
+mmServiceVlrIsdAcks					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of VLR ISD Acks in last one minute"
+		   ::= { mmServiceVlrIsdKPIGroup 4 }									-- 1.3.6.1.4.1.11150.103.2.3.1.4
+		   
+mmServiceVlrIsdNacks				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of VLR ISD Nacks in last one minute"
+		   ::= { mmServiceVlrIsdKPIGroup 5 }									-- 1.3.6.1.4.1.11150.103.2.3.1.5	
+		   
+mmServiceVlrIsdAttempts				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of VLR ISD Attempts in last one minute"
+		   ::= { mmServiceVlrIsdKPIGroup 6 }									-- 1.3.6.1.4.1.11150.103.2.3.1.6
+		   		   
+mmServiceVlrIsdNotAttemptsDueToCamelPhaseMismatch				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of VLR ISD not attempted due to Camel Phase mismatch in last one minute"
+		   ::= { mmServiceVlrIsdKPIGroup 7 }									-- 1.3.6.1.4.1.11150.103.2.3.1.7
+
+---
+--- mmServiceVlrDsdKPIGroup
+--- number of VLR DSDs succeeded/failed/ etc
+---
+mmServiceVlrDsdKPIGroup			OBJECT IDENTIFIER ::= { mmServiceTcapVlrKPIGroup 2 }				-- 1.3.6.1.4.1.11150.103.2.3.2
+
+mmServiceVlrDsdFailures				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of VLR DSD Failures in last one minute"
+		   ::= { mmServiceVlrDsdKPIGroup 1 }									-- 1.3.6.1.4.1.11150.103.2.3.2.1
+		   
+mmServiceVlrDsdTimeouts				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of VLR DSD Timeouts in last one minute"
+		   ::= { mmServiceVlrDsdKPIGroup 2 }									-- 1.3.6.1.4.1.11150.103.2.3.2.2
+		   
+mmServiceVlrDsdAborts				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of VLR DSD Aborts in last one minute"
+		   ::= { mmServiceVlrDsdKPIGroup 3 }									-- 1.3.6.1.4.1.11150.103.2.3.2.3
+		   
+mmServiceVlrDsdAcks					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of VLR DSD Acks in last one minute"
+		   ::= { mmServiceVlrDsdKPIGroup 4 }									-- 1.3.6.1.4.1.11150.103.2.3.2.4
+		   
+mmServiceVlrDsdNacks				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of VLR DSD Nacks in last one minute"
+		   ::= { mmServiceVlrDsdKPIGroup 5 }									-- 1.3.6.1.4.1.11150.103.2.3.2.5
+		   
+mmServiceVlrDsdAttempts				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of VLR DSD Attempts in last one minute"
+		   ::= { mmServiceVlrDsdKPIGroup 6 }									-- 1.3.6.1.4.1.11150.103.2.3.2.6	
+
+---
+--- mmServicePUThresholdGroup
+--- threshold for profile updation (isd/dsd) related alarms
+---
+
+mmServicePUThresholdGroup			OBJECT IDENTIFIER ::= { mmServiceTcapVlrKPIGroup 3 }			-- 1.3.6.1.4.1.11150.103.2.3.3
+
+mmServiceProfileUpdateFailureHWM		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "If the percent of Profile update attempts failed is greater than HWM % of the total Profile update attempts an alarm is raised"
+		   ::= { mmServicePUThresholdGroup 1 }									-- 1.3.6.1.4.1.11150.103.2.3.3.1
+
+mmServiceProfileUpdateFailureLWM		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "If the percent of Profile update attempts failed is less than LWM % of the total Profile update attempts the alarm is cleared"
+		   ::= { mmServicePUThresholdGroup 2 }									-- 1.3.6.1.4.1.11150.103.2.3.3.2
+		   
+mmServiceProfileUpdateSuccessHWM		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "If the percent of Profile update attempts successes are greater than HWM % of the total Profile update attempts an alarm is raised"
+		   ::= { mmServicePUThresholdGroup 3 }									-- 1.3.6.1.4.1.11150.103.2.3.3.3
+
+mmServiceProfileUpdateSuccessLWM		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "If the percent of Profile update attempts successes are less than LWM % of the total Profile update attempts the alarm is cleared"
+		   ::= { mmServicePUThresholdGroup 4 }									-- 1.3.6.1.4.1.11150.103.2.3.3.4
+		   
+---
+--- mmServiceVlrPUKPIGroup
+--- threshold for profile updation (isd/dsd) related alarms
+---
+mmServiceVlrPUKPIGroup			OBJECT IDENTIFIER ::= { mmServiceTcapVlrKPIGroup 4 }				-- 1.3.6.1.4.1.11150.103.2.3.4
+
+mmServiceVlrProfileUpdateAttempts			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of VLR Profile Update (ISD+DSD) attempts in last one minute"
+		   ::= { mmServiceVlrPUKPIGroup 1 }									-- 1.3.6.1.4.1.11150.103.2.3.4.1
+		   
+
+mmServiceVlrProfileUpdateFailures			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of VLR Profile update (ISD+DSD) Failures in last one minute"
+		   ::= { mmServiceVlrPUKPIGroup 2 }									-- 1.3.6.1.4.1.11150.103.2.3.4.2
+		   
+---
+--- mmServiceVlrRDKPIGroup
+--- threshold for profile updation (RD) related alarms
+---
+mmServiceVlrRDKPIGroup			OBJECT IDENTIFIER ::= { mmServiceTcapVlrKPIGroup 5 }				-- 1.3.6.1.4.1.11150.103.2.3.5
+
+mmServiceVlrRDAttempts			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of  VLR RD Success attempts in last one minute"
+		   ::= { mmServiceVlrRDKPIGroup 1 }									-- 1.3.6.1.4.1.11150.103.2.3.5.1
+		   
+
+mmServiceVlrRDFailures			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of VLR RD Failures in last one minute"
+		   ::= { mmServiceVlrRDKPIGroup 2 }									-- 1.3.6.1.4.1.11150.103.2.3.5.2
+
+		  
+---
+--- mmServiceEMLPPThresholdGroup
+--- threshold for EMLPP related alarms
+---
+
+mmServiceEMLPPThresholdGroup			OBJECT IDENTIFIER ::= { mmServiceTcapVlrKPIGroup 6 }			-- 1.3.6.1.4.1.11150.103.2.3.6
+
+mmServiceEMLPPFailedHWM				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "If the percent of eMLPP attempts failed is greater than HWM % of the total eMLPP attempts an alarm is raised"
+		   ::= { mmServiceEMLPPThresholdGroup 1 }								-- 1.3.6.1.4.1.11150.103.2.3.6.1
+
+mmServiceEMLPPFailedLWM				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "If the percent of eMLPP attempts failed is less than LWM % of the total eMLPP attempts the alarm is cleared"
+		   ::= { mmServiceEMLPPThresholdGroup 2 }								-- 1.3.6.1.4.1.11150.103.2.3.6.2
+
+---
+--- mmServiceVlrEmlppKPIGroup
+--- number of eMLPP attempted succeeded/failed/ etc
+---
+mmServiceVlrEmlppKPIGroup			OBJECT IDENTIFIER ::= { mmServiceTcapVlrKPIGroup 7 }			-- 1.3.6.1.4.1.11150.103.2.3.7
+
+mmServiceULOrISDRcvd				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of ULs or SA-ISDs recieved in last one minute"
+		   ::= { mmServiceVlrEmlppKPIGroup 1 }									-- 1.3.6.1.4.1.11150.103.2.3.7.1
+		  
+mmServiceULOrISDRcvdWithEMLPP				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of ULs or SA-ISDs recieved with eMLPP in last one minute"
+		   ::= { mmServiceVlrEmlppKPIGroup 2 }									-- 1.3.6.1.4.1.11150.103.2.3.7.2
+
+mmServiceEmlppRequestSent				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of eMLPP attempts in last one minute"
+		   ::= { mmServiceVlrEmlppKPIGroup 3 }									-- 1.3.6.1.4.1.11150.103.2.3.7.3
+
+mmServiceEmlppSuccess					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of eMLPP attempts successful in last one minute"
+		   ::= { mmServiceVlrEmlppKPIGroup 4 }									-- 1.3.6.1.4.1.11150.103.2.3.7.4
+
+mmServiceEmlppFailed					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of eMLPP attempts failed in last one minute"
+		   ::= { mmServiceVlrEmlppKPIGroup 5 }									-- 1.3.6.1.4.1.11150.103.2.3.7.5
+		  
+
+
+--
+-- MM Service Internal Service Request KPI
+--  Keep statistics related to internal service requests
+--
+mmServiceIntSvcKPIGroup				OBJECT IDENTIFIER ::= { mmServiceKPIGroup 4 }				-- 1.3.6.1.4.1.11150.103.2.4
+
+mmServiceIReqsReceived				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of internal service requests received in last one minute"
+		   ::= { mmServiceIntSvcKPIGroup 1 }									-- 1.3.6.1.4.1.11150.103.2.4.1
+
+		   
+--
+-- MM Service Passive Event KPI
+-- keep statistics related to SGSN's passive events like ULs,isds,dsds,cl,purgems etc monitored 
+--
+mmServicePassiveSgsnKPIGroup			OBJECT IDENTIFIER ::= { mmServiceKPIGroup 5 }				-- 1.3.6.1.4.1.11150.103.2.5
+
+mmServiceSgsnULsMonitored				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of SGSN update locations monitored passively in last one minute"
+		   ::= { mmServicePassiveSgsnKPIGroup 1 }								-- 1.3.6.1.4.1.11150.103.2.5.1
+		   
+mmServiceSgsnISDsMonitored				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of SGSN ISDs monitored passively in last one minute"
+		   ::= { mmServicePassiveSgsnKPIGroup 2 }								-- 1.3.6.1.4.1.11150.103.2.5.2
+	
+mmServiceSgsnDSDsMonitored				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of SGSN DSDs monitored passively in last one minute"
+		   ::= { mmServicePassiveSgsnKPIGroup 3 }								-- 1.3.6.1.4.1.11150.103.2.5.3
+		   
+mmServiceSgsnCLsMonitored				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of SGSN CLs monitored passively in last one minute"
+		   ::= { mmServicePassiveSgsnKPIGroup 4 }								-- 1.3.6.1.4.1.11150.103.2.5.4
+   		   
+mmServiceSgsnPMsMonitored				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of SGSN Purge MSs  monitored passively in last one minute"
+		   ::= { mmServicePassiveSgsnKPIGroup 5 }								-- 1.3.6.1.4.1.11150.103.2.5.5
+
+--
+-- MM Service SGSN TCAP KPI Group
+-- keep statistics of incoming TCAP messages
+--
+mmServiceTcapSgsnKPIGroup			OBJECT IDENTIFIER ::= { mmServiceKPIGroup 6 }				-- 1.3.6.1.4.1.11150.103.2.6
+
+---
+--- mmServiceSgsnIsdKPIGroup
+--- number of SGSN ISDs succeeded/failed/ etc
+---
+
+mmServiceSgsnIsdKPIGroup				OBJECT IDENTIFIER ::= { mmServiceTcapSgsnKPIGroup 1 }		-- 1.3.6.1.4.1.11150.103.2.6.1
+
+mmServiceSgsnIsdFailures				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of SGSN ISD Failures in last one minute"
+		   ::= { mmServiceSgsnIsdKPIGroup 1 }									-- 1.3.6.1.4.1.11150.103.2.6.1.1
+		   
+mmServiceSgsnIsdTimeouts				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of SGSN ISD Timeouts in last one minute"
+		   ::= { mmServiceSgsnIsdKPIGroup 2 }									-- 1.3.6.1.4.1.11150.103.2.6.1.2
+		   
+mmServiceSgsnIsdAborts					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of SGSN ISD Aborts in last one minute"
+		   ::= { mmServiceSgsnIsdKPIGroup 3 }									-- 1.3.6.1.4.1.11150.103.2.6.1.3
+		   
+mmServiceSgsnIsdAcks					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of SGSN ISD Acks in last one minute"
+		   ::= { mmServiceSgsnIsdKPIGroup 4 }									-- 1.3.6.1.4.1.11150.103.2.6.1.4
+		   
+mmServiceSgsnIsdNacks					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of SGSN ISD Nacks in last one minute"
+		   ::= { mmServiceSgsnIsdKPIGroup 5 }									-- 1.3.6.1.4.1.11150.103.2.6.1.5	
+		   
+mmServiceSgsnIsdAttempts				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of SGSN ISD Attempts in last one minute"
+		   ::= { mmServiceSgsnIsdKPIGroup 6 }									-- 1.3.6.1.4.1.11150.103.2.6.1.6
+
+mmServiceSgsnIsdNotAttemptsDueToCamelPhaseMismatch				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of SGSN ISD not attempted due to Camel Phase mismatch in last one minute"
+		   ::= { mmServiceSgsnIsdKPIGroup 7 }									-- 1.3.6.1.4.1.11150.103.2.6.1.7
+				   
+---
+--- mmServiceSgsnDsdKPIGroup
+--- number of VLR DSDs succeeded/failed/ etc
+---
+mmServiceSgsnDsdKPIGroup			OBJECT IDENTIFIER ::= { mmServiceTcapSgsnKPIGroup 2 }			-- 1.3.6.1.4.1.11150.103.2.6.2
+
+mmServiceSgsnDsdFailures				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of SGSN DSD Failures in last one minute"
+		   ::= { mmServiceSgsnDsdKPIGroup 1 }									-- 1.3.6.1.4.1.11150.103.2.6.2.1
+		   
+mmServiceSgsnDsdTimeouts				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of SGSN DSD Timeouts in last one minute"
+		   ::= { mmServiceSgsnDsdKPIGroup 2 }									-- 1.3.6.1.4.1.11150.103.2.6.2.2
+		   
+mmServiceSgsnDsdAborts					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of SGSN DSD Aborts in last one minute"
+		   ::= { mmServiceSgsnDsdKPIGroup 3 }									-- 1.3.6.1.4.1.11150.103.2.6.2.3
+		   
+mmServiceSgsnDsdAcks					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of SGSN DSD Acks in last one minute"
+		   ::= { mmServiceSgsnDsdKPIGroup 4 }									-- 1.3.6.1.4.1.11150.103.2.6.2.4
+		   
+mmServiceSgsnDsdNacks					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of SGSN DSD Nacks in last one minute"
+		   ::= { mmServiceSgsnDsdKPIGroup 5 }									-- 1.3.6.1.4.1.11150.103.2.6.2.5
+		   
+mmServiceSgsnDsdAttempts				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of SGSN DSD Attempts in last one minute"
+		   ::= { mmServiceSgsnDsdKPIGroup 6 }									-- 1.3.6.1.4.1.11150.103.2.6.2.6	
+		   
+---
+--- mmServiceSgsnPUKPIGroup
+--- threshold for SGSN profile updation (isd/dsd) related alarms
+---
+mmServiceSgsnPUKPIGroup			OBJECT IDENTIFIER ::= { mmServiceTcapSgsnKPIGroup 3}				-- 1.3.6.1.4.1.11150.103.2.6.3
+
+mmServiceSgsnProfileUpdateAttempts			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of SGSN Profile Update (ISD+DSD) attempts in last one minute"
+		   ::= { mmServiceSgsnPUKPIGroup 1 }									-- 1.3.6.1.4.1.11150.103.2.6.3.1
+		   
+
+mmServiceSgsnProfileUpdateFailures			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of SGSN Profile update (ISD+DSD) Failures in last one minute"
+		   ::= { mmServiceSgsnPUKPIGroup 2 }									-- 1.3.6.1.4.1.11150.103.2.6.3.2
+
+--
+-- MM Service Caches
+--
+mmServiceCacheGroup				OBJECT IDENTIFIER ::= { pmms-mob 1 }			-- 1.3.6.1.4.1.11150.103.1
+
+--
+-- MM Service HLRVLRRecord Cache - The HLR data received in UL/ISD/DSD to VLR is persisted here
+--
+mmServiceHLRVLRRecordCacheGroup	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 1 }	-- 1.3.6.1.4.1.11150.103.1.1
+
+mmServiceHLRVLRRecordCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was not found in HLRVLRRecord cache
+			 in the last one minute."
+		   ::= { mmServiceHLRVLRRecordCacheGroup 5 }										-- 1.3.6.1.4.1.11150.103.1.1.5
+
+mmServiceHLRVLRRecordCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing HLRVLRRecord cache configuration properties."
+		   ::= { mmServiceHLRVLRRecordCacheGroup 6 }										-- 1.3.6.1.4.1.11150.103.1.1.6
+		   
+mmServiceHLRVLRRecordCachePullHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a record was pulled from db into HLRVLRRecord cache"
+		   ::= { mmServiceHLRVLRRecordCacheGroup 7 }										-- 1.3.6.1.4.1.11150.103.1.1.7
+		   
+mmServiceHLRVLRRecordCacheSaves			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a record was inserted into HLRVLRRecord cache"
+		   ::= { mmServiceHLRVLRRecordCacheGroup 8 }										-- 1.3.6.1.4.1.11150.103.1.1.8
+		   
+mmServiceHLRVLRRecordCacheRemoves			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times records have been removed from HLRVLRRecord cache"
+		   ::= { mmServiceHLRVLRRecordCacheGroup 9 }										-- 1.3.6.1.4.1.11150.103.1.1.9
+
+mmServiceHLRVLRRecordCachePrint			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the HLRVLRRecord cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { mmServiceHLRVLRRecordCacheGroup 10 }										-- 1.3.6.1.4.1.11150.103.1.1.10
+
+--
+-- MM Service HLRSGSNRecord Cache - The HLR data received in UL/ISD/DSD to SGSN is persisted here
+--
+mmServiceHLRSGSNRecordCacheGroup	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 2 }	-- 1.3.6.1.4.1.11150.103.1.2
+
+
+mmServiceHLRSGSNRecordCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was not found in HLRSGSNRecord cache
+			 in the last one minute."
+		   ::= { mmServiceHLRSGSNRecordCacheGroup 5 }										-- 1.3.6.1.4.1.11150.103.1.2.5
+
+mmServiceHLRSGSNRecordCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing HLRSGSNRecord cache configuration properties."
+		   ::= { mmServiceHLRSGSNRecordCacheGroup 6 }										-- 1.3.6.1.4.1.11150.103.1.2.6
+		   
+mmServiceHLRSGSNRecordCachePullHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a record was pulled from db into HLRSGSNRecord cache"
+		   ::= { mmServiceHLRSGSNRecordCacheGroup 7 }										-- 1.3.6.1.4.1.11150.103.1.2.7
+		   
+mmServiceHLRSGSNRecordCacheSaves			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a record was inserted into HLRSGSNRecord cache"
+		   ::= { mmServiceHLRSGSNRecordCacheGroup 8 }										-- 1.3.6.1.4.1.11150.103.1.2.8
+		   
+mmServiceHLRSGSNRecordCacheRemoves			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times records have been removed from HLRSGSNRecord cache"
+		   ::= { mmServiceHLRSGSNRecordCacheGroup 9 }										-- 1.3.6.1.4.1.11150.103.1.2.9
+
+mmServiceHLRSGSNRecordCachePrint			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the HLRSGSNRecord cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { mmServiceHLRSGSNRecordCacheGroup 10 }										-- 1.3.6.1.4.1.11150.103.1.2.10
+
+--
+-- MM Service VLRCOSConfig Cache - This has the operator configuration of a profile to be set in VLR 
+--
+mmServiceVLRCOSConfigCacheGroup	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 3 }	-- 1.3.6.1.4.1.11150.103.1.3
+
+
+mmServiceVLRCOSConfigCacheCmdRefresh		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The HLRVLRRecord cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { mmServiceVLRCOSConfigCacheGroup 2 }										-- 1.3.6.1.4.1.11150.103.1.3.2
+
+mmServiceVLRCOSConfigCacheRefreshTime		OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of VLRCOSConfig cache."
+		   ::= { mmServiceVLRCOSConfigCacheGroup 3 }										-- 1.3.6.1.4.1.11150.103.1.3.3
+	
+mmServiceVLRCOSConfigCacheMemHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was found in the VLRCOSConfig cache in the
+			 last one minute."
+		   ::= { mmServiceVLRCOSConfigCacheGroup 4 }										-- 1.3.6.1.4.1.11150.103.1.3.4
+
+mmServiceVLRCOSConfigCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was not found in VLRCOSConfig cache
+			 in the last one minute."
+		   ::= { mmServiceVLRCOSConfigCacheGroup 5 }										-- 1.3.6.1.4.1.11150.103.1.3.5
+
+mmServiceVLRCOSConfigCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing HLRSGSNRecord cache configuration properties."
+		   ::= { mmServiceVLRCOSConfigCacheGroup 6 }										-- 1.3.6.1.4.1.11150.103.1.3.6
+
+--
+-- MM Service SGSNCOSConfig Cache - This has the operator configuration of a profile to be set in SGSN 
+--
+mmServiceSGSNCOSConfigCacheGroup	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 4 }	-- 1.3.6.1.4.1.11150.103.1.4
+
+
+mmServiceSGSNCOSConfigCacheCmdRefresh		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The HLRSGSNRecord cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { mmServiceSGSNCOSConfigCacheGroup 2 }										-- 1.3.6.1.4.1.11150.103.1.4.2
+
+mmServiceSGSNCOSConfigCacheRefreshTime		OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of SGSNCOSConfig cache."
+		   ::= { mmServiceSGSNCOSConfigCacheGroup 3 }										-- 1.3.6.1.4.1.11150.103.1.4.3
+	
+mmServiceSGSNCOSConfigCacheMemHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was found in the SGSNCOSConfig cache in the
+			 last one minute."
+		   ::= { mmServiceSGSNCOSConfigCacheGroup 4 }										-- 1.3.6.1.4.1.11150.103.1.4.4
+
+mmServiceSGSNCOSConfigCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was not found in SGSNCOSConfig cache
+			 in the last one minute."
+		   ::= { mmServiceSGSNCOSConfigCacheGroup 5 }										-- 1.3.6.1.4.1.11150.103.1.4.5
+
+mmServiceSGSNCOSConfigCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing HLRSGSNRecord cache configuration properties."
+		   ::= { mmServiceSGSNCOSConfigCacheGroup 6 }										-- 1.3.6.1.4.1.11150.103.1.4.6
+
+--
+-- MM Service ActionMaster Cache - This has action ids and action name for the mmservice actions 
+--
+mmServiceActionMasterCacheGroup	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 5 }	-- 1.3.6.1.4.1.11150.103.1.5
+
+mmServiceActionMasterCacheCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of elements in the ActionMaster cache in the instance of MMService."
+		   ::= { mmServiceActionMasterCacheGroup 1 }										-- 1.3.6.1.4.1.11150.103.1.5.1
+
+mmServiceActionMasterCacheCmdRefresh		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The ActionMaster cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { mmServiceActionMasterCacheGroup 2 }										-- 1.3.6.1.4.1.11150.103.1.5.2
+
+mmServiceActionMasterCacheRefreshTime		OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of ActionMaster cache."
+		   ::= { mmServiceActionMasterCacheGroup 3 }										-- 1.3.6.1.4.1.11150.103.1.5.3
+	
+mmServiceActionMasterCacheMemHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was found in the ActionMaster cache in the
+			 last one minute."
+		   ::= { mmServiceActionMasterCacheGroup 4 }										-- 1.3.6.1.4.1.11150.103.1.5.4
+
+mmServiceActionMasterCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was not found in ActionMaster cache
+			 in the last one minute."
+		   ::= { mmServiceActionMasterCacheGroup 5 }										-- 1.3.6.1.4.1.11150.103.1.5.5
+
+mmServiceActionMasterCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing ActionMaster cache configuration properties."
+		   ::= { mmServiceActionMasterCacheGroup 6 }										-- 1.3.6.1.4.1.11150.103.1.5.6
+		   
+mmServiceActionMasterCachePrint			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the HLRSGSNRecord cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { mmServiceActionMasterCacheGroup 7 }										-- 1.3.6.1.4.1.11150.103.1.5.7
+--
+-- MM Service ActionChaining Cache - This has next action information for a specific current action and response
+--
+mmServiceActionChainingCacheGroup	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 6 }	-- 1.3.6.1.4.1.11150.103.1.6
+
+mmServiceActionChainingCacheCount			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of elements in the ActionChaining cache in the instance of MMService."
+		   ::= { mmServiceActionChainingCacheGroup 1 }										-- 1.3.6.1.4.1.11150.103.1.6.1
+
+mmServiceActionChainingCacheCmdRefresh		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The ActionChaining cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { mmServiceActionChainingCacheGroup 2 }										-- 1.3.6.1.4.1.11150.103.1.6.2
+
+mmServiceActionChainingCacheRefreshTime		OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of ActionChaining cache."
+		   ::= { mmServiceActionChainingCacheGroup 3 }										-- 1.3.6.1.4.1.11150.103.1.6.3
+	
+mmServiceActionChainingCacheMemHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was found in the ActionChaining cache in the
+			 last one minute."
+		   ::= { mmServiceActionChainingCacheGroup 4 }										-- 1.3.6.1.4.1.11150.103.1.6.4
+
+mmServiceActionChainingCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was not found in ActionChaining cache
+			 in the last one minute."
+		   ::= { mmServiceActionChainingCacheGroup 5 }										-- 1.3.6.1.4.1.11150.103.1.6.5
+
+mmServiceActionChainingCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing ActionChaining cache configuration properties."
+		   ::= { mmServiceActionChainingCacheGroup 6 }										-- 1.3.6.1.4.1.11150.103.1.6.6
+		   
+mmServiceActionChainingCachePrint			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the HLRSGSNRecord cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { mmServiceActionChainingCacheGroup 7 }										-- 1.3.6.1.4.1.11150.103.1.6.7
+
+--
+-- MM Service MobilityControl Cache - This has the first action to be executed for a given appgroup and event information.
+--
+mmServiceMobilityControlCacheGroup	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 7 }	-- 1.3.6.1.4.1.11150.103.1.7
+
+mmServiceMobilityControlCacheCmdRefresh		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The MobilityControl cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { mmServiceMobilityControlCacheGroup 2 }										-- 1.3.6.1.4.1.11150.103.1.7.2
+
+mmServiceMobilityControlCacheRefreshTime		OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of MobilityControl cache."
+		   ::= { mmServiceMobilityControlCacheGroup 3 }										-- 1.3.6.1.4.1.11150.103.1.7.3
+	
+mmServiceMobilityControlCacheMemHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was found in the MobilityControl cache in the
+			 last one minute."
+		   ::= { mmServiceMobilityControlCacheGroup 4 }										-- 1.3.6.1.4.1.11150.103.1.7.4
+
+mmServiceMobilityControlCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was not found in MobilityControl cache
+			 in the last one minute."
+		   ::= { mmServiceMobilityControlCacheGroup 5 }										-- 1.3.6.1.4.1.11150.103.1.7.5
+
+mmServiceMobilityControlCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing MobilityControl cache configuration properties."
+		   ::= { mmServiceMobilityControlCacheGroup 6 }										-- 1.3.6.1.4.1.11150.103.1.7.6
+
+--
+-- MM Service SvcKeyGTMapping Cache - This cache stores the originalgt,servicekey for a generated service key
+--
+mmServiceSvcKeyGTMappingCacheGroup	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 8 }	-- 1.3.6.1.4.1.11150.103.1.8
+
+
+mmServiceSvcKeyGTMappingCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was not found in SvcKeyGTMapping cache
+			 in the last one minute."
+		   ::= { mmServiceSvcKeyGTMappingCacheGroup 5 }										-- 1.3.6.1.4.1.11150.103.1.8.5
+
+mmServiceSvcKeyGTMappingCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing SvcKeyGTMapping cache configuration properties."
+		   ::= { mmServiceSvcKeyGTMappingCacheGroup 6 }										-- 1.3.6.1.4.1.11150.103.1.8.6
+
+mmServiceSvcKeyGTMappingCachePullHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a record was pulled from db into SvcKeyGTMapping cache"
+		   ::= { mmServiceSvcKeyGTMappingCacheGroup 7 }										-- 1.3.6.1.4.1.11150.103.1.8.7
+		   
+mmServiceSvcKeyGTMappingCacheSaves			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a record was inserted into SvcKeyGTMapping cache"
+		   ::= { mmServiceSvcKeyGTMappingCacheGroup 8 }										-- 1.3.6.1.4.1.11150.103.1.8.8
+		   
+mmServiceSvcKeyGTMappingCacheRemoves			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times records have been removed from SvcKeyGTMapping cache"
+		   ::= { mmServiceSvcKeyGTMappingCacheGroup 9 }										-- 1.3.6.1.4.1.11150.103.1.8.9
+
+mmServiceSvcKeyGTMappingCachePrint			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the SvcKeyGTMapping cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { mmServiceSvcKeyGTMappingCacheGroup 10 }										-- 1.3.6.1.4.1.11150.103.1.8.10
+
+--
+-- MM Service GTSvcKeyMapping Cache - This cache stores the generated servicekey for a specific original gt and original service key
+--
+mmServiceGTSvcKeyMappingCacheGroup	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 9 }	-- 1.3.6.1.4.1.11150.103.1.9
+
+
+mmServiceGTSvcKeyMappingCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was not found in GTSvcKeyMapping cache
+			 in the last one minute."
+		   ::= { mmServiceGTSvcKeyMappingCacheGroup 5 }										-- 1.3.6.1.4.1.11150.103.1.9.5
+
+mmServiceGTSvcKeyMappingCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing GTSvcKeyMapping cache configuration properties."
+		   ::= { mmServiceGTSvcKeyMappingCacheGroup 6 }										-- 1.3.6.1.4.1.11150.103.1.9.6
+
+mmServiceGTSvcKeyMappingCachePullHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a record was pulled from db into GTSvcKeyMapping cache"
+		   ::= { mmServiceGTSvcKeyMappingCacheGroup 7 }										-- 1.3.6.1.4.1.11150.103.1.9.7
+		   
+mmServiceGTSvcKeyMappingCacheSaves			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a record was inserted into GTSvcKeyMapping cache"
+		   ::= { mmServiceGTSvcKeyMappingCacheGroup 8 }										-- 1.3.6.1.4.1.11150.103.1.9.8
+		   
+mmServiceGTSvcKeyMappingCacheRemoves			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times records have been removed from GTSvcKeyMapping cache"
+		   ::= { mmServiceGTSvcKeyMappingCacheGroup 9 }										-- 1.3.6.1.4.1.11150.103.1.9.9
+
+mmServiceGTSvcKeyMappingCachePrint			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the GTSvcKeyMapping cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { mmServiceGTSvcKeyMappingCacheGroup 10 }										-- 1.3.6.1.4.1.11150.103.1.9.10
+
+--
+-- Exclusion List Cache - cache which stores the PMMS white list, black list information
+--
+mmServiceExclusionListCacheGroup				OBJECT IDENTIFIER ::= { mmServiceCacheGroup 10 }		-- 1.3.6.1.4.1.11150.103.1.10
+
+
+mmServiceExclusionListCacheCmdRefresh			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The ExclusionList list cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { mmServiceExclusionListCacheGroup 2 }											-- 1.3.6.1.4.1.11150.103.1.10.2
+	
+mmServiceExclusionListCacheRefreshTime			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of ExclusionList list cache."
+		   ::= { mmServiceExclusionListCacheGroup 3 }											-- 1.3.6.1.4.1.11150.103.1.10.3
+		   
+mmServiceExclusionListCacheMemHits				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a network entry was found in the ExclusionList list cache in the
+			 last one minute."
+		   ::= { mmServiceExclusionListCacheGroup 4 }											-- 1.3.6.1.4.1.11150.103.1.10.4
+
+mmServiceExclusionListCacheMisses				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a network entry was not found in ExclusionList list cache
+			 in the last one minute."
+		   ::= { mmServiceExclusionListCacheGroup 5 }											-- 1.3.6.1.4.1.11150.103.1.10.5
+
+mmServiceExclusionListCacheProps				OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing ExclusionList list cache configuration properties."
+		   ::= { mmServiceExclusionListCacheGroup 6 }											-- 1.3.6.1.4.1.11150.103.1.10.6
+
+--
+-- QOS Control Cache - cache which stores Quality of Service parameters
+--
+mmServiceQOSControlCacheGroup					OBJECT IDENTIFIER ::= { mmServiceCacheGroup 11 }				-- 1.3.6.1.4.1.11150.103.1.11
+
+mmServiceQOSControlCacheCount					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of elements in the QOSControl cache in the instance of MMService."
+		   ::= { mmServiceQOSControlCacheGroup 1 }											-- 1.3.6.1.4.1.11150.103.1.11.1
+
+mmServiceQOSControlCacheRefresh					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The QOSControl cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { mmServiceQOSControlCacheGroup 2 }											-- 1.3.6.1.4.1.11150.103.1.11.2
+	
+mmServiceQOSControlCacheRefreshTime				OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of QOSControl cache."
+		   ::= { mmServiceQOSControlCacheGroup 3 }											-- 1.3.6.1.4.1.11150.103.1.11.3
+		   
+mmServiceQOSControlCacheMemHits					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a network entry was found in the QOSControl cache in the
+			 last one minute."
+		   ::= { mmServiceQOSControlCacheGroup 4 }											-- 1.3.6.1.4.1.11150.103.1.11.4
+
+mmServiceQOSControlCacheMisses					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a network entry was not found in QOSControl cache
+			 in the last one minute."
+		   ::= { mmServiceQOSControlCacheGroup 5 }											-- 1.3.6.1.4.1.11150.103.1.11.5
+
+mmServiceQOSControlCacheProps					OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing QOSControl cache configuration properties."
+		   ::= { mmServiceQOSControlCacheGroup 6 }											-- 1.3.6.1.4.1.11150.103.1.11.6
+		
+mmServiceQOSControlCachePrint					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the QOSControl cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { mmServiceQOSControlCacheGroup 7 }											-- 1.3.6.1.4.1.11150.103.1.11.7
+
+
+--
+-- NetworkCamelInfo Cache - cache which stores Quality of Service parameters
+--
+mmServiceNetworkCamelInfoCacheGroup				OBJECT IDENTIFIER ::= { mmServiceCacheGroup 12 }	 -- 1.3.6.1.4.1.11150.103.1.12
+
+mmServiceNetworkCamelInfoCacheCount					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of elements in the NetworkCamelInfo cache in the instance of MMService."
+		   ::= { mmServiceNetworkCamelInfoCacheGroup 1 }											-- 1.3.6.1.4.1.11150.103.1.12.1
+
+mmServiceNetworkCamelInfoCacheRefresh					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The NetworkCamelInfo cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { mmServiceNetworkCamelInfoCacheGroup 2 }											-- 1.3.6.1.4.1.11150.103.1.12.2
+	
+mmServiceNetworkCamelInfoCacheRefreshTime				OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of NetworkCamelInfo cache."
+		   ::= { mmServiceNetworkCamelInfoCacheGroup 3 }											-- 1.3.6.1.4.1.11150.103.1.12.3
+		   
+mmServiceNetworkCamelInfoCacheMemHits					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a network entry was found in the NetworkCamelInfo cache in the
+			 last one minute."
+		   ::= { mmServiceNetworkCamelInfoCacheGroup 4 }											-- 1.3.6.1.4.1.11150.103.1.12.4
+
+mmServiceNetworkCamelInfoCacheMisses					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a network entry was not found in NetworkCamelInfo cache
+			 in the last one minute."
+		   ::= { mmServiceNetworkCamelInfoCacheGroup 5 }											-- 1.3.6.1.4.1.11150.103.1.12.5
+
+mmServiceNetworkCamelInfoCacheProps					OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing NetworkCamelInfo cache configuration properties."
+		   ::= { mmServiceNetworkCamelInfoCacheGroup 6 }											-- 1.3.6.1.4.1.11150.103.1.12.6
+		
+mmServiceNetworkCamelInfoCachePrint					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the NetworkCamelInfo cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { mmServiceNetworkCamelInfoCacheGroup 7 }											-- 1.3.6.1.4.1.11150.103.1.12.7
+
+
+--
+-- MM Service OldGTModGT Cache - This cache stores the Modified GT for a specific original gt 
+--
+mmServiceOrigGTModGTMappingCacheGroup	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 13 }	-- 1.3.6.1.4.1.11150.103.1.13
+
+
+mmServiceOrigGTModGTMappingCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was not found in OrigGTModGTMapping cache
+			 in the last one minute."
+		   ::= { mmServiceOrigGTModGTMappingCacheGroup 5 }										-- 1.3.6.1.4.1.11150.103.1.13.5
+
+mmServiceOrigGTModGTMappingCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing OrigGTModGTMapping cache configuration properties."
+		   ::= { mmServiceOrigGTModGTMappingCacheGroup 6 }										-- 1.3.6.1.4.1.11150.103.1.13.6
+
+mmServiceOrigGTModGTMappingCachePullHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a record was pulled from db into OrigGTModGTMapping cache"
+		   ::= { mmServiceOrigGTModGTMappingCacheGroup 7 }										-- 1.3.6.1.4.1.11150.103.1.13.7
+		   
+mmServiceOrigGTModGTMappingCacheCacheSaves			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a record was inserted into OrigGTModGTMapping cache"
+		   ::= { mmServiceOrigGTModGTMappingCacheGroup 8 }										-- 1.3.6.1.4.1.11150.103.1.13.8
+		   
+mmServiceOrigGTModGTMappingCacheRemoves			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times records have been removed from OrigGTModGTMapping cache"
+		   ::= { mmServiceOrigGTModGTMappingCacheGroup 9 }										-- 1.3.6.1.4.1.11150.103.1.13.9
+
+mmServiceOrigGTModGTMappingCacheCachePrint			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the OrigGTModGTMapping cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { mmServiceOrigGTModGTMappingCacheGroup 10 }										-- 1.3.6.1.4.1.11150.103.1.13.10
+
+--
+-- MM Service SGSN Addr To GT Cache - This cache stores the GT for a SGSN Address 
+--
+mmServiceSGSNAddrGTMappingCacheGroup	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 14 }	-- 1.3.6.1.4.1.11150.103.1.14
+
+
+mmServiceSGSNAddrGTMappingCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was not found in SGSNAddrGTMapping cache
+			 in the last one minute."
+		   ::= { mmServiceSGSNAddrGTMappingCacheGroup 5 }										-- 1.3.6.1.4.1.11150.103.1.14.5
+
+mmServiceSGSNAddrGTMappingCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing SGSNAddrGTMapping cache configuration properties."
+		   ::= { mmServiceSGSNAddrGTMappingCacheGroup 6 }										-- 1.3.6.1.4.1.11150.103.1.14.6
+
+mmServiceSGSNAddrGTMappingCachePullHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a record was pulled from db into SGSNAddrGTMapping cache"
+		   ::= { mmServiceSGSNAddrGTMappingCacheGroup 7 }										-- 1.3.6.1.4.1.11150.103.1.14.7
+		   
+mmServiceSGSNAddrGTMappingCacheCacheSaves			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a record was inserted into SGSNAddrGTMapping cache"
+		   ::= { mmServiceSGSNAddrGTMappingCacheGroup 8 }										-- 1.3.6.1.4.1.11150.103.1.14.8
+		   
+mmServiceSGSNAddrGTMappingCacheRemoves			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times records have been removed from SGSNAddrGTMapping cache"
+		   ::= { mmServiceSGSNAddrGTMappingCacheGroup 9 }										-- 1.3.6.1.4.1.11150.103.1.14.9
+
+mmServiceSGSNAddrGTMappingCacheCachePrint			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the SGSNAddrGTMapping cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { mmServiceSGSNAddrGTMappingCacheGroup 10 }										-- 1.3.6.1.4.1.11150.103.1.14.10
+
+
+-- MM Service GT to mapversion Cache - This cache stores the mapversion for a GT 
+--
+mmServiceGTMapVersionMappingCacheGroup	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 15 }	-- 1.3.6.1.4.1.11150.103.1.15
+
+
+mmServiceGTMapVersionMappingCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was not found in GTMapVersionMapping cache
+			 in the last one minute."
+		   ::= { mmServiceGTMapVersionMappingCacheGroup 5 }										-- 1.3.6.1.4.1.11150.103.1.15.5
+
+mmServiceGTMapVersionMappingCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing GTMapVersionMapping cache configuration properties."
+		   ::= { mmServiceGTMapVersionMappingCacheGroup 6 }										-- 1.3.6.1.4.1.11150.103.1.15.6
+
+mmServiceGTMapVersionMappingCachePullHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a record was pulled from db into GTMapVersionMapping cache"
+		   ::= { mmServiceGTMapVersionMappingCacheGroup 7 }										-- 1.3.6.1.4.1.11150.103.1.15.7
+		   
+mmServiceGTMapVersionMappingCacheCacheSaves			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a record was inserted into GTMapVersionMapping cache"
+		   ::= { mmServiceGTMapVersionMappingCacheGroup 8 }										-- 1.3.6.1.4.1.11150.103.1.15.8
+		   
+mmServiceGTMapVersionMappingCacheRemoves			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times records have been removed from GTMapVersionMapping cache"
+		   ::= { mmServiceGTMapVersionMappingCacheGroup 9 }										-- 1.3.6.1.4.1.11150.103.1.15.9
+
+mmServiceGTMapVersionMappingCacheCachePrint			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the GTMapVersionMapping cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { mmServiceGTMapVersionMappingCacheGroup 10 }										-- 1.3.6.1.4.1.11150.103.1.15.10
+
+-- MM Service QoS Template Cache - This cache stores the QoS Templates 
+--
+mmServiceQoSTmplCacheGroup	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 16 }	-- 1.3.6.1.4.1.11150.103.1.16
+--
+
+mmServiceQoSTmplCacheCount					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of elements in the QOS Template cache in the instance of MMService."
+		   ::= { mmServiceQoSTmplCacheGroup 1 }											-- 1.3.6.1.4.1.11150.103.1.16.1
+
+mmServiceQoSTmplCacheRefresh					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The QOS Template cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { mmServiceQoSTmplCacheGroup 2 }											-- 1.3.6.1.4.1.11150.103.1.16.2
+	
+mmServiceQoSTmplCacheRefreshTime				OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of QOS Template cache."
+		   ::= { mmServiceQoSTmplCacheGroup 3 }											-- 1.3.6.1.4.1.11150.103.1.16.3
+		   
+mmServiceQoSTmplCacheMemHits					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a network entry was found in the QOS Template cache in the
+			 last one minute."
+		   ::= { mmServiceQoSTmplCacheGroup 4 }											-- 1.3.6.1.4.1.11150.103.1.16.4
+
+mmServiceQoSTmplCacheMisses					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a network entry was not found in QOS Template cache
+			 in the last one minute."
+		   ::= { mmServiceQoSTmplCacheGroup 5 }											-- 1.3.6.1.4.1.11150.103.1.16.5
+
+mmServiceQoSTmplCacheProps					OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing QOS Template cache configuration properties."
+		   ::= { mmServiceQoSTmplCacheGroup 6 }											-- 1.3.6.1.4.1.11150.103.1.16.6
+		
+mmServiceQoSTmplCachePrint					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the QOS Template cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { mmServiceQoSTmplCacheGroup 7 }											-- 1.3.6.1.4.1.11150.103.1.16.7
+
+--
+-- PMMS Subscriber Whitelist Cache 
+--
+
+mmServiceWhiteListCacheGroup	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 17 }	-- 1.3.6.1.4.1.11150.103.1.17
+
+
+mmServiceWhiteListCacheRefresh					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The White List Cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { mmServiceWhiteListCacheGroup 1 }					-- 1.3.6.1.4.1.11150.103.1.17.1
+	
+mmServiceWhiteListCacheRefreshTime				OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of White List Cache."
+		   ::= { mmServiceWhiteListCacheGroup 2 }					-- 1.3.6.1.4.1.11150.103.1.17.2
+		   
+
+-- MM Service VPMN Specific Config Cache - This cache stores the VPMN Specific Configuration for blacklisting
+--
+mmServiceVpmnSpecCacheGroup	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 18 }	-- 1.3.6.1.4.1.11150.103.1.18
+--
+
+mmServiceVpmnSpecCacheCount					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of elements in the VPMN Specific Config cache in the instance of MMService."
+		   ::= { mmServiceVpmnSpecCacheGroup 1 }											-- 1.3.6.1.4.1.11150.103.1.18.1
+
+mmServiceVpmnSpecCacheRefresh					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The VPMN Specific Config cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { mmServiceVpmnSpecCacheGroup 2 }											-- 1.3.6.1.4.1.11150.103.1.18.2
+	
+mmServiceVpmnSpecCacheRefreshTime				OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of VPMN Specific Config cache."
+		   ::= { mmServiceVpmnSpecCacheGroup 3 }											-- 1.3.6.1.4.1.11150.103.1.18.3
+		   
+mmServiceVpmnSpecCacheMemHits					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a network entry was found in the VPMN Specific Config cache in the
+			 last one minute."
+		   ::= { mmServiceVpmnSpecCacheGroup 4 }											-- 1.3.6.1.4.1.11150.103.1.18.4
+
+mmServiceVpmnSpecCacheMisses					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a network entry was not found in VPMN Specific Config cache
+			 in the last one minute."
+		   ::= { mmServiceVpmnSpecCacheGroup 5 }											-- 1.3.6.1.4.1.11150.103.1.18.5
+
+mmServiceVpmnSpecCacheProps					OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing VPMN Specific Config cache configuration properties."
+		   ::= { mmServiceVpmnSpecCacheGroup 6 }											-- 1.3.6.1.4.1.11150.103.1.18.6
+		
+mmServiceVpmnSpecCachePrint					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the VPMN Specific Config cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { mmServiceVpmnSpecCacheGroup 7 }											-- 1.3.6.1.4.1.11150.103.1.18.7
+
+-- MM Service MME Specific Config Cache - This cache stores the MME specific configurations where VPMN / Alliance id is curently null
+--
+mmMMESpecificConfigCacheGroup	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 25 }	-- 1.3.6.1.4.1.11150.103.1.25
+--
+
+mmMMESpecificConfigCacheRefresh					OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The MME specific config cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { mmMMESpecificConfigCacheGroup 2 }											-- 1.3.6.1.4.1.11150.103.1.25.2
+	
+mmMMESpecificConfigCacheRefreshTime				OBJECT-TYPE
+		   SYNTAX OCTET STRING
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of MME specific config cache."
+		   ::= { mmMMESpecificConfigCacheGroup 3 }											-- 1.3.6.1.4.1.11150.103.1.25.3
+		   
+mmMMESpecificConfigCacheMemHits					OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a network entry was found in the MME specific config cache in the
+			 last one minute."
+		   ::= { mmMMESpecificConfigCacheGroup 4 }											-- 1.3.6.1.4.1.11150.103.1.25.4
+
+mmMMESpecificConfigCacheMisses					OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a network entry was not found in MME specific config cache
+			 in the last one minute."
+		   ::= { mmMMESpecificConfigCacheGroup 5 }											-- 1.3.6.1.4.1.11150.103.1.25.5
+
+mmMMESpecificConfigCacheProps					OBJECT-TYPE
+		   SYNTAX OCTET STRING
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing MME specific config cache configuration properties."
+		   ::= { mmMMESpecificConfigCacheGroup 6 }										-- 1.3.6.1.4.1.11150.103.1.25.6
+
+
+--DelayIDRTimeCache
+
+mmServiceDelayIDRTimeCacheGroup	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 19 }	-- 1.3.6.1.4.1.11150.103.1.19
+--
+
+mmServiceDelayIDRTimeCacheCount					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of elements in the Delay IDR Time Cache in the instance of MMService."
+		   ::= { mmServiceDelayIDRTimeCacheGroup 1 }											-- 1.3.6.1.4.1.11150.103.1.19.1
+
+mmServiceDelayIDRTimeCacheRefresh					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The Delay IDR Time Cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { mmServiceDelayIDRTimeCacheGroup 2 }											-- 1.3.6.1.4.1.11150.103.1.19.2
+	
+mmServiceDelayIDRTimeCacheRefreshTime				OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of Delay IDR Time Cache."
+		   ::= { mmServiceDelayIDRTimeCacheGroup 3 }											-- 1.3.6.1.4.1.11150.103.1.19.3
+		   
+mmServiceDelayIDRTimeCacheMemHits					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a network entry was found in the Delay IDR Time Cache in the
+			 last one minute."
+		   ::= { mmServiceDelayIDRTimeCacheGroup 4 }											-- 1.3.6.1.4.1.11150.103.1.19.4
+
+mmServiceDelayIDRTimeCacheMisses					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a network entry was not found in Delay IDR Time Cache
+			 in the last one minute."
+		   ::= { mmServiceDelayIDRTimeCacheGroup 5 }											-- 1.3.6.1.4.1.11150.103.1.19.5
+
+mmServiceDelayIDRTimeCacheProps					OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing Delay IDR Time Cache configuration properties."
+		   ::= { mmServiceDelayIDRTimeCacheGroup 6 }											-- 1.3.6.1.4.1.11150.103.1.19.6
+		
+mmServiceDelayIDRTimeCachePrint					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the Delay IDR Time Cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { mmServiceDelayIDRTimeCacheGroup 7 }											-- 1.3.6.1.4.1.11150.103.1.19.7
+
+
+--DelayDSRTimeCache
+
+mmServiceDelayDSRTimeCacheGroup	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 20 }	-- 1.3.6.1.4.1.11150.103.1.20
+--
+
+mmServiceDelayDSRTimeCacheCount					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of elements in the Delay DSR Time Cache in the instance of MMService."
+		   ::= { mmServiceDelayDSRTimeCacheGroup 1 }											-- 1.3.6.1.4.1.11150.103.1.20.1
+
+mmServiceDelayDSRTimeCacheRefresh					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The Delay DSR Time Cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { mmServiceDelayDSRTimeCacheGroup 2 }											-- 1.3.6.1.4.1.11150.103.1.20.2
+	
+mmServiceDelayDSRTimeCacheRefreshTime				OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of Delay DSR Time Cache."
+		   ::= { mmServiceDelayDSRTimeCacheGroup 3 }											-- 1.3.6.1.4.1.11150.103.1.20.3
+		   
+mmServiceDelayDSRTimeCacheMemHits					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a network entry was found in the Delay DSR Time Cache in the
+			 last one minute."
+		   ::= { mmServiceDelayDSRTimeCacheGroup 4 }											-- 1.3.6.1.4.1.11150.103.1.20.4
+
+mmServiceDelayDSRTimeCacheMisses					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a network entry was not found in Delay DSR Time Cache
+			 in the last one minute."
+		   ::= { mmServiceDelayDSRTimeCacheGroup 5 }											-- 1.3.6.1.4.1.11150.103.1.20.5
+
+mmServiceDelayDSRTimeCacheProps					OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing Delay DSR Time Cache configuration properties."
+		   ::= { mmServiceDelayDSRTimeCacheGroup 6 }											-- 1.3.6.1.4.1.11150.103.1.20.6
+		
+mmServiceDelayDSRTimeCachePrint					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the Delay DSR Time Cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { mmServiceDelayDSRTimeCacheGroup 7 }											-- 1.3.6.1.4.1.11150.103.1.20.7
+
+
+
+
+		   
+-- MM Service SGSN Specific Config Cache - This cache stores the SGSN specific configurations where VPMN / Alliance id is not null
+--
+mmSGSNSpecificConfigCacheGroup	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 21 }	-- 1.3.6.1.4.1.11150.103.1.21
+--
+
+mmSGSNSpecificConfigCacheRefresh				OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The SGSN Specific Config Cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { mmSGSNSpecificConfigCacheGroup 2 }											-- 1.3.6.1.4.1.11150.103.1.21.2
+	
+mmSGSNSpecificConfigCacheRefreshTime				OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of SGSN Specific Config Cache."
+		   ::= { mmSGSNSpecificConfigCacheGroup 3 }											-- 1.3.6.1.4.1.11150.103.1.21.3
+		   
+mmSGSNSpecificConfigCacheMemHits					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a network entry was found in the SGSN Specific Config Cache in the
+			 last one minute."
+		   ::= { mmSGSNSpecificConfigCacheGroup 4 }											-- 1.3.6.1.4.1.11150.103.1.21.4
+
+mmSGSNSpecificConfigCacheMisses					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a network entry was not found in SGSN Specific Config Cache
+			 in the last one minute."
+		   ::= { mmSGSNSpecificConfigCacheGroup 5 }											-- 1.3.6.1.4.1.11150.103.1.21.5
+
+mmSGSNSpecificConfigCacheProps					OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing SGSN Specific Config Cache configuration properties."
+		   ::= { mmSGSNSpecificConfigCacheGroup 6 }											-- 1.3.6.1.4.1.11150.103.1.21.6
+
+--
+-- MM Service HLRVLRRecord Cache - The HLR data received in UL/ISD/DSD to VLR is persisted here
+--
+mmServiceNetworkCacheGroup	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 23 }	-- 1.3.6.1.4.1.11150.103.1.23
+
+mmServiceNetworkCacheMisses			OBJECT-TYPE
+		   SYNTAX INTEGER
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was not found in Network Group Cache cache
+			 in the last one minute."
+		   ::= { mmServiceNetworkCacheGroup 5 }										-- 1.3.6.1.4.1.11150.103.1.23.5
+
+mmServiceNetworkCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing Network Group Cache configuration properties."
+		   ::= { mmServiceNetworkCacheGroup 6 }										-- 1.3.6.1.4.1.11150.103.1.23.6
+		   
+mmServiceNetworkCachePullHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a record was pulled from db into Network Group Cache"
+		   ::= { mmServiceNetworkCacheGroup 7 }										-- 1.3.6.1.4.1.11150.103.1.23.7
+		   
+--
+-- MM Service LTECOSConfig Cache - This has the operator configuration of a profile to be set in SGSN 
+--
+mmServiceLTECOSConfigCacheGroup	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 24 }	-- 1.3.6.1.4.1.11150.103.1.24
+
+
+mmServiceLTECOSConfigCacheCmdRefresh		OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "The HLRSGSNRecord cache is refreshed when this parameter is SET with a non-zero value.
+			 GET on this parameter returns nothing useful."
+		   ::= { mmServiceLTECOSConfigCacheGroup 2 }				-- 1.3.6.1.4.1.11150.103.1.24.2
+
+mmServiceLTECOSConfigCacheRefreshTime		OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string containing the last refresh date/time of SGSNCOSConfig cache."
+		   ::= { mmServiceLTECOSConfigCacheGroup 3 }				-- 1.3.6.1.4.1.11150.103.1.24.3
+	
+mmServiceLTECOSConfigCacheMemHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was found in the SGSNCOSConfig cache in the
+			 last one minute."
+		   ::= { mmServiceLTECOSConfigCacheGroup 4 }				-- 1.3.6.1.4.1.11150.103.1.24.4
+
+mmServiceLTECOSConfigCacheMisses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was not found in SGSNCOSConfig cache
+			 in the last one minute."
+		   ::= { mmServiceLTECOSConfigCacheGroup 5 }				-- 1.3.6.1.4.1.11150.103.1.24.5
+
+mmServiceLTECOSConfigCacheProps			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing HLRSGSNRecord cache configuration properties."
+		   ::= { mmServiceLTECOSConfigCacheGroup 6 }				-- 1.3.6.1.4.1.11150.103.1.24.6
+
+
+--
+-- MM Service HLRSGSNRecord2 new Cache - The HLR data received in UL/ISD/DSD to SGSN is persisted here
+--
+
+mmServiceHLRSGSNRecord2Cache2Group	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 26 }	-- 1.3.6.1.4.1.11150.103.1.26
+
+
+mmServiceHLRSGSNRecord2Cache2Misses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was not found in HLRSGSNRecord2 cache
+			 in the last one minute."
+		   ::= { mmServiceHLRSGSNRecord2Cache2Group 5 }										-- 1.3.6.1.4.1.11150.103.1.26.5
+
+mmServiceHLRSGSNRecord2Cache2Props			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing HLRSGSNRecord2 cache configuration properties."
+		   ::= { mmServiceHLRSGSNRecord2Cache2Group 6 }										-- 1.3.6.1.4.1.11150.103.1.26.6
+		   
+mmServiceHLRSGSNRecord2Cache2PullHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a record was pulled from db into HLRSGSNRecord2 cache"
+		   ::= { mmServiceHLRSGSNRecord2Cache2Group 7 }										-- 1.3.6.1.4.1.11150.103.1.26.7
+		   
+mmServiceHLRSGSNRecord2Cache2Saves			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a record was inserted into HLRSGSNRecord2 cache"
+		   ::= { mmServiceHLRSGSNRecord2Cache2Group 8 }										-- 1.3.6.1.4.1.11150.103.1.26.8
+		   
+mmServiceHLRSGSNRecord2Cache2Removes			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times records have been removed from HLRSGSNRecord2 cache"
+		   ::= { mmServiceHLRSGSNRecord2Cache2Group 9 }										-- 1.3.6.1.4.1.11150.103.1.26.9
+
+mmServiceHLRSGSNRecord2Cache2Print			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the HLRSGSNRecord2 cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { mmServiceHLRSGSNRecord2Cache2Group 10 }										-- 1.3.6.1.4.1.11150.103.1.26.10
+
+
+--
+-- MM Service HSSMMERecord2 new Cache - The HSS data received in ULR/IDR/DSR to MME is persisted here
+--
+
+mmServiceHSSMMERecord2Cache2Group	OBJECT IDENTIFIER ::= { mmServiceCacheGroup 27 }	-- 1.3.6.1.4.1.11150.103.1.27
+
+
+mmServiceHSSMMERecord2Cache2Misses			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a parameter was not found in HSSMMERecord2 cache
+			 in the last one minute."
+		   ::= { mmServiceHSSMMERecord2Cache2Group 5 }										-- 1.3.6.1.4.1.11150.103.1.27.5
+
+mmServiceHSSMMERecord2Cache2Props			OBJECT-TYPE
+		   SYNTAX DisplayString
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns a string showing HSSMMERecord2 cache configuration properties."
+		   ::= { mmServiceHSSMMERecord2Cache2Group 6 }										-- 1.3.6.1.4.1.11150.103.1.27.6
+		   
+mmServiceHSSMMERecord2Cache2PullHits			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a record was pulled from db into HSSMMERecord2 cache"
+		   ::= { mmServiceHSSMMERecord2Cache2Group 7 }										-- 1.3.6.1.4.1.11150.103.1.27.7
+		   
+mmServiceHSSMMERecord2Cache2Saves			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times a record was inserted into HSSMMERecord2 cache"
+		   ::= { mmServiceHSSMMERecord2Cache2Group 8 }										-- 1.3.6.1.4.1.11150.103.1.27.8
+		   
+mmServiceHSSMMERecord2Cache2Removes			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of times records have been removed from HSSMMERecord2 cache"
+		   ::= { mmServiceHSSMMERecord2Cache2Group 9 }										-- 1.3.6.1.4.1.11150.103.1.27.9
+
+mmServiceHSSMMERecord2Cache2Print			OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "Dumps the content of the HSSMMERecord2 cache in a file when this parameter is SET
+			 with a non-zero value. GET on this parameter returns nothing useful."
+		   ::= { mmServiceHSSMMERecord2Cache2Group 10 }										-- 1.3.6.1.4.1.11150.103.1.27.10
+
+--
+		   
+		   
+---
+--- mmServiceDiaKPIGroup
+--- Diameter KPI Group
+---
+mmServiceDiaKPIGroup			OBJECT IDENTIFIER ::= { mmServiceKPIGroup 7 }				-- 1.3.6.1.4.1.11150.103.2.7
+
+---
+--- MMServiceDiaThresholdGroup
+--- threshold for Diameter related alarms
+---
+mmServiceDiaIReqThresholdGroup			OBJECT IDENTIFIER ::= { mmServiceDiaKPIGroup 1 }				-- 1.3.6.1.4.1.11150.103.2.7.1
+
+mmServiceIDRFailedHWM					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "If the percent of Diameter DIR failed is greater than HWM % of the total IDRs sent an alarm is raised"
+		   ::= { mmServiceDiaIReqThresholdGroup 1 }									-- 1.3.6.1.4.1.11150.103.2.7.1.1
+
+mmServiceIDRFailedLWM					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "If the percent of Diameter DIR failed is less than LWM % of the total IDRs sent the alarm is cleared"
+		   ::= { mmServiceDiaIReqThresholdGroup 2 }									-- 1.3.6.1.4.1.11150.103.2.7.1.2
+		   
+mmServiceDSRFailedHWM					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "If the percent of Diameter DSR failed is greater than HWM % of the total IDRs sent an alarm is raised"
+		   ::= { mmServiceDiaIReqThresholdGroup 3 }									-- 1.3.6.1.4.1.11150.103.2.7.1.3
+
+mmServiceDSRFailedLWM					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "If the percent of Diameter DSR failed is less than LWM % of the total IDRs sent the alarm is cleared"
+		   ::= { mmServiceDiaIReqThresholdGroup 4 }									-- 1.3.6.1.4.1.11150.103.2.7.1.4
+
+mmServiceCLRFailedHWM					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "If the percent of Diameter CLR failed is greater than HWM % of the total CLRs sent an alarm is raised"
+		   ::= { mmServiceDiaIReqThresholdGroup 5 }									-- 1.3.6.1.4.1.11150.103.2.7.1.5
+
+mmServiceCLRFailedLWM					OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-write
+		   STATUS current
+		   DESCRIPTION
+			 "If the percent of Diameter CLR failed is less than LWM % of the total CLRs sent the alarm is cleared"
+		   ::= { mmServiceDiaIReqThresholdGroup 6 }									-- 1.3.6.1.4.1.11150.103.2.7.1.6
+		   
+--
+-- MM Service IDR or DSR sent KPI
+-- keep statistics related to Diameter messages like IDRs, DSRs and CLRs sent to MME 
+--
+mmServiceDiaMMEKPIGroup			OBJECT IDENTIFIER ::= { mmServiceDiaKPIGroup 2 }				-- 1.3.6.1.4.1.11150.103.2.7.2
+
+mmServiceIDRSent						OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of diameter IDRs sent in last one minute"
+		   ::= { mmServiceDiaMMEKPIGroup 1 }								-- 1.3.6.1.4.1.11150.103.2.7.2.1
+
+mmServiceDSRSent						OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of diameter DSRs sent in last one minute"
+		   ::= { mmServiceDiaMMEKPIGroup 2 }								-- 1.3.6.1.4.1.11150.103.2.7.2.2
+		   
+mmServiceIDRFail						OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of IDR attempts failed in last one minute"
+		   ::= { mmServiceDiaMMEKPIGroup 3 }									-- 1.3.6.1.4.1.11150.103.2.7.2.3		   
+
+mmServiceDSRFail						OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of DSR attempts failed in last one minute"
+		   ::= { mmServiceDiaMMEKPIGroup 4 }									-- 1.3.6.1.4.1.11150.103.2.7.2.4
+
+mmServiceCLRSent						OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of diameter CLRs sent in last one minute"
+		   ::= { mmServiceDiaMMEKPIGroup 5 }								-- 1.3.6.1.4.1.11150.103.2.7.2.5
+
+mmServiceCLRFail						OBJECT-TYPE
+		   SYNTAX Integer32
+		   MAX-ACCESS read-only
+		   STATUS current
+		   DESCRIPTION
+			 "Returns the number of CLR attempts failed in last one minute"
+		   ::= { mmServiceDiaMMEKPIGroup 6 }									-- 1.3.6.1.4.1.11150.103.2.7.2.6		
+
+--
+-- MM Service Trap Group
+--
+mmServiceAlarmModule OBJECT IDENTIFIER ::= { pmms-mob 10 }							-- 1.3.6.1.4.1.11150.103.10
+mmServiceAlarmGroup  OBJECT IDENTIFIER ::= { mmServiceAlarmModule 0 }					-- 1.3.6.1.4.1.11150.103.10.0
+
+--
+-- MM Service Traps
+--		
+mmServiceTrapVlrProfileUpdateFailures	NOTIFICATION-TYPE
+			OBJECTS { mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+						mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+						mobGenCapacity, mobGenThresholdArmTime}
+			STATUS current
+			DESCRIPTION
+			  "Indicates that the percentage of vlr profile update failures is too high."
+			::= {mmServiceAlarmGroup 1}	
+
+mmServiceTrapVlrProfileUpdatesAbnormal	NOTIFICATION-TYPE
+			OBJECTS { mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+						mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+						mobGenCapacity, mobGenThresholdArmTime}
+			STATUS current
+			DESCRIPTION
+			  "Indicates that the number of vlr profile update attempts too high/low compared to previous interval."
+			::= {mmServiceAlarmGroup 2}	
+			
+mmServiceTrapVlrULsMonitoredAbnormal	NOTIFICATION-TYPE
+			OBJECTS { mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+						mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+						mobGenCapacity, mobGenThresholdArmTime}
+			STATUS current
+			DESCRIPTION
+			  "Indicates that the number of vlr update locations is too high/low compared to previous interval."
+			::= {mmServiceAlarmGroup 3}		
+
+mmServiceTrapSgsnProfileUpdateFailures	NOTIFICATION-TYPE
+			OBJECTS { mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+						mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+						mobGenCapacity, mobGenThresholdArmTime}
+			STATUS current
+			DESCRIPTION
+			  "Indicates that the percentage of sgsn profile update failures is too high."
+			::= {mmServiceAlarmGroup 5}		
+
+mmServiceTrapSgsnProfileUpdatesAbnormal	NOTIFICATION-TYPE
+			OBJECTS { mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+						mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+						mobGenCapacity, mobGenThresholdArmTime}
+			STATUS current
+			DESCRIPTION
+			  "Indicates that the number of sgsn profile update attempts is too high/low compared to previous interval."
+			::= {mmServiceAlarmGroup 6}				
+
+mmServiceSgsnULsMonitoredAbnormal	NOTIFICATION-TYPE
+			OBJECTS { mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+						mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+						mobGenCapacity, mobGenThresholdArmTime}
+			STATUS current
+			DESCRIPTION
+			  "Indicates that the number of sgsn update locations is too high/low compared to previous interval."
+			::= {mmServiceAlarmGroup 7}	
+
+mmServiceVLREmlppFailedAbnormal	NOTIFICATION-TYPE
+			OBJECTS { mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+						mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+						mobGenCapacity, mobGenThresholdArmTime}
+			STATUS current
+			DESCRIPTION
+			  "Indicates that the number of EMLPP failures too high/low compared to previous interval."
+			::= {mmServiceAlarmGroup 8}	
+
+mmServiceTrapInternalIDRRequestFailed	NOTIFICATION-TYPE
+			OBJECTS { mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+						mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+						mobGenCapacity, mobGenThresholdArmTime}
+			STATUS current
+			DESCRIPTION
+			  "Indicates that the percentage of IDRs failed due to Internal request is too high/low compared to previous interval."
+			::= {mmServiceAlarmGroup 9}		
+
+mmServiceTrapInternalDSRRequestFailed	NOTIFICATION-TYPE
+			OBJECTS { mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+						mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+						mobGenCapacity, mobGenThresholdArmTime}
+			STATUS current
+			DESCRIPTION
+			  "Indicates that the percentage of DSRs failed due to Internal request is too high/low compared to previous interval."
+			::= {mmServiceAlarmGroup 10}
+
+mmServiceTrapInternalCLRRequestFailed	NOTIFICATION-TYPE
+			OBJECTS { mobGenNotificationId, mobGenSeverity, mobGenDescription, mobGenMachineID,
+			            mobGenServiceName, mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause,
+						mobGenThresholdName, mobGenThresholdLWM, mobGenThresholdHWM, mobGenUtilization,
+						mobGenCapacity, mobGenThresholdArmTime}
+			STATUS current
+			DESCRIPTION
+			  "Indicates that the percentage of CLRs failed due to Internal request is too high/low compared to previous interval."
+			::= {mmServiceAlarmGroup 11}							
+
+END

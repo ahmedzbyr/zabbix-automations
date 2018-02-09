@@ -1,0 +1,368 @@
+"Name","Full Name","OID","Type","Access","Indexes","MIB Module","Description"
+"tmnxChassisNotification",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification",".1.3.6.1.4.1.6527.3.1.3.2.1.0",,,"","TIMETRA-CHASSIS-MIB",
+"tmnxHwConfigChange",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxHwConfigChange",".1.3.6.1.4.1.6527.3.1.3.2.1.0.1",,,"","TIMETRA-CHASSIS-MIB","""A tmnxHwConfigChange notification is generated when the value of
+tmnxHwLastChange is updated.  It can be used by the NMS to trigger
+maintenance polls of the hardware configuration information.
+Only one tmnxHwConfigChange notification event will be generated
+in a 5 second throttling time period.  A notification event is
+the transmission of a single trap to a list of notification
+destinations configured in the SNMP-TARGET-MIB.
+If additional hardware configuration change occurs within the
+throttling period, the notification events for these changes are
+suppressed until the throttling period expires.  At the end of
+the throttling period, one notification event is generated if
+any addition configuration changes occurred within the just
+completed throttling period and another throttling period is
+started.
+The NMS should periodically check the value of tmnxHwConfigChange
+to detect any missed tmnxHwConfigChange traps.
+This notification was made obsolete in the 2.1 release.
+The tmnxHwConfigChange notification has been replaced
+with the generic change notifications from the
+TIMETRA-SYSTEM-MIB:tmnxConfigModify, tmnxConfigCreate,
+tmnxConfigDelete, tmnxStateChange."""
+"tmnxEnvTempTooHigh",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEnvTempTooHigh",".1.3.6.1.4.1.6527.3.1.3.2.1.0.2",,,"","TIMETRA-CHASSIS-MIB","""Generated when the temperature sensor reading on an equipment
+object is greater than its configured threshold."""
+"tmnxEqPowerSupplyFailure",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqPowerSupplyFailure",".1.3.6.1.4.1.6527.3.1.3.2.1.0.3",,,"","TIMETRA-CHASSIS-MIB","""Generated when one of the chassis's power supplies fails."""
+"tmnxEqPowerSupplyInserted",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqPowerSupplyInserted",".1.3.6.1.4.1.6527.3.1.3.2.1.0.4",,,"","TIMETRA-CHASSIS-MIB","""Generated when one of the chassis's power supplies is inserted."""
+"tmnxEqPowerSupplyRemoved",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqPowerSupplyRemoved",".1.3.6.1.4.1.6527.3.1.3.2.1.0.5",,,"","TIMETRA-CHASSIS-MIB","""Generated when one of the chassis's power supplies is removed."""
+"tmnxEqFanFailure",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqFanFailure",".1.3.6.1.4.1.6527.3.1.3.2.1.0.6",,,"","TIMETRA-CHASSIS-MIB","""Generated when one of the fans in a fan tray has failed."""
+"tmnxEqCardFailure",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqCardFailure",".1.3.6.1.4.1.6527.3.1.3.2.1.0.7",,,"","TIMETRA-CHASSIS-MIB","""Generated when one of the cards in a chassis has failed.  The card
+type may be IOM, Fabric, MDA, MCM, CCM, CPM module, compact flash
+module, etc. tmnxChassisNotifyCardFailureReason contains the reason
+for card failure."""
+"tmnxEqCardInserted",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqCardInserted",".1.3.6.1.4.1.6527.3.1.3.2.1.0.8",,,"","TIMETRA-CHASSIS-MIB","""Generated when a card is inserted into the chassis.  The card type
+may be IOM, Fabric, MDA, MCM, CCM CPM module, compact flash module,
+etc."""
+"tmnxEqCardRemoved",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqCardRemoved",".1.3.6.1.4.1.6527.3.1.3.2.1.0.9",,,"","TIMETRA-CHASSIS-MIB","""Generated when a card is removed from the chassis.  The card type
+may be IOM, Fabric, MDA, MCM, CCM, CPM module, compact flash module,
+etc."""
+"tmnxEqWrongCard",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqWrongCard",".1.3.6.1.4.1.6527.3.1.3.2.1.0.10",,,"","TIMETRA-CHASSIS-MIB","""Generated when the wrong type of card is inserted into a slot of
+the chassis.  Even though a card may be physically supported by
+the slot, it may have been administratively configured to allow
+only certain card types in a particular slot location.  The card
+type may be IOM, Fabric, MDA, MCM, CPM module, etc."""
+"tmnxEqCpuFailure",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqCpuFailure",".1.3.6.1.4.1.6527.3.1.3.2.1.0.11",,,"","TIMETRA-CHASSIS-MIB","""Generated when a failure is detected for a CPU on an IOM card or
+CPM module.
+This notification was made obsolete in the 2.1 release.
+A cpu failure on a CPM card is detected by the hardware
+bootup and is indicated by the boot diagnostic display.
+If there is no working redundant CPM card, the system
+does not come up.
+A failure of an IOM card or standby redundant CPM card
+causes the tmnxEqCardFailure notification to be sent."""
+"tmnxEqMemoryFailure",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqMemoryFailure",".1.3.6.1.4.1.6527.3.1.3.2.1.0.12",,,"","TIMETRA-CHASSIS-MIB","""Generated when a memory module failure is detected for an IOM card or
+CPM module.
+This notification was made obsolete in the 2.1 release.
+A failure of the memory device is detected by the
+hardware bootup and is indicated by the boot diagnostic
+display.  If there is no working redundant CPM card,
+the system does not come up.
+A failure of the memory device during run-time causes
+the system to fail and the 'admin tech-support'
+information to be saved.
+A failure of an IOM card or standby redundant CPM card
+causes the tmnxEqCardFailure notification to be sent."""
+"tmnxEqBackdoorBusFailure",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqBackdoorBusFailure",".1.3.6.1.4.1.6527.3.1.3.2.1.0.13",,,"","TIMETRA-CHASSIS-MIB","""Generated when the backdoor bus has failed.
+This notification was made obsolete in the 2.1 release."""
+"tmnxPeSoftwareError",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxPeSoftwareError",".1.3.6.1.4.1.6527.3.1.3.2.1.0.14",,,"","TIMETRA-CHASSIS-MIB","""Generated when a software error has been detected.
+This notification was made obsolete in the 2.1 release.
+Many of the other notifications more specifically
+indicate detection of some type of software error.
+The 'admin tech-support' information helps developers
+diagnose a failure of the software in the field."""
+"tmnxPeSoftwareAbnormalHalt",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxPeSoftwareAbnormalHalt",".1.3.6.1.4.1.6527.3.1.3.2.1.0.15",,,"","TIMETRA-CHASSIS-MIB","""Generated when the software has abnormally terminated.
+This notification was made obsolete in the 2.1 release.
+Many of the other notifications more specifically
+indicate detection of some type of software error.
+The 'admin tech-support' information helps developers
+diagnose a failure of the software in the field."""
+"tmnxPeSoftwareVersionMismatch",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxPeSoftwareVersionMismatch",".1.3.6.1.4.1.6527.3.1.3.2.1.0.16",,,"","TIMETRA-CHASSIS-MIB","""Generated when there is a mismatch between software versions of the
+active CPM and standby CPM or the CPM and IOM.
+tmnxChassisNotifyHwIndex identifies the mismatched CPM/IOM card and
+tmnxChassisNotifyMismatchedVer will contain the version of the
+mismatched card. The tmnxHwSoftwareCodeVersion object will contain
+the expected version."""
+"tmnxPeOutOfMemory",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxPeOutOfMemory",".1.3.6.1.4.1.6527.3.1.3.2.1.0.17",,,"","TIMETRA-CHASSIS-MIB","""Generated when there is an out of memory error detected.
+This notification was made obsolete in the 2.1 release.
+The tmnxPeOutOfMemory notification has been replaced
+with the module specific notification from the
+TIMETRA-SYSTEM-MIB:tmnxModuleMallocFailed."""
+"tmnxPeConfigurationError",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxPeConfigurationError",".1.3.6.1.4.1.6527.3.1.3.2.1.0.18",,,"","TIMETRA-CHASSIS-MIB","""Generated when a configuration error has been detected.
+This notification was made obsolete in the 2.1 release.
+Many other notifications more specifically indicate
+detection of a configuration error.  In most cases the
+SNMP SET request that tries to make an invalid
+configuration results in an error response.
+In some cases the configuration parameters are valid
+and the SNMP SET request succeeds but the system cannot
+successfully apply the new parameters.  The affected
+object may then put into an operational 'down' state.
+A state change notification such as tmnxStateChange or
+a more specific notification is sent to alert about the
+problem.
+For example, an attempt to create an event log with a
+file-type destination when the specified cflash media is
+full or not present results in TIMETRA-LOG-MIB
+notifications tmnxLogSpaceContention, tmnxLogAdminLocFailed,
+or tmnxLogBackupLocFailed."""
+"tmnxPeStorageProblem",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxPeStorageProblem",".1.3.6.1.4.1.6527.3.1.3.2.1.0.19",,,"","TIMETRA-CHASSIS-MIB","""Generated when there is a storage capacity problem.
+This notification was made obsolete in the 2.1 release.
+The only 'storage' devices on the SR7750 are the cflash
+drives.  Cflash write errors cause a tmnxEqFlashDataLoss
+notification to be sent.  The tmnxEqFlashDiskFull
+notification is sent when the driver detects that the
+cflash device is full."""
+"tmnxPeCpuCyclesExceeded",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxPeCpuCyclesExceeded",".1.3.6.1.4.1.6527.3.1.3.2.1.0.20",,,"","TIMETRA-CHASSIS-MIB","""Generated when the CPU cycle usage limit has been exceeded.
+This notification was made obsolete in the 2.1 release.
+It does not apply. The SR7750 software architecture does
+not restrict CPU cycles used by a specific code module."""
+"tmnxRedPrimaryCPMFail",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxRedPrimaryCPMFail",".1.3.6.1.4.1.6527.3.1.3.2.1.0.21",,,"","TIMETRA-CHASSIS-MIB","""Generated when the primary CPM fails."""
+"tmnxRedSecondaryCPMStatusChange",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxRedSecondaryCPMStatusChange",".1.3.6.1.4.1.6527.3.1.3.2.1.0.22",,,"","TIMETRA-CHASSIS-MIB","""Generated when there is a change in the secondary CPM status.
+This notification was made obsolete in the 2.1 release.
+There is no way to administratively enable or disable
+CPM cards so there is no need for a status change event
+for administrative state changes.
+Operational changes detected about the standby CPM
+card are indicated by more specific notifications such
+as tmnxEqCardFailure, tmnxEqCardRemoved, tmnxEqCardInserted
+TIMETRA-SYSTEM-MIB::ssiRedStandbyReady,
+TIMETRA-SYSTEM-MIB::ssiRedStandbySyncLost, and
+TIMETRA-SYSTEM-MIB::ssiRedStandbySyncLost."""
+"tmnxRedRestoreSuccess",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxRedRestoreSuccess",".1.3.6.1.4.1.6527.3.1.3.2.1.0.23",,,"","TIMETRA-CHASSIS-MIB","""Generated when the secondary CPM successfully restores
+the config and state.
+This notification was made obsolete in the 2.1 release.
+It does not apply. This event was originally created
+for an early redundancy mechanism that was never
+released."""
+"tmnxRedRestoreFail",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxRedRestoreFail",".1.3.6.1.4.1.6527.3.1.3.2.1.0.24",,,"","TIMETRA-CHASSIS-MIB","""Generated when the secondary CPM fails to
+restore the config and state.
+This notification was made obsolete in the 2.1 release.
+It does not apply. This event was originally created
+for an early redundancy mechanism that was never
+released."""
+"tmnxChassisNotificationClear",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxChassisNotificationClear",".1.3.6.1.4.1.6527.3.1.3.2.1.0.25",,,"","TIMETRA-CHASSIS-MIB","""A trap indicating the clear of a chassis notification
+identified by tmnxChassisNotifyOID."""
+"tmnxEqSyncIfTimingHoldover",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqSyncIfTimingHoldover",".1.3.6.1.4.1.6527.3.1.3.2.1.0.26",,,"","TIMETRA-CHASSIS-MIB","""Generated when the synchronous equipment timing subsystem
+transitions into a holdover state.
+This notification will have the same indices as those of
+the tmnxCpmCardTable."""
+"tmnxEqSyncIfTimingHoldoverClear",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqSyncIfTimingHoldoverClear",".1.3.6.1.4.1.6527.3.1.3.2.1.0.27",,,"","TIMETRA-CHASSIS-MIB","""Generated when the synchronous equipment timing subsystem
+transitions out of the holdover state.
+This notification will have the same indices as those of
+the tmnxCpmCardTable."""
+"tmnxEqSyncIfTimingRef1Alarm",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqSyncIfTimingRef1Alarm",".1.3.6.1.4.1.6527.3.1.3.2.1.0.28",,,"","TIMETRA-CHASSIS-MIB","""Generated when an alarm condition on the first timing
+reference is detected.
+This notification will have the same indices as those of
+the tmnxCpmCardTable."""
+"tmnxEqSyncIfTimingRef1AlarmClear",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqSyncIfTimingRef1AlarmClear",".1.3.6.1.4.1.6527.3.1.3.2.1.0.29",,,"","TIMETRA-CHASSIS-MIB","""Generated when an alarm condition on the first timing
+reference is cleared.
+This notification will have the same indices as those of
+the tmnxCpmCardTable."""
+"tmnxEqSyncIfTimingRef2Alarm",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqSyncIfTimingRef2Alarm",".1.3.6.1.4.1.6527.3.1.3.2.1.0.30",,,"","TIMETRA-CHASSIS-MIB","""Generated when an alarm condition on the second timing
+reference is detected.
+This notification will have the same indices as those of
+the tmnxCpmCardTable."""
+"tmnxEqSyncIfTimingRef2AlarmClear",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqSyncIfTimingRef2AlarmClear",".1.3.6.1.4.1.6527.3.1.3.2.1.0.31",,,"","TIMETRA-CHASSIS-MIB","""Generated when an alarm condition on the second timing
+reference is cleared.
+This notification will have the same indices as those of
+the tmnxCpmCardTable."""
+"tmnxEqFlashDataLoss",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqFlashDataLoss",".1.3.6.1.4.1.6527.3.1.3.2.1.0.32",,,"","TIMETRA-CHASSIS-MIB","""tmnxEqFlashDataLoss is generated when there was an error
+while data was getting written on to the compact flash. This
+notification indicates a probable data loss."""
+"tmnxEqFlashDiskFull",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqFlashDiskFull",".1.3.6.1.4.1.6527.3.1.3.2.1.0.33",,,"","TIMETRA-CHASSIS-MIB","""tmnxEqFlashDiskFull is generated when there is no space
+left on the compact flash. No more data can be written to it."""
+"tmnxPeSoftwareLoadFailed",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxPeSoftwareLoadFailed",".1.3.6.1.4.1.6527.3.1.3.2.1.0.34",,,"","TIMETRA-CHASSIS-MIB","""Generated when the CPM fails to load the software from a specified
+location.
+tmnxChassisNotifyHwIndex identifies the card for which the software
+load failed and tmnxChassisNotifySoftwareLocation contains the
+location from where the software load was attempted."""
+"tmnxPeBootloaderVersionMismatch",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxPeBootloaderVersionMismatch",".1.3.6.1.4.1.6527.3.1.3.2.1.0.35",,,"","TIMETRA-CHASSIS-MIB","""Generated when there is a mismatch between the CPM and boot loader
+versions. tmnxChassisNotifyHwIndex identifies the CPM card.
+tmnxChassisNotifyMismatchedVer contains the mismatched version of
+bootloader and tmnxHwSoftwareCodeVersion contains the
+expected version of the bootloader."""
+"tmnxPeBootromVersionMismatch",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxPeBootromVersionMismatch",".1.3.6.1.4.1.6527.3.1.3.2.1.0.36",,,"","TIMETRA-CHASSIS-MIB","""Generated when there is a mismatch between the boot rom versions.
+tmnxChassisNotifyHwIndex identifies the IOM card.
+tmnxChassisNotifyMismatchedVer contains the mismatched version of
+bootrom and tmnxHwSoftwareCodeVersion contains the expected version
+of the bootrom."""
+"tmnxPeFPGAVersionMismatch",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxPeFPGAVersionMismatch",".1.3.6.1.4.1.6527.3.1.3.2.1.0.37",,,"","TIMETRA-CHASSIS-MIB","""Generated when there is a mismatch between the FPGA versions.
+tmnxChassisNotifyHwIndex identifies the IOM card.
+tmnxChassisNotifyMismatchedVer contains the mismatched version of
+FPGA and tmnxHwSoftwareCodeVersion contains the expected version
+of the FPGA."""
+"tmnxEqSyncIfTimingBITSAlarm",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqSyncIfTimingBITSAlarm",".1.3.6.1.4.1.6527.3.1.3.2.1.0.38",,,"","TIMETRA-CHASSIS-MIB","""Generated when an alarm condition on the BITS timing
+reference is detected.
+This notification will have the same indices as those of
+the tmnxCpmCardTable."""
+"tmnxEqSyncIfTimingBITSAlarmClear",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqSyncIfTimingBITSAlarmClear",".1.3.6.1.4.1.6527.3.1.3.2.1.0.39",,,"","TIMETRA-CHASSIS-MIB","""Generated when an alarm condition on the BITS timing
+reference is cleared.
+This notification will have the same indices as those of
+the tmnxCpmCardTable."""
+"tmnxEqCardFirmwareUpgraded",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqCardFirmwareUpgraded",".1.3.6.1.4.1.6527.3.1.3.2.1.0.40",,,"","TIMETRA-CHASSIS-MIB","""Generated when a card is hot-inserted into the chassis and its
+firmware is automatically upgraded.  The card type may be IOM or
+CPM module."""
+"tmnxChassisUpgradeInProgress",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxChassisUpgradeInProgress",".1.3.6.1.4.1.6527.3.1.3.2.1.0.41",,,"","TIMETRA-CHASSIS-MIB","""The tmnxChassisUpgradeInProgress notification is generated only
+after a CPM switchover occurs and the new active CPM is running new
+software, while the IOMs are still running old software. This is the
+start of the upgrade process. The tmnxChassisUpgradeInProgress
+notification will continue to be generated every 30 minutes while at
+least one IOM is still running older software."""
+"tmnxChassisUpgradeComplete",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxChassisUpgradeComplete",".1.3.6.1.4.1.6527.3.1.3.2.1.0.42",,,"","TIMETRA-CHASSIS-MIB","""The tmnxChassisUpgradeComplete notification is generated to
+indicate that all the IOMs are running matching software version in
+reference to the active CPM software version changed as part of the
+upgrade process."""
+"tmnxChassisHiBwMcastAlarm",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxChassisHiBwMcastAlarm",".1.3.6.1.4.1.6527.3.1.3.2.1.0.43",,,"","TIMETRA-CHASSIS-MIB","""The tmnxChassisHiBwMcastAlarm notification is generated when a plane
+is  shared by more than one high bandwidth multicast tap."""
+"tmnxEqMdaCfgNotCompatible",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqMdaCfgNotCompatible",".1.3.6.1.4.1.6527.3.1.3.2.1.0.44",,,"","TIMETRA-CHASSIS-MIB","""Generated when a supported MDA is inserted into a slot of an
+IOM, the MDA is compatible with the currently provisioned
+MDA, but the current configuration on the MDA's ports is not
+compatible with the inserted MDA.
+[EFFECT] Though services can still be created, if the tmnxMdaNotifyType
+is the same as the tmnxMDAEquippedType then the MDA will fail to
+operate as configured and will be in a failed state.
+[RECOVERY] Change the configuration to reflect the capabilities of the
+MDA port, or switch out/re-provision the MDA for one that is
+compatible."""
+"tmnxCpmCardSyncFileNotPresent",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxCpmCardSyncFileNotPresent",".1.3.6.1.4.1.6527.3.1.3.2.1.0.45",,,"","TIMETRA-CHASSIS-MIB","""The tmnxCpmCardSyncFileNotPresent notification is generated when
+the redundancy file synchronization failed to locate an optional
+file."""
+"tmnxEqMdaXplError",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqMdaXplError",".1.3.6.1.4.1.6527.3.1.3.2.1.0.46",,,"","TIMETRA-CHASSIS-MIB","""The tmnxEqMdaXplError notification is generated when an MDA
+exhibits persistent XPL Errors."""
+"tmnxEqCardPChipError",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqCardPChipError",".1.3.6.1.4.1.6527.3.1.3.2.1.0.47",,,"","TIMETRA-CHASSIS-MIB","""The tmnxEqCardPChipError notification is generated when persistent FCS
+errors are detected by the P chip in either the ingress or egress
+datapath/complex.  The value tmnxCardSrcSlotBitmap is only used for the
+egress datapath/complex direction."""
+"tmnxEqCardSoftResetAlarm",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqCardSoftResetAlarm",".1.3.6.1.4.1.6527.3.1.3.2.1.0.48",,,"","TIMETRA-CHASSIS-MIB","""The tmnxEqCardSoftResetAlarm notification is generated when an IOM
+card enters and exits the 'soft-reset' state."""
+"tmnxEqMdaSyncENotCompatible",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqMdaSyncENotCompatible",".1.3.6.1.4.1.6527.3.1.3.2.1.0.49",,,"","TIMETRA-CHASSIS-MIB","""The tmnxEqMdaSyncENotCompatible notification is generated when an
+MDA card is inserted into a slot of an IOM. The MDA is compatible
+with the currently provisioned MDA, but the currently configured
+synchronous ethernet, tmnxMDASynchronousEthernet, is not compatible
+with the inserted MDA.
+[EFFECT] Though services can still be created, if the tmnxMdaNotifyType
+is the same as the tmnxMDAEquippedType then the MDA will fail to
+operate as configured and will be in a failed state.
+[RECOVERY] Change the configuration to reflect the capabilities of the
+MDA port, or switch out/re-provision the MDA for one that is
+compatible."""
+"tmnxIPsecIsaGrpActiveIsaChgd",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxIPsecIsaGrpActiveIsaChgd",".1.3.6.1.4.1.6527.3.1.3.2.1.0.50",,,"","TIMETRA-CHASSIS-MIB","""The tmnxIPsecIsaGrpActiveIsaChgd notification is generated when a
+change in the active ISA (Integrated Service Adaptor) occurs in a
+IPsec ISA module group."""
+"tmnxEqCardPChipMemoryEvent",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqCardPChipMemoryEvent",".1.3.6.1.4.1.6527.3.1.3.2.1.0.51",,,"","TIMETRA-CHASSIS-MIB","""The tmnxEqCardPChipMemoryEvent notification is generated when
+a P-chip experiences an occurrence of a memory parity error."""
+"tmnxIPsecIsaGrpUnableToSwitch",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxIPsecIsaGrpUnableToSwitch",".1.3.6.1.4.1.6527.3.1.3.2.1.0.52",,,"","TIMETRA-CHASSIS-MIB","""The tmnxIPsecIsaGrpUnableToSwitch notification is generated when
+an IPsec ISA (Integrated Service Adaptor) module group is unable
+to switch due to lack of resources.
+In such an event the ISA group is left without an active MDA and
+the tmnxIPsecIsaGrpOperState is set to 'outOfService'.
+Recovery is possible by releasing resources, and setting the
+tmnxIPsecIsaGrpAdminState object to 'outOfService' followed by a
+reset to 'inService' to bring up the ISA group."""
+"tmnxIPsecIsaGrpTnlLowWMark",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxIPsecIsaGrpTnlLowWMark",".1.3.6.1.4.1.6527.3.1.3.2.1.0.53",,,"","TIMETRA-CHASSIS-MIB","""The tmnxIPsecIsaGrpTnlLowWMark notification is generated when
+number of tunnels for an IPsec ISA (Integrated Service Adaptor) module
+has dropped to the low watermark which is 90% of the
+tmnxIPsecIsaGrpMaxTunnels."""
+"tmnxIPsecIsaGrpTnlHighWMark",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxIPsecIsaGrpTnlHighWMark",".1.3.6.1.4.1.6527.3.1.3.2.1.0.54",,,"","TIMETRA-CHASSIS-MIB","""The tmnxIPsecIsaGrpTnlHighWMark notification is generated when
+number of tunnels for an IPsec ISA (Integrated Service Adaptor) module
+has reached to the high watermark which is 95% of the
+tmnxIPsecIsaGrpMaxTunnels."""
+"tmnxIPsecIsaGrpTnlMax",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxIPsecIsaGrpTnlMax",".1.3.6.1.4.1.6527.3.1.3.2.1.0.55",,,"","TIMETRA-CHASSIS-MIB","""The tmnxIPsecIsaGrpTnlMax notification is generated when
+number of tunnels for an IPsec ISA (Integrated Service Adaptor) module
+has reached the maximum of the tmnxIPsecIsaGrpMaxTunnels."""
+"tmnxEqSyncIfTimingRef1Quality",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqSyncIfTimingRef1Quality",".1.3.6.1.4.1.6527.3.1.3.2.1.0.56",,,"","TIMETRA-CHASSIS-MIB","""Generated when there is a change of the received quality level
+on timing reference 1."""
+"tmnxEqSyncIfTimingRef2Quality",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqSyncIfTimingRef2Quality",".1.3.6.1.4.1.6527.3.1.3.2.1.0.57",,,"","TIMETRA-CHASSIS-MIB","""Generated when there is a change of the received quality level
+on timing reference 2."""
+"tmnxEqSyncIfTimingBITSQuality",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqSyncIfTimingBITSQuality",".1.3.6.1.4.1.6527.3.1.3.2.1.0.58",,,"","TIMETRA-CHASSIS-MIB","""Generated when there is a change of the received quality level
+on the bits interface."""
+"tmnxEqSyncIfTimingBITS2Quality",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqSyncIfTimingBITS2Quality",".1.3.6.1.4.1.6527.3.1.3.2.1.0.59",,,"","TIMETRA-CHASSIS-MIB","""Generated when there is a change of the received quality level
+on the second bits interface."""
+"tmnxEqSyncIfTimingRefSwitch",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqSyncIfTimingRefSwitch",".1.3.6.1.4.1.6527.3.1.3.2.1.0.60",,,"","TIMETRA-CHASSIS-MIB","""Generated when there is a change of which timing reference
+is providing timing for the system."""
+"tmnxEqSyncIfTimingBITS2Alarm",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqSyncIfTimingBITS2Alarm",".1.3.6.1.4.1.6527.3.1.3.2.1.0.61",,,"","TIMETRA-CHASSIS-MIB","""Generated when an alarm condition on the BITS 2 timing
+reference is detected.
+This notification will have the same indices as those of
+the tmnxCpmCardTable."""
+"tmnxEqSyncIfTimingBITS2AlarmClr",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqSyncIfTimingBITS2AlarmClr",".1.3.6.1.4.1.6527.3.1.3.2.1.0.62",,,"","TIMETRA-CHASSIS-MIB","""Generated when an alarm condition on the BITS 2 timing
+reference is cleared.
+This notification will have the same indices as those of
+the tmnxCpmCardTable."""
+"tmnxEqSyncIfTimingBITSOutRefChg",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqSyncIfTimingBITSOutRefChg",".1.3.6.1.4.1.6527.3.1.3.2.1.0.63",,,"","TIMETRA-CHASSIS-MIB","""Generated when the BITS Out timing reference selection changes."""
+"tmnxEqCardPChipCamEvent",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqCardPChipCamEvent",".1.3.6.1.4.1.6527.3.1.3.2.1.0.64",,,"","TIMETRA-CHASSIS-MIB","""The tmnxEqCardPChipCamEvent notification is generated when either an
+IOM or a CPM experiences a persistent occurrence of a PChip CAM error.
+On a CPM card, the tmnxCardComplexNumber will be fixed to the value
+zero (0)."""
+"tmnxEqSyncIfTimingSystemQuality",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqSyncIfTimingSystemQuality",".1.3.6.1.4.1.6527.3.1.3.2.1.0.65",,,"","TIMETRA-CHASSIS-MIB","""The tmnxEqSyncIfTimingSystemQuality notification is generated when
+there is a change in the system timing quality level. This
+notification is a point-in-time state change event.
+[CAUSE] This notification may be triggered for the following reasons:
+1) There has been a switch in the timing reference in use by the
+network element, either because the previously active timing
+reference was disqualified, or to ensure that the network element
+is using the timing reference with the best timing quality.
+2) There has been a change in the active timing reference's quality
+and the change does not result in a timing reference switch.
+3) The network element has transitioned into or out of the holdover
+state.
+[EFFECT] The system quality level is used to determine the SSM code
+transmitted on synchronous interfaces. This may affect the SSM code
+transmitted on some or all interfaces, which may affect the
+distribution of timing throughout the network.
+[RECOVERY] If the customer is expecting the system to be locked to a
+reference of a particular quality and the system quality has
+decreased, the customer will need to determine the root cause (for
+example, loss of communication with a satellite) and resolve the
+issue."""
+"tmnxEqHwEnhancedCapability",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqHwEnhancedCapability",".1.3.6.1.4.1.6527.3.1.3.2.1.0.66",,,"","TIMETRA-CHASSIS-MIB","""The tmnxEqHwEnhancedCapability notification is generated when the
+hardware, specified by the supplied objects, consists of enhanced
+capabilities as compared to the active hardware.
+[EFFECT] The system behaves normally under this situation, however,
+switching to the newer hardware will put the system in an incompatible
+state with the currently active hardware. That is, once this device
+takes activity, the lesser capable hardware will fail to communicate
+with it.
+In this mode, the system is deemed to be in a 'one-way upgrade'
+scenario.
+[RECOVERY] Two modes of recovery exist for this notification.
+1. Remove the enhanced hardware, and supply a more compatible
+device (status quo) with the active hardware, or
+2. Switch to the enhanced device, and replace the older hardware
+with a similarly enhanced device (upgrade)."""
+"tmnxEqSyncIfTimingPTPQuality",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqSyncIfTimingPTPQuality",".1.3.6.1.4.1.6527.3.1.3.2.1.0.67",,,"","TIMETRA-CHASSIS-MIB","""Generated when there is a change of the received quality level
+on the Precision Timing Protocol (PTP)."""
+"tmnxEqSyncIfTimingPTPAlarm",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqSyncIfTimingPTPAlarm",".1.3.6.1.4.1.6527.3.1.3.2.1.0.68",,,"","TIMETRA-CHASSIS-MIB","""Generated when an alarm condition on the Precision Timing Protocol
+(PTP) timing reference is detected.
+This notification will have the same indices as those of the
+tmnxCpmCardTable."""
+"tmnxEqSyncIfTimingPTPAlarmClear",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqSyncIfTimingPTPAlarmClear",".1.3.6.1.4.1.6527.3.1.3.2.1.0.69",,,"","TIMETRA-CHASSIS-MIB","""Generated when an alarm condition on the Precision Timing Protocol
+(PTP) timing reference is cleared.
+This notification will have the same indices as those of the
+tmnxCpmCardTable."""
+"tmnxEqCardQChipBufMemoryEvent",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqCardQChipBufMemoryEvent",".1.3.6.1.4.1.6527.3.1.3.2.1.0.86",,,"","TIMETRA-CHASSIS-MIB","""[CAUSE] The tmnxEqCardQChipBufMemoryEvent notification is generated
+when a Q-chip experiences an occurrence of a buffer memory error.
+[EFFECT] Contact Alcatel-Lucent customer support.
+[RECOVERY] Contact Alcatel-Lucent customer support."""
+"tmnxEqCardQChipStatsMemoryEvent",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqCardQChipStatsMemoryEvent",".1.3.6.1.4.1.6527.3.1.3.2.1.0.87",,,"","TIMETRA-CHASSIS-MIB","""[CAUSE] The tmnxEqCardQChipStatsMemoryEvent notification is generated
+when a Q-chip experiences an occurrence of a statistics memory error.
+[EFFECT] Contact Alcatel-Lucent customer support.
+[RECOVERY] Contact Alcatel-Lucent customer support."""
+"tmnxEqCardQChipIntMemoryEvent",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqCardQChipIntMemoryEvent",".1.3.6.1.4.1.6527.3.1.3.2.1.0.88",,,"","TIMETRA-CHASSIS-MIB","""[CAUSE] The tmnxEqCardQChipIntMemoryEvent notification is generated
+when a Q-chip experiences an occurrence of an internal memory error.
+[EFFECT] Contact Alcatel-Lucent customer support.
+[RECOVERY] Contact Alcatel-Lucent customer support."""
+"tmnxEqCardChipIfDownEvent",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqCardChipIfDownEvent",".1.3.6.1.4.1.6527.3.1.3.2.1.0.89",,,"","TIMETRA-CHASSIS-MIB","""[CAUSE] The tmnxEqCardChipIfDownEvent notification is generated when
+an inter-chip interface (XPL2 bundle) experiences an internal datapath
+problem.
+[EFFECT] Contact Alcatel-Lucent customer support.
+[RECOVERY] Contact Alcatel-Lucent customer support."""
+"tmnxEqCardChipIfCellEvent",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqCardChipIfCellEvent",".1.3.6.1.4.1.6527.3.1.3.2.1.0.90",,,"","TIMETRA-CHASSIS-MIB","""[CAUSE] The tmnxEqCardChipIfCellEvent notification is generated when
+an inter-chip interface (XPL2 bundle) experiences internal datapath
+cell errors.
+[EFFECT] Contact Alcatel-Lucent customer support.
+[RECOVERY] Contact Alcatel-Lucent customer support."""
+"tmnxEqCardTChipParityEvent",".iso.org.dod.internet.private.enterprises.timetra.timetraProducts.tmnxSRMIB.tmnxSRNotifyPrefix.tmnxHwNotification.tmnxChassisNotifyPrefix.tmnxChassisNotification.tmnxEqCardTChipParityEvent",".1.3.6.1.4.1.6527.3.1.3.2.1.0.97",,,"","TIMETRA-CHASSIS-MIB","""[CAUSE] The tmnxEqCardTChipParityEvent notification is generated
+when a T-chip experiences an occurrence of an internal memory error.
+[EFFECT] Contact Alcatel-Lucent customer support.
+[RECOVERY] Contact Alcatel-Lucent customer support."""

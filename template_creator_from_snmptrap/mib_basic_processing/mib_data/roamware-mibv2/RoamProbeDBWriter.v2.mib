@@ -1,0 +1,520 @@
+--
+-- Roamware DBW Writer MIB definition.
+-- Release : 6.0.1
+-- Revision : R110201
+-- Revision date :  03-March-2011
+--
+-- This specification is supplied "AS IS," and no warranty,
+-- either expressed or implied, as to the use, operation, condition,
+-- or performance of the specification, is made by the publisher.
+--
+-- Publisher: Roamware Inc., USA
+-- **************************************************************
+
+Roamware-RDB-V2-MIB DEFINITIONS ::= BEGIN
+IMPORTS
+	MODULE-IDENTITY, OBJECT-TYPE, NOTIFICATION-TYPE,
+	TimeTicks, Counter32, Integer32, IpAddress
+		FROM SNMPv2-SMI
+	DisplayString
+		FROM SNMPv2-TC
+	OBJECT-GROUP
+		FROM SNMPv2-CONF
+	roamware, mobGenNotificationId, mobGenSeverity,
+    mobGenDescription, mobGenMachineID, mobGenServiceName,
+    mobGenAlarmTime, mobGenAlarmType, mobGenProbableCause, mobGenMachineID, mobGenRemoteHostAddr,
+	mobGenRemotePort, mobGenThresholdValue, mobGenUtilization, mobGenCapacity, mobGenThresholdName, 
+	mobGenThresholdArmTime, mobGenSequenceNumber
+		FROM Roamware-SDS-V2-MIB ;
+
+rdb-mob	MODULE-IDENTITY
+	LAST-UPDATED "201103030000Z"
+	ORGANIZATION "Roamware Inc."
+	CONTACT-INFO "info@roamware.com"
+	DESCRIPTION  "This is the top level entry for the database interface of Roamware SS7 Probe."
+	REVISION "201103030000Z"
+	DESCRIPTION  "Refer to releast notes"
+	::= { roamware 6 }                                           -- 1.3.6.1.4.1.11150.6
+
+--
+-- DBWriter specific status reports
+--
+rdbStatus                    OBJECT IDENTIFIER ::= { rdb-mob 1 }                              --1.3.6.1.4.1.11150.6.1
+
+rdbGenStatus                 OBJECT-TYPE
+                             SYNTAX INTEGER { working(1), error(6) }
+                             MAX-ACCESS accessible-for-notify
+                             STATUS current
+                             DESCRIPTION
+                             "Indicates the status of the DBWriter System."
+                             ::= { rdbStatus 1 }                                              -- 1.3.6.1.4.1.11150.6.1.1
+
+rdbEngineNum                 OBJECT-TYPE
+                             SYNTAX INTEGER { primary(1), secondary(2) }
+                             MAX-ACCESS accessible-for-notify
+                             STATUS current
+                             DESCRIPTION
+                             "Indicates the DBWriter system - primary or secondary."
+                             ::= { rdbStatus 2 }                                              -- 1.3.6.1.4.1.11150.6.1.2
+
+rdbMesgPoolLWM               OBJECT-TYPE
+                             SYNTAX Integer32
+                             MAX-ACCESS read-write
+                             STATUS current
+                             DESCRIPTION
+                             "This variable indicates the low water mark of the message queue that contains the 
+							  events that need to be written in to the database."
+                             ::= { rdbStatus 3 }                                              -- 1.3.6.1.4.1.11150.6.1.3
+
+rdbMesgPoolHWM               OBJECT-TYPE
+                             SYNTAX Integer32
+                             MAX-ACCESS read-write
+                             STATUS current
+                             DESCRIPTION
+                             "This variable indicates the high water mark of the message queue that contains the 
+							  events that need to be written in to the database."
+                             ::= { rdbStatus 4 }                                              -- 1.3.6.1.4.1.11150.6.1.4
+
+rdbSIO               	     OBJECT-TYPE
+                             SYNTAX INTEGER { sccp(3), itup(4), isup(5) }
+                             MAX-ACCESS read-write
+                             STATUS current
+                             DESCRIPTION
+                             "This variable indicates SIO for MTP2 message pool."
+                             ::= { rdbStatus 5 }                                              -- 1.3.6.1.4.1.11150.6.1.5
+
+--
+-- DBWriter specific statistics
+--
+rdbStatistics                OBJECT IDENTIFIER ::= { rdb-mob 2 }                              -- 1.3.6.1.4.1.11150.6.2
+
+rdbQueueLen                  OBJECT-TYPE
+                             SYNTAX Integer32
+                             MAX-ACCESS read-only
+                             STATUS current
+                             DESCRIPTION
+                             "This variable identifies the number of messages that are there in the Message Queue."
+                             ::= { rdbStatistics 1 }                                          -- 1.3.6.1.4.1.11150.6.2.1
+
+rdbNumOutRoamers             OBJECT-TYPE
+                             SYNTAX Integer32
+                             MAX-ACCESS read-only
+                             STATUS current
+                             DESCRIPTION
+                             "This variable indicates the number of Outbound Roamers from this network."
+                             ::= { rdbStatistics 2 }                                          -- 1.3.6.1.4.1.11150.6.2.2
+
+rdbNumInRoamers              OBJECT-TYPE
+                             SYNTAX Integer32
+                             MAX-ACCESS read-only
+                             STATUS current
+                             DESCRIPTION
+                             "This variable indicates the number of Inbound Roamers that are there in this network."
+                             ::= { rdbStatistics 3 }                                          -- 1.3.6.1.4.1.11150.6.2.3
+
+rdbNumQLastMin               OBJECT-TYPE
+                             SYNTAX Integer32
+                             MAX-ACCESS read-only
+                             STATUS current
+                             DESCRIPTION
+                             "This variable indicates the number of events queued from state machine in last one minute."
+                             ::= { rdbStatistics 4 }                                          -- 1.3.6.1.4.1.11150.6.2.4
+
+rdbNumQClrLastMin            OBJECT-TYPE
+                             SYNTAX Integer32
+                             MAX-ACCESS read-only
+                             STATUS current
+                             DESCRIPTION
+                             "This variable indicates the number of events cleared from queue in last one minute."
+                             ::= { rdbStatistics 5 }                                          -- 1.3.6.1.4.1.11150.6.2.5
+
+rdbDBWProcessedMesgCount     OBJECT-TYPE
+                             SYNTAX Integer32
+                             MAX-ACCESS read-only
+                             STATUS current
+                             DESCRIPTION
+                             "This variable indicates the number of messages processed by DBW since startup."
+                             ::= { rdbStatistics 6 }                                          -- 1.3.6.1.4.1.11150.6.2.6
+
+rdbMesgPoolSize              OBJECT-TYPE
+                             SYNTAX Integer32
+                             MAX-ACCESS read-only
+                             STATUS current
+                             DESCRIPTION
+                             "This variable indicates the number of messages currently available in the pool."
+                             ::= { rdbStatistics 7 }                                          -- 1.3.6.1.4.1.11150.6.2.7
+
+rdbNumActiveSM               OBJECT-TYPE
+                             SYNTAX Integer32
+                             MAX-ACCESS read-only
+                             STATUS current
+                             DESCRIPTION
+                             "This variable indicates the number of active statemachines."
+                             ::= { rdbStatistics 8 }                                          -- 1.3.6.1.4.1.11150.6.2.8
+
+rdbAppState                  OBJECT-TYPE
+                             SYNTAX INTEGER { active(1), passive(2) }
+                             MAX-ACCESS read-only
+                             STATUS current
+                             DESCRIPTION
+                             "This variable indicates the status (active/passive) of the application."
+                             ::= { rdbStatistics 9 }                                          -- 1.3.6.1.4.1.11150.6.2.9
+
+rdbQueueCapacity             OBJECT-TYPE
+                             SYNTAX Integer32
+                             MAX-ACCESS read-only
+                             STATUS current
+                             DESCRIPTION
+                             "This variable indicates the maximum capacity of the message queue."
+                             ::= { rdbStatistics 10 }                                          -- 1.3.6.1.4.1.11150.6.2.10
+
+rdbSCCPMSUPoolCapacity       OBJECT-TYPE
+                             SYNTAX Integer32
+                             MAX-ACCESS read-only
+                             STATUS current
+                             DESCRIPTION
+                             "This variable indicates the maximum number of MSU-s that can be allocated by SCCP MSU pool."
+                             ::= { rdbStatistics 11 }                                          -- 1.3.6.1.4.1.11150.6.2.11
+
+rdbSCCPMSUPoolAvailable      OBJECT-TYPE
+                             SYNTAX Integer32
+                             MAX-ACCESS read-only
+                             STATUS current
+                             DESCRIPTION
+                             "This variable indicates the maximum number of MSU-s available in the SCCP MSU pool."
+                             ::= { rdbStatistics 12 }                                          -- 1.3.6.1.4.1.11150.6.2.12
+
+rdbISUPGatewayPRNQLen             OBJECT-TYPE
+		                  SYNTAX Integer32
+		                  MAX-ACCESS read-only
+		                  STATUS current
+		                  DESCRIPTION
+			          "This variable indicates the number of active PRN Events in input Queue."
+		                  ::= { rdbStatistics 14 }					-- 1.3.6.1.4.1.11150.6.2.14
+
+rdbISUPGatewayISUPCallEventQLen   OBJECT-TYPE
+		                  SYNTAX Integer32
+		                  MAX-ACCESS read-only
+		                  STATUS current
+		                  DESCRIPTION
+			          "This variable indicates the number of active ISUP Call Events in input Queue."
+		                  ::= { rdbStatistics 15 }					-- 1.3.6.1.4.1.11150.6.2.15
+
+rdbISUPGatewayPRNEventTimeout     OBJECT-TYPE
+		                  SYNTAX Integer32
+		                  MAX-ACCESS read-only
+		                  STATUS current
+		                  DESCRIPTION
+			          "This variable indicates the number of PRN Events timed out in last one minute."
+		                  ::= { rdbStatistics 16 }					-- 1.3.6.1.4.1.11150.6.2.16
+
+rdbISUPGatewayISUPCallEvents      OBJECT-TYPE
+		                  SYNTAX Integer32
+		                  MAX-ACCESS read-only
+		                  STATUS current
+		                  DESCRIPTION
+			          "This variable indicates the number of ISUP Call Event illegible for notification in last one minute."
+		                  ::= { rdbStatistics 17 }					-- 1.3.6.1.4.1.11150.6.2.17
+
+rdbISUPGatewayPRNISUPCallEvents   OBJECT-TYPE
+		                  SYNTAX Integer32
+		                  MAX-ACCESS read-only
+		                  STATUS current
+		                  DESCRIPTION
+			          "This variable indicates the number of ISUP Call Event combined with PRN Events illegible for notification in last one minute."
+		                  ::= { rdbStatistics 18 }					-- 1.3.6.1.4.1.11150.6.2.18
+
+rdbISUPGatewayEventsNotified      OBJECT-TYPE
+		                  SYNTAX Integer32
+		                  MAX-ACCESS read-only
+		                  STATUS current
+		                  DESCRIPTION
+			          "This variable indicates the number of ISUP Call Event notified in last one minute."
+		                  ::= { rdbStatistics 19 }					-- 1.3.6.1.4.1.11150.6.2.19
+
+--
+-- DBWriter specific commands
+--
+rdbCommands                  OBJECT IDENTIFIER ::= { rdb-mob 3 }                              -- 1.3.6.1.4.1.11150.6.3
+
+rdbCmdRescanSysParams        OBJECT-TYPE
+                             SYNTAX Integer32
+                             MAX-ACCESS read-only
+                             STATUS obsolete
+                             DESCRIPTION
+                             "This command instructs the system to rescan system parameters."
+                             ::= { rdbCommands 1 }                                            -- 1.3.6.1.4.1.11150.6.3.1
+
+rdbCmdDumpRoamerData         OBJECT-TYPE
+                             SYNTAX INTEGER
+                             {
+                                on(1),
+                                off(2)
+                             }
+                             MAX-ACCESS read-write
+                             STATUS current
+                             DESCRIPTION
+                             "Indicates whether the roamer data logging is ON/OFF. By manipulating this value, roamer data logging can be switched ON or OFF."
+                             ::= { rdbCommands 2 }                                            -- 1.3.6.1.4.1.11150.6.3.2
+
+rdbCmdDumpEvents             OBJECT-TYPE
+                             SYNTAX INTEGER
+                             {
+                                on(1),
+                                off(2)
+                             }
+                             MAX-ACCESS read-write
+                             STATUS current
+                             DESCRIPTION
+                             "Indicates whether the trace of events is ON/OFF. By manipulating this value, trace of events can be switched ON or OFF."
+                             ::= { rdbCommands 3 }                                            -- 1.3.6.1.4.1.11150.6.3.3
+
+rdbCmdRescanNw               OBJECT-TYPE
+                             SYNTAX Integer32
+                             MAX-ACCESS read-only
+                             STATUS obsolete
+                             DESCRIPTION
+                             "This command instructs the system to rescan network information for which RQM is suppose to raise trap."
+                             ::= { rdbCommands 4 }                                            -- 1.3.6.1.4.1.11150.6.3.4
+
+rdbCmdScanIgnoreIMSIVLR      OBJECT-TYPE
+                             SYNTAX Integer32
+                             MAX-ACCESS read-only
+                             STATUS current
+                             DESCRIPTION
+                             "This command instructs the system to rescan ignore IMSI/VLR list."
+                             ::= { rdbCommands 5 }                                            -- 1.3.6.1.4.1.11150.6.3.5
+
+
+
+rdbKPIGroup                  OBJECT IDENTIFIER ::= { rdb-mob 4 }                              -- 1.3.6.1.4.1.11150.6.4
+rdbInTxnKPIGroup             OBJECT IDENTIFIER ::= { rdb-mob 6 }                              -- 1.3.6.1.4.1.11150.6.6
+rdbOutTxnKPIGroup            OBJECT IDENTIFIER ::= { rdb-mob 7 }                              -- 1.3.6.1.4.1.11150.6.7
+
+--
+-- DBWriter specific traps
+--
+rdbTrapsModule               OBJECT IDENTIFIER ::= { rdb-mob 5 }                              -- 1.3.6.1.4.1.11150.6.5
+rdbTrapsGroup                OBJECT IDENTIFIER ::= { rdbTrapsModule 0 }                       -- 1.3.6.1.4.1.11150.6.5.0
+
+rdbSysUp                     NOTIFICATION-TYPE
+                             OBJECTS { mobGenSequenceNumber, mobGenNotificationId,
+										mobGenSeverity, mobGenDescription,
+										mobGenMachineID, mobGenServiceName,
+										mobGenAlarmTime, mobGenAlarmType,
+										mobGenProbableCause }
+                             STATUS current
+                             DESCRIPTION
+                             "Indicates that the DBWriter system is up and active."
+                             ::= {rdbTrapsGroup 1}
+
+rdbSysDown                   NOTIFICATION-TYPE
+                             OBJECTS { mobGenSequenceNumber, mobGenNotificationId,
+										mobGenSeverity, mobGenDescription,
+										mobGenMachineID, mobGenServiceName,
+										mobGenAlarmTime, mobGenAlarmType,
+										mobGenProbableCause }
+                             STATUS current
+                             DESCRIPTION
+                             "Indicates that the DBWriter system is shutting down."
+                             ::= {rdbTrapsGroup 2}
+
+rdbDBConnection              NOTIFICATION-TYPE
+                             OBJECTS { mobGenSequenceNumber, mobGenNotificationId,
+										mobGenSeverity, mobGenDescription,
+										mobGenMachineID, mobGenServiceName,
+										mobGenAlarmTime, mobGenAlarmType,
+										mobGenProbableCause }
+                             STATUS current
+                             DESCRIPTION
+                             "Indicates abnormal condition of database connections."
+                             ::= {rdbTrapsGroup 3}
+
+-- rdbQueueStatus            NOTIFICATION-TYPE
+--                           OBJECTS { mobGenSeverity, mobGenDescription }
+--                           STATUS current
+--                           DESCRIPTION
+--                           "Indicates that the status of event queue. This alarm is now obsolete."
+--                           ::= {rdbTrapsGroup 4}
+
+rdbStatusChange              NOTIFICATION-TYPE
+                             OBJECTS { mobGenSequenceNumber, mobGenNotificationId,
+										mobGenSeverity, mobGenDescription,
+										mobGenMachineID, mobGenServiceName,
+										mobGenAlarmTime, mobGenAlarmType,
+										mobGenProbableCause }
+                             STATUS current
+                             DESCRIPTION
+                             "Indicates the state of the system going from passive to active."
+                             ::= {rdbTrapsGroup 5}
+
+rdbProbeConn                 NOTIFICATION-TYPE
+                             OBJECTS { mobGenSequenceNumber, mobGenNotificationId,
+										mobGenSeverity, mobGenDescription,
+										mobGenMachineID, mobGenServiceName,
+										mobGenAlarmTime, mobGenAlarmType,
+										mobGenProbableCause, mobGenRemoteHostAddr, mobGenRemotePort }
+                             STATUS current
+                             DESCRIPTION
+                             "Indicates that the connection with the SS7Probe is lost/gained/paused/resumed."
+                             ::= {rdbTrapsGroup 6}
+
+rdbIMDBConn                  NOTIFICATION-TYPE
+                             OBJECTS { mobGenSequenceNumber, mobGenNotificationId,
+										mobGenSeverity, mobGenDescription,
+										mobGenMachineID, mobGenServiceName,
+										mobGenAlarmTime, mobGenAlarmType,
+										mobGenProbableCause, mobGenMachineID }
+                             STATUS current
+                             DESCRIPTION
+                             "Indicates that the connection with the roamer cache server is lost/gained."
+                             ::= {rdbTrapsGroup 7}
+
+rdbTDRConn                   NOTIFICATION-TYPE
+                             OBJECTS { mobGenSequenceNumber, mobGenNotificationId,
+										mobGenSeverity, mobGenDescription,
+										mobGenMachineID, mobGenServiceName,
+										mobGenAlarmTime, mobGenAlarmType,
+										mobGenProbableCause }
+                             STATUS current
+                             DESCRIPTION
+                             "Indicates that the connection with the TDR interface is lost/gained."
+                             ::= {rdbTrapsGroup 8}
+
+rdbNoMesgFromProbe           NOTIFICATION-TYPE
+                             OBJECTS { mobGenSequenceNumber, mobGenNotificationId,
+										mobGenSeverity, mobGenDescription,
+										mobGenMachineID, mobGenServiceName,
+										mobGenAlarmTime, mobGenAlarmType,
+										mobGenProbableCause, mobGenRemoteHostAddr, mobGenRemotePort }
+                             STATUS current
+                             DESCRIPTION
+                             "Indicates that no messages are received from Probe for a configurable period."
+                             ::= {rdbTrapsGroup 9}
+
+rdbProbeMsgPoolStatus        NOTIFICATION-TYPE
+                             OBJECTS { mobGenSequenceNumber, mobGenNotificationId,
+										mobGenSeverity, mobGenDescription,
+										mobGenMachineID, mobGenServiceName,
+										mobGenAlarmTime, mobGenAlarmType,
+										mobGenProbableCause }
+                             STATUS current
+                             DESCRIPTION
+                             "Indicates the status of probe message pool."
+                             ::= {rdbTrapsGroup 10}
+
+rdbEventQueue                NOTIFICATION-TYPE
+                             OBJECTS { mobGenSequenceNumber, mobGenNotificationId,
+										mobGenSeverity, mobGenDescription,
+										mobGenMachineID, mobGenServiceName,
+										mobGenAlarmTime, mobGenAlarmType,
+										mobGenProbableCause, mobGenThresholdValue, mobGenUtilization, mobGenCapacity }
+                             STATUS current
+                             DESCRIPTION
+                             "Indicates the status of event queue."
+                             ::= {rdbTrapsGroup 11}
+
+rdbEODFailure                NOTIFICATION-TYPE
+                             OBJECTS { mobGenSequenceNumber, mobGenNotificationId,
+										mobGenSeverity, mobGenDescription,
+										mobGenMachineID, mobGenServiceName,
+										mobGenAlarmTime, mobGenAlarmType,
+										mobGenProbableCause }
+                             STATUS current
+                             DESCRIPTION
+                             "Indicates that the EOD process has failed."
+                             ::= {rdbTrapsGroup 12}
+
+rdbHeartbeat                 NOTIFICATION-TYPE
+                             OBJECTS { mobGenSequenceNumber, mobGenNotificationId,
+										mobGenSeverity, mobGenDescription,
+										mobGenMachineID, mobGenServiceName,
+										mobGenAlarmTime, mobGenAlarmType,
+										mobGenProbableCause }
+                             STATUS current
+                             DESCRIPTION
+                             "Sent periodically to indicate that DBWriter is alive."
+                             ::= {rdbTrapsGroup 13}
+
+rdbAllocatorDeplete          NOTIFICATION-TYPE
+                             OBJECTS { mobGenSequenceNumber, mobGenNotificationId,
+										mobGenSeverity, mobGenDescription,
+										mobGenMachineID, mobGenServiceName,
+										mobGenAlarmTime, mobGenAlarmType,
+										mobGenProbableCause, mobGenThresholdName, 
+										mobGenThresholdValue, mobGenCapacity, mobGenUtilization }
+                             STATUS current
+                             DESCRIPTION
+                             "Indicates that an MSU allocator buffer is depleting."
+                             ::= {rdbTrapsGroup 14}
+
+rdbMsgPoolStatus             NOTIFICATION-TYPE
+                             OBJECTS { mobGenSequenceNumber, mobGenNotificationId,
+										mobGenSeverity, mobGenDescription,
+										mobGenMachineID, mobGenServiceName,
+										mobGenAlarmTime, mobGenAlarmType,
+										mobGenProbableCause, rdbSIO}
+                             STATUS current
+                             DESCRIPTION
+                             "Indicates the status of message mtp2 pool."
+                             ::= {rdbTrapsGroup 15}
+
+--Following Trap will be raised if DBWriter is deployed in callgateway mode.
+
+callgwClientConnStatus       NOTIFICATION-TYPE
+                             OBJECTS { mobGenSequenceNumber, mobGenNotificationId,
+										mobGenSeverity, mobGenDescription,
+										mobGenMachineID, mobGenServiceName,
+										mobGenAlarmTime, mobGenAlarmType,
+										mobGenProbableCause, mobGenRemoteHostAddr, mobGenRemotePort }
+                             STATUS current
+                             DESCRIPTION
+                             "Indicates Roamware ISUPGateway Client connection status."
+                             ::= {rdbTrapsGroup 16}
+
+msuProcessingCapacity        NOTIFICATION-TYPE
+                             OBJECTS { mobGenSequenceNumber, mobGenNotificationId,
+										mobGenSeverity, mobGenDescription,
+										mobGenMachineID, mobGenServiceName,
+										mobGenAlarmTime, mobGenAlarmType,
+										mobGenProbableCause, mobGenThresholdName, 
+										mobGenThresholdValue, mobGenUtilization, 
+										mobGenCapacity, mobGenThresholdArmTime}
+                             STATUS current
+                             DESCRIPTION
+                             "Indicates status of number of MTP2 MSU received by DBWriter."
+                             ::= {rdbTrapsGroup 17}
+
+smTimeoutStatus              NOTIFICATION-TYPE
+                             OBJECTS { mobGenSequenceNumber, mobGenNotificationId,
+										mobGenSeverity, mobGenDescription,
+										mobGenMachineID, mobGenServiceName,
+										mobGenAlarmTime, mobGenAlarmType,
+										mobGenProbableCause, mobGenThresholdName, 
+										mobGenThresholdValue, mobGenUtilization, 
+										mobGenCapacity, mobGenThresholdArmTime}
+                             STATUS current
+                             DESCRIPTION
+                             "Indicates status of percentage number statemachines of MTP2 MSU received by DBWriter."
+                             ::= {rdbTrapsGroup 18}
+
+--------------------------------------------------------------------------------
+-- Severity:    Minor
+-- Description: "Application trap resync started."
+--
+-- Severity:    Normal
+-- Description: "Application trap resync ended."
+--------------------------------------------------------------------------------
+
+rdbTrapsResync 				NOTIFICATION-TYPE
+							OBJECTS { mobGenSequenceNumber, mobGenNotificationId,
+										mobGenSeverity, mobGenDescription,
+										mobGenMachineID, mobGenServiceName,
+										mobGenAlarmTime, mobGenAlarmType,
+										mobGenProbableCause }
+							STATUS current
+							DESCRIPTION
+								"Indicates the start and end of a trap resync operation."
+								::= {rdbTrapsGroup 19}
+
+END

@@ -1,0 +1,3383 @@
+<?xml version="1.0" ?>
+<zabbix_export>
+	<version>2.0</version>
+	<date>2016-01-06T15:16:06Z</date>
+	<groups>
+		<group>
+			<name>Custom Template GT</name>
+		</group>
+	</groups>
+	<templates>
+		<template>
+			<template>Template SNMP Custom AMS Traps GGSN Nodes</template>
+			<name>Template SNMP Custom AMS Traps GGSN Nodes</name>
+			<groups>
+				<group>
+					<name>Custom Template GT</name>
+				</group>
+			</groups>
+			<applications>
+				<application>
+					<name>Alarms</name>
+				</application>
+			</applications>
+			<items>
+				<item>
+					<name>Alarm Notification For : HLR2-PRO1</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bHLR2-PRO1$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : NLG1-HLR2</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bNLG1-HLR2$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : default</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bdefault$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : Hutch 3UK</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bHutch 3UK$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : Hutch 3AT</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bHutch 3AT$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : GT_Radius</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bGT_Radius$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : SCTP_ABORT_RCVD</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bSCTP_ABORT_RCVD$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-AT-Primary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bPCRF-AT-Primary$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-DE-Primary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bPCRF-DE-Primary$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-DE-Testing</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bPCRF-DE-Testing$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-IR-Primary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bPCRF-IR-Primary$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-IR-Testing</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bPCRF-IR-Testing$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-IT-Primary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bPCRF-IT-Primary$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-IT-Testing</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bPCRF-IT-Testing$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-SE-Primary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bPCRF-SE-Primary$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-AT-Secondary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bPCRF-AT-Secondary$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-DE-Secondary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bPCRF-DE-Secondary$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-IR-Secondary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bPCRF-IR-Secondary$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-IT-Secondary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bPCRF-IT-Secondary$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-SE-Secondary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bPCRF-SE-Secondary$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : OCS-Server-Hutch-DE-Primary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bOCS-Server-Hutch-DE-Primary$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : OCS-Server-Hutch-IT-Primary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bOCS-Server-Hutch-IT-Primary$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : OCS-Server-Hutch-SE-Primary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bOCS-Server-Hutch-SE-Primary$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : OCS-Server-Hutch-SE-Testing</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bOCS-Server-Hutch-SE-Testing$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : OCS-Server-Hutch-DE-Secondary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bOCS-Server-Hutch-DE-Secondary$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : OCS-Server-Hutch-IT-Secondary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bOCS-Server-Hutch-IT-Secondary$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : OCS-Server-Hutch-SE-Secondary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bOCS-Server-Hutch-SE-Secondary$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : OCS-Delcom-1</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bOCS-Delcom-1$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : OCS-Delcom-2</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bOCS-Delcom-2$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : VOD-APP1</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bVOD-APP1$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : Hutch 3DE</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(\bHutch 3DE$\b)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : HLR2-PRO1</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(HLR2-PRO1$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : NLG1-HLR2</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(NLG1-HLR2$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : default</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(default$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : Hutch 3UK</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(Hutch 3UK$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : Hutch 3AT</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(Hutch 3AT$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : GT_Radius</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(GT_Radius$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : SCTP_ABORT_RCVD</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(SCTP_ABORT_RCVD$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-AT-Primary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(PCRF-AT-Primary$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-DE-Primary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(PCRF-DE-Primary$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-DE-Testing</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(PCRF-DE-Testing$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-IR-Primary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(PCRF-IR-Primary$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-IR-Testing</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(PCRF-IR-Testing$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-IT-Primary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(PCRF-IT-Primary$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-IT-Testing</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(PCRF-IT-Testing$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-SE-Primary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(PCRF-SE-Primary$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-AT-Secondary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(PCRF-AT-Secondary$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-DE-Secondary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(PCRF-DE-Secondary$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-IR-Secondary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(PCRF-IR-Secondary$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-IT-Secondary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(PCRF-IT-Secondary$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : PCRF-SE-Secondary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(PCRF-SE-Secondary$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : OCS-Server-Hutch-DE-Primary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(OCS-Server-Hutch-DE-Primary$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : OCS-Server-Hutch-IT-Primary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(OCS-Server-Hutch-IT-Primary$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : OCS-Server-Hutch-SE-Primary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(OCS-Server-Hutch-SE-Primary$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : OCS-Server-Hutch-SE-Testing</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(OCS-Server-Hutch-SE-Testing$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : OCS-Server-Hutch-DE-Secondary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(OCS-Server-Hutch-DE-Secondary$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : OCS-Server-Hutch-IT-Secondary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(OCS-Server-Hutch-IT-Secondary$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : OCS-Server-Hutch-SE-Secondary</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(OCS-Server-Hutch-SE-Secondary$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : OCS-Delcom-1</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(OCS-Delcom-1$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : OCS-Delcom-2</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(OCS-Delcom-2$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : VOD-APP1</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(VOD-APP1$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+				<item>
+					<name>Alarm Notification For : Hutch 3DE</name>
+					<type>17</type>
+					<snmp_community/>
+					<multiplier>0</multiplier>
+					<snmp_oid/>
+					<key>snmptrap[&quot;(Hutch 3DE$)&quot;]</key>
+					<delay>0</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<status>0</status>
+					<value_type>2</value_type>
+					<allowed_hosts/>
+					<units/>
+					<delta>0</delta>
+					<snmpv3_contextname/>
+					<snmpv3_securityname/>
+					<snmpv3_securitylevel>0</snmpv3_securitylevel>
+					<snmpv3_authprotocol>0</snmpv3_authprotocol>
+					<snmpv3_authpassphrase/>
+					<snmpv3_privprotocol>0</snmpv3_privprotocol>
+					<snmpv3_privpassphrase/>
+					<formula>1</formula>
+					<delay_flex/>
+					<params/>
+					<ipmi_sensor/>
+					<data_type>0</data_type>
+					<authtype>0</authtype>
+					<username/>
+					<password/>
+					<publickey/>
+					<privatekey/>
+					<port/>
+					<description>Path Management - Check Peer State</description>
+					<inventory_link>0</inventory_link>
+					<valuemap/>
+					<applications>
+						<application>
+							<name>Alarms</name>
+						</application>
+					</applications>
+					<valuemap/>
+					<logtimefmt>hh:mm:ss yyyy/MM/dd</logtimefmt>
+				</item>
+			</items>
+			<discovery_rules/>
+			<macros/>
+			<templates/>
+			<screens/>
+		</template>
+	</templates>
+	<triggers>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bHLR2-PRO1$\b)&quot;].str(&quot;HLR2-PRO1&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bHLR2-PRO1$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  HLR2-PRO1</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bNLG1-HLR2$\b)&quot;].str(&quot;NLG1-HLR2&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bNLG1-HLR2$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  NLG1-HLR2</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bdefault$\b)&quot;].str(&quot;default&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bdefault$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  default</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bHutch 3UK$\b)&quot;].str(&quot;Hutch 3UK&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bHutch 3UK$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  Hutch 3UK</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bHutch 3AT$\b)&quot;].str(&quot;Hutch 3AT&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bHutch 3AT$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  Hutch 3AT</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bGT_Radius$\b)&quot;].str(&quot;GT_Radius&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bGT_Radius$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  GT_Radius</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bSCTP_ABORT_RCVD$\b)&quot;].str(&quot;SCTP_ABORT_RCVD&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bSCTP_ABORT_RCVD$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  SCTP_ABORT_RCVD</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-AT-Primary$\b)&quot;].str(&quot;PCRF-AT-Primary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-AT-Primary$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-AT-Primary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-DE-Primary$\b)&quot;].str(&quot;PCRF-DE-Primary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-DE-Primary$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-DE-Primary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-DE-Testing$\b)&quot;].str(&quot;PCRF-DE-Testing&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-DE-Testing$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-DE-Testing</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-IR-Primary$\b)&quot;].str(&quot;PCRF-IR-Primary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-IR-Primary$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-IR-Primary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-IR-Testing$\b)&quot;].str(&quot;PCRF-IR-Testing&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-IR-Testing$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-IR-Testing</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-IT-Primary$\b)&quot;].str(&quot;PCRF-IT-Primary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-IT-Primary$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-IT-Primary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-IT-Testing$\b)&quot;].str(&quot;PCRF-IT-Testing&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-IT-Testing$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-IT-Testing</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-SE-Primary$\b)&quot;].str(&quot;PCRF-SE-Primary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-SE-Primary$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-SE-Primary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-AT-Secondary$\b)&quot;].str(&quot;PCRF-AT-Secondary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-AT-Secondary$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-AT-Secondary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-DE-Secondary$\b)&quot;].str(&quot;PCRF-DE-Secondary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-DE-Secondary$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-DE-Secondary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-IR-Secondary$\b)&quot;].str(&quot;PCRF-IR-Secondary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-IR-Secondary$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-IR-Secondary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-IT-Secondary$\b)&quot;].str(&quot;PCRF-IT-Secondary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-IT-Secondary$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-IT-Secondary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-SE-Secondary$\b)&quot;].str(&quot;PCRF-SE-Secondary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bPCRF-SE-Secondary$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-SE-Secondary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bOCS-Server-Hutch-DE-Primary$\b)&quot;].str(&quot;OCS-Server-Hutch-DE-Primary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bOCS-Server-Hutch-DE-Primary$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  OCS-Server-Hutch-DE-Primary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bOCS-Server-Hutch-IT-Primary$\b)&quot;].str(&quot;OCS-Server-Hutch-IT-Primary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bOCS-Server-Hutch-IT-Primary$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  OCS-Server-Hutch-IT-Primary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bOCS-Server-Hutch-SE-Primary$\b)&quot;].str(&quot;OCS-Server-Hutch-SE-Primary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bOCS-Server-Hutch-SE-Primary$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  OCS-Server-Hutch-SE-Primary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bOCS-Server-Hutch-SE-Testing$\b)&quot;].str(&quot;OCS-Server-Hutch-SE-Testing&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bOCS-Server-Hutch-SE-Testing$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  OCS-Server-Hutch-SE-Testing</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bOCS-Server-Hutch-DE-Secondary$\b)&quot;].str(&quot;OCS-Server-Hutch-DE-Secondary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bOCS-Server-Hutch-DE-Secondary$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  OCS-Server-Hutch-DE-Secondary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bOCS-Server-Hutch-IT-Secondary$\b)&quot;].str(&quot;OCS-Server-Hutch-IT-Secondary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bOCS-Server-Hutch-IT-Secondary$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  OCS-Server-Hutch-IT-Secondary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bOCS-Server-Hutch-SE-Secondary$\b)&quot;].str(&quot;OCS-Server-Hutch-SE-Secondary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bOCS-Server-Hutch-SE-Secondary$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  OCS-Server-Hutch-SE-Secondary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bOCS-Delcom-1$\b)&quot;].str(&quot;OCS-Delcom-1&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bOCS-Delcom-1$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  OCS-Delcom-1</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bOCS-Delcom-2$\b)&quot;].str(&quot;OCS-Delcom-2&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bOCS-Delcom-2$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  OCS-Delcom-2</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bVOD-APP1$\b)&quot;].str(&quot;VOD-APP1&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bVOD-APP1$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  VOD-APP1</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bHutch 3DE$\b)&quot;].str(&quot;Hutch 3DE&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(\bHutch 3DE$\b)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  Hutch 3DE</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(HLR2-PRO1$)&quot;].str(&quot;HLR2-PRO1&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(HLR2-PRO1$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  HLR2-PRO1</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(NLG1-HLR2$)&quot;].str(&quot;NLG1-HLR2&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(NLG1-HLR2$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  NLG1-HLR2</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(default$)&quot;].str(&quot;default&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(default$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  default</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(Hutch 3UK$)&quot;].str(&quot;Hutch 3UK&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(Hutch 3UK$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  Hutch 3UK</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(Hutch 3AT$)&quot;].str(&quot;Hutch 3AT&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(Hutch 3AT$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  Hutch 3AT</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(GT_Radius$)&quot;].str(&quot;GT_Radius&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(GT_Radius$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  GT_Radius</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(SCTP_ABORT_RCVD$)&quot;].str(&quot;SCTP_ABORT_RCVD&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(SCTP_ABORT_RCVD$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  SCTP_ABORT_RCVD</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-AT-Primary$)&quot;].str(&quot;PCRF-AT-Primary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-AT-Primary$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-AT-Primary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-DE-Primary$)&quot;].str(&quot;PCRF-DE-Primary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-DE-Primary$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-DE-Primary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-DE-Testing$)&quot;].str(&quot;PCRF-DE-Testing&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-DE-Testing$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-DE-Testing</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-IR-Primary$)&quot;].str(&quot;PCRF-IR-Primary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-IR-Primary$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-IR-Primary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-IR-Testing$)&quot;].str(&quot;PCRF-IR-Testing&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-IR-Testing$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-IR-Testing</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-IT-Primary$)&quot;].str(&quot;PCRF-IT-Primary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-IT-Primary$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-IT-Primary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-IT-Testing$)&quot;].str(&quot;PCRF-IT-Testing&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-IT-Testing$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-IT-Testing</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-SE-Primary$)&quot;].str(&quot;PCRF-SE-Primary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-SE-Primary$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-SE-Primary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-AT-Secondary$)&quot;].str(&quot;PCRF-AT-Secondary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-AT-Secondary$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-AT-Secondary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-DE-Secondary$)&quot;].str(&quot;PCRF-DE-Secondary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-DE-Secondary$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-DE-Secondary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-IR-Secondary$)&quot;].str(&quot;PCRF-IR-Secondary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-IR-Secondary$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-IR-Secondary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-IT-Secondary$)&quot;].str(&quot;PCRF-IT-Secondary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-IT-Secondary$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-IT-Secondary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-SE-Secondary$)&quot;].str(&quot;PCRF-SE-Secondary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(PCRF-SE-Secondary$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  PCRF-SE-Secondary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(OCS-Server-Hutch-DE-Primary$)&quot;].str(&quot;OCS-Server-Hutch-DE-Primary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(OCS-Server-Hutch-DE-Primary$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  OCS-Server-Hutch-DE-Primary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(OCS-Server-Hutch-IT-Primary$)&quot;].str(&quot;OCS-Server-Hutch-IT-Primary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(OCS-Server-Hutch-IT-Primary$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  OCS-Server-Hutch-IT-Primary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(OCS-Server-Hutch-SE-Primary$)&quot;].str(&quot;OCS-Server-Hutch-SE-Primary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(OCS-Server-Hutch-SE-Primary$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  OCS-Server-Hutch-SE-Primary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(OCS-Server-Hutch-SE-Testing$)&quot;].str(&quot;OCS-Server-Hutch-SE-Testing&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(OCS-Server-Hutch-SE-Testing$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  OCS-Server-Hutch-SE-Testing</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(OCS-Server-Hutch-DE-Secondary$)&quot;].str(&quot;OCS-Server-Hutch-DE-Secondary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(OCS-Server-Hutch-DE-Secondary$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  OCS-Server-Hutch-DE-Secondary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(OCS-Server-Hutch-IT-Secondary$)&quot;].str(&quot;OCS-Server-Hutch-IT-Secondary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(OCS-Server-Hutch-IT-Secondary$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  OCS-Server-Hutch-IT-Secondary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(OCS-Server-Hutch-SE-Secondary$)&quot;].str(&quot;OCS-Server-Hutch-SE-Secondary&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(OCS-Server-Hutch-SE-Secondary$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  OCS-Server-Hutch-SE-Secondary</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(OCS-Delcom-1$)&quot;].str(&quot;OCS-Delcom-1&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(OCS-Delcom-1$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  OCS-Delcom-1</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(OCS-Delcom-2$)&quot;].str(&quot;OCS-Delcom-2&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(OCS-Delcom-2$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  OCS-Delcom-2</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(VOD-APP1$)&quot;].str(&quot;VOD-APP1&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(VOD-APP1$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  VOD-APP1</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+		<trigger>
+			<expression>{Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(Hutch 3DE$)&quot;].str(&quot;Hutch 3DE&quot;)}=1 &amp; {Template SNMP Custom AMS Traps GGSN Nodes:snmptrap[&quot;(Hutch 3DE$)&quot;].nodata(600)}=0</expression>
+			<name>Check Peer State For  :  Hutch 3DE</name>
+			<url/>
+			<status>0</status>
+			<priority>2</priority>
+			<description>Path Management - Check Peer State</description>
+			<type>0</type>
+			<dependencies/>
+		</trigger>
+	</triggers>
+	<graphs/>
+</zabbix_export>
