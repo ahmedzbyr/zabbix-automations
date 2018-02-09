@@ -119,4 +119,4 @@ Here is a raw output. Rather a semicolon separated values (SSV).
            
                                
 ### Code Location
-Code can be found here : <https://github.com/ahmedzbyr/fetch_monitoring_data_to_csv>
+Code can be found here : <https://github.com/ahmedzbyr/zabbix-automations/tree/master/monitoring_data_to_csv>
