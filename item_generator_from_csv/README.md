@@ -129,5 +129,5 @@ zabbix_items_from_csv.xml_pretty_me('CHN-DEVICE_2.xml', xml_tree_string_device_2
 ```
 
 ### Code Location 
-Code can be found here : <https://github.com/ahmedzbyr/zabbix_item_from_csv>
+Code can be found here : <https://github.com/ahmedzbyr/zabbix-automations/tree/master/item_generator_from_csv>
 
