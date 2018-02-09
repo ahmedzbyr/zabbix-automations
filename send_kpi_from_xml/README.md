@@ -97,4 +97,4 @@ Install Packages - `pip install zbxsend` and `pip install xmltodict`
       -d, --debug           Running Debug mode - More Verbose
 
 ### Code location 
-Location can be found here : <https://github.com/ahmedzbyr/zabbix_send_from_xml_kpi>
+Location can be found here : <https://github.com/ahmedzbyr/zabbix-automations/blob/master/send_kpi_from_xml>
