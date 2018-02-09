@@ -1,7 +1,7 @@
 
 <a name="Zabbix Hadoop Monitoring"></a>
 
-#Zabbix Hadoop Monitoring
+# Zabbix Hadoop Monitoring
 
 
 ---
@@ -27,7 +27,7 @@ Table of Contents
 
 <a name="Namenode Zabbix Monitoring"></a>
 
-##Namenode Zabbix Monitoring
+## Namenode Zabbix Monitoring
 
 This script can be used to monitor Namenode Parameters.
 This script can be used to
@@ -186,7 +186,7 @@ OR
 
 <a name="SubCommand Option 'send-data'"></a>
 
-###SubCommand Option 'send-data'
+### SubCommand Option 'send-data'
 
     usage: zabbix_hadoop_nn.py send-data [-h] [-zp ZABBIX_PORT] -zi
                                          ZABBIX_SERVER_IP
@@ -201,7 +201,7 @@ OR
 
 <a name="SubCommand Option 'xml-gen'"></a>
 
-###SubCommand Option 'xml-gen'
+### SubCommand Option 'xml-gen'
 
     usage: zabbix_hadoop_nn.py xml-gen [-h] -zp ZABBIX_HOST_PORT -zi
                                        ZABBIX_HOST_INTERFACE -zg ZABBIX_HOST_GROUP
@@ -225,5 +225,5 @@ OR
 <a name="Code Location"></a>
 
 ### Code Location 
-Code can be found here : <https://github.com/ahmedzbyr/zabbix_hadoop_monitoring>
+Code can be found here : <https://github.com/ahmedzbyr/zabbix-automations/tree/master/hadoop_monitoring>
 
